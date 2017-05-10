@@ -4,21 +4,18 @@
 \usepackage{latexsym}
 \usepackage{color}
 % black, blue, brown, cyan, darkgray, gray, green, lightgray, lime, magenta, blue, orange, pink, purple, red, teal, violet, white, yellow.
+\usepackage{enumitem}
 
 \title[LSST Special Programs]{Data Management \\ and LSST Special Programs}
 
-\author{M.~L.~Graham}
-\author{M.~Juri\'{c}}
+\author{M.~L.~Graham and M.~Juri\'{c}}
 
 \setDocRef{DMTN-nnn}
 \date{\today}
 \setDocRevision{TBD}
 \setDocStatus{draft}
 
-\setDocAbstract{\textbf{WORKING DRAFT } but intended to be an overview of any and all potential requirements on data management (DM) from special programs (SP) such as the deep drilling fields (DDF) or mini-surveys (MS). We also summarize the plans for how the special programs data will be integrated into the wide-fast-deep (WFD) Main Survey (Levels 1 and 2). It is the intent that this document evolve to become an internal catalog of change requests to the DM Level 1 and 2 pipelines and products, and a community resource for future special program white papers and preparations for Level 3 pipelines. \textbf{Preliminary action items are listed in Section \ref{ssec:intro_action}.} 
-
-\medskip MLG Summary: The very high level requirements for Level 3 and Special Programs are written down in the DMSR, but they're broad. The next document down-flow, the LDM-151, is focused on the Level 1 and 2 algorithms with no accountability to the DMSR requirements related to SP and Level 3 (and that's fine). LDM-151, Section 7, mentions the DAX and SUIT, and then also mentions that it will be detailed in a different document. At this stage it seems it is maybe a mite too early to conclude anything, but we can go through the "Action Items" and try to resolve the questions that exist, for now.
-}
+\setDocAbstract{\textbf{WORKING DRAFT (contains rough notes and partial thoughts) } but intended to be an overview of any and all potential requirements on data management (DM) from Special Programs such as the deep drilling fields (DDF) or mini-surveys. We also summarize the plans for how the Special Programs data will be integrated into the wide-fast-deep (WFD) Main Survey (Levels 1 and 2). It is the intent that this document evolve to become an internal catalog of change requests to the DM Level 1 and 2 pipelines and products, and a community resource for future Special Program white papers and preparations for Level 3 pipelines. }
 
 
 \setDocChangeRecord{%
@@ -41,45 +38,37 @@
 % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % 
 \section{Introduction} \label{sec:intro}
 
-\noindent The current status of this work is that it is an internal, ongoing study with several interim preliminary action items or outstanding questions so far (Section \ref{ssec:intro_action}).
-
 \noindent The purpose of this study is to: \\
-(1) summarize the current plans of the DM pipelines with respect to special programs, \\
-(2) summarize the processing that is required to enable science for special programs, \\
-(3) assess whether the DM pipelines meet the expected needs of special programs, and \\
+(1) summarize the current plans of the DM pipelines with respect to Special Programs, \\
+(2) summarize the processing that is required to enable science for Special Programs, \\
+(3) assess whether the DM pipelines meet the expected needs of Special Programs, and \\
 (4) ensure any necessary changes get written into the requirements, designs, and plans.
 
 \noindent This will be accomplished by: \\
 (1) starting with the DPDD, whitepapers, etc., and compiling relevant information, \\
-(2) discussing initial issues internally with DM (Mario, K-T, Tim), and then \\
-(3) ensure the identified needs become specified requirements (i.e., action items Section \ref{ssec:intro_action}).
+(2) discussing initial issues internally with DM (Mario, the SST), engineering (K-T, Tim), and then \\
+(3) ensuring the identified needs become specified requirements (i.e., spawn change requests).
 
 {\it Mario: "Examples include making sure there's a requirement that the system is able to use an arbitrary template for some (deep drilling) field and a plan to deliver that functionality; or that the requirements define how a user-supplied code will be able to run in the batch system to process the last-night's data with shift-and-stack code for KBOs."}
 
-\subsection{Current Action Items}\label{ssec:intro_action}
+% % % % % % % % % % % % % % % % % % 
+\subsection{Boundaries of Allowed Special Programs Observations}\label{ssec:intro_bounds}
 
-Action items for Data Management can be done internally as needed -- some are just questions of things to investigate. Items that involve gather feedback from the Science Collaborations should probably wait and happen at the same time as the next calls for community input (see Section \ref{ssec:intro_forum}).
+In the next couple of years, cadences and pointings for DDF and new mini-surveys will be proposed by the community. The LSST project will need to define boundaries for these observations. Although not all of these boundaries will originate with DM constraints, we start that process here (\textcolor{red}{MLG: Are any initially derived boundaries for Special Programs observations specified elsewhere?}). The relevant Jira issue is \url{https://jira.lsstcorp.org/browse/LIT-325?filter=-3}
 
-\noindent \textbf{Data Management: } \\
-\textbf{(1)} Confirm whether processed single visits for Special Programs can stay on disk and accessible for Level 3 pipelines for a longer amount of time than the WFD images, by user request. (Section \ref{ssec:dmdocs_review}) \\
-\textbf{(2)} Confirm whether the computational/storage budget requires more than 10\% of the total resources for Special Programs and Level 3 processing. (Section \ref{ssec:dmdocs_review}) \\
-\textbf{(3)} Confirm the expected thermal tolerances of the CCD and the associated minimum and maximum exposure times and exposure cadence that will keep the camera temperature within specifications. (Section \ref{ssec:dmdocs_review}) \\
-\textbf{(4)} Find out whether we can expect a filter change time shorter than 120 seconds (the specified maximum), which would enable a DDF to sequence filters. (Section \ref{ssec:dmdocs_review}) \\
-\textbf{(5)} Confirm whether alternative data products can contribute to the Alert Stream, or if only the Level 1 processing system will create alerts. (Section \ref{ssec:issues_alerts}) \\
-\textbf{(6)} Update the database schema for {\tt DIASource} to add an element that contains information about which template was used to create the difference image (e.g., {\tt tractId} or {\tt patchId}). (Section \ref{ssec:issues_databases}) \\
-\textbf{(7)} Clarify whether database schema key {\tt Object.prv\_inputID} will identify whether an object is an externally provided coordinate for forced photometry. (Section \ref{ssec:issues_databases}) \\
-\textbf{(8)} Find out whether a SP visit with a single exposure (no snaps) disqualifies it from incorporation into Level 1. (Section \ref{ssec:issues_snaps}) \\
-\textbf{(9)} Confirm that the ISR algorithms will cover a range of exposure times and dither patterns. (Section \ref{ssec:issues_calibrations}) \\
-\textbf{(10)} Implanting fake sources remains TBD; will DM provide a code base to do this in Level 3? (Section \ref{ssec:issues_calibrations}) \\
+Start of a list of observing restrictions. \\
+\textbf{Sky coordinates --} (The RA and Dec that will be accessible from the site.) \\
+\textbf{Pointing alt/az, airmass --} (Telescope pointing constraints.) \\
+\textbf{Sky background level --} (e.g., twilight observations cannot start before X) \\
+\textbf{Exposure times --} (e.g., current shortest is 1 s, with stretch goal of 0.1, but... \\
+\textbf{Filters --} (e.g., list filter combinations; $gri$ always be on?; change times, etc.) \\
+\textbf{Afternoon calibrations --} (e.g., must fit into some amount of time left over after the WFD main survey daily calibration frames are obtained) \\
+\textbf{Time allotted --} Nominally, 10\% of the total observing time (90\% goes to the WFD Main Survey). \\
 
-\noindent \textbf{Science Collaborations: } \\
-\textbf{(1)} SC should be solicited to provide input about all special program science goals that require 60 second alert latency from non-standard exposure times. (Section \ref{ssec:issues_alerts})\\
-\textbf{(2)} SC should be solicited to provide input on whether the space allotted for object characterization parameters in the database schema such as variability (e.g., {\tt lcPeriodic = float[6 x 32]}) or morphology (e.g., {\tt extendedness = float[1]}) are adequate to describe objects with Special Programs observations, which may include a wider range of cadences and depths than the WFD observations. Two examples include: (1) Does the variability parameter {\tt lcPeriodic} have enough space to adequately characterize high and low cadence observations with a variable dynamic range from a Twilight Survey? (2) Do the morphology parameters have enough elements to adequately represent both bright spiral arms and ultra-low-surface brightness features like tidal tails? DM will first compile and provide a list of planned parameters from the schema. (Section \ref{ssec:issues_databases}) \\
-\textbf{(3)} SC should be solicited to provide input on whether there are science use-cases for specialized, auto-generated template images e.g., with constant $\Delta t$, or image-image differencing (instead of image-template). DM should then assess whether this will require additional database elements. (Section \ref{ssec:issues_templates}) \\
-
+% % % % % % % % % % % % % % % % % % 
 \subsection{Interacting with the Science Community} \label{ssec:intro_forum}
 
-Several of the Action Items suggest soliciting input from the science collaborations (SC). However, it may be wiser/easier to wait until the next call for community input, and package these requests up in a broader request that a kind of "DM Requirements" section be included in all white papers. The document "Cadence Exploration and Improvement Plan" (by Zeljko, Lynne, Andy) proposes that the next call for DDF White Papers (proposed fields and cadences) be in December 2017, and the call for Mini-Survey White Papers be in October 2018. 
+To resolve some open issues we will need to solicit input from the science collaborations (SC). However, it may be better and easier to wait until the next call for community input, and package these requests up in a broader request that a kind of "DM Requirements" section be included in all white papers. The document "Cadence Exploration and Improvement Plan" (by Zeljko, Lynne, Andy) proposes that the next call for DDF White Papers (proposed fields and cadences) be in December 2017, and the call for Mini-Survey White Papers be in October 2018. 
 
 \noindent Recall that there is already a community forum on this topic, so far minimally used but ready to be revised in the future when the next calls soliciting white papers are released. \\ \url{http://community.lsst.org/t/deep-drilling-fields-and-data-management/1115}.
 
@@ -91,77 +80,130 @@ Several of the Action Items suggest soliciting input from the science collaborat
 (3) Are there aspects of the Science User Interface and Tools (SUIT) that need to be developed in order to enhance the usefulness of DDF data products. \\
 (4) To what degree should the DDF or Mini-Survey imaging could/should be incorporated into the main survey's deep stacks and associated data products (as opposed to being processed as separate data products)?
 
+% % % % % % % % % % % % % % % % % % 
+\subsection{A Summary of Open Action Items} \label{ssec:intro_AI}
+
+\begin{enumerate}[topsep=-15pt,label= \textbf{Action \Roman*.}] \item Investigate the minimum and maximum exposure times that can be successfully used in difference imaging and thereby contribute to the Alert Stream. \end{enumerate}
+\begin{enumerate}[resume,topsep=-15pt,label= \textbf{Action \Roman*.}] \item Confirm whether a latency shorter than {\tt \textbf{L1PublicT}}=24 hours for Level 1 data products (LSR-REQ-0104) can be provided to federated and/or user-run Level 3 pipelines for Special Programs. \end{enumerate}
+\begin{enumerate}[resume,topsep=-15pt,label= \textbf{Action \Roman*.}] \item Specify the latencies for delivering raw, reduced, and calibrated Special Programs images that are not processed by the Level 1 pipeline. \end{enumerate}
+\begin{enumerate}[resume,topsep=-15pt,label= \textbf{Action \Roman*.}] \item Confirm whether the computational budget for processing the Special Programs data requires more than 10\% of the total resources, and on which batch system the bulk of this processing will take place. \end{enumerate}
+\begin{enumerate}[resume,topsep=-15pt,label= \textbf{Action \Roman*.}] \item Confirm the expected thermal tolerances of the CCD and the associated minimum and maximum exposure times and exposure cadence that will keep the camera temperature within specifications. \end{enumerate}
+\begin{enumerate}[topsep=-15pt,label= \textbf{Action \Roman*.},resume] \item Confirm whether processed single visits for Special Programs can stay on disk and accessible for Level 3 pipelines for a longer amount of time, by user request. \end{enumerate}
+\begin{enumerate}[resume,topsep=-15pt,label= \textbf{Action \Roman*.}] \item Query the science community and NCSA about the science needs and processing capabilities, respectively, of $<30$ second cadence imaging. \end{enumerate}
+\begin{enumerate}[resume,topsep=-15pt,label= \textbf{Action \Roman*.}] \item Database schema for {\tt DIASource} needs to have an element added that contains information about the template that was used to create the difference image. \end{enumerate}
+\begin{enumerate}[resume,topsep=-15pt,label= \textbf{Action \Roman*.}] \item Clarify whether {\tt Object.prv\_inputID} will identify whether an object is an externally provided coordinate for forced photometry. \end{enumerate}
+\begin{enumerate}[resume,topsep=-15pt,label= \textbf{Action \Roman*.}] \item Contact the Science Collaborations for input on whether {\tt float[6 x 32]} for the characterization parameters for variability is adequate to express the additional timescales and depths covered by all possible Special Programs observing strategies. \end{enumerate}
+\begin{enumerate}[resume,topsep=-15pt,label= \textbf{Action \Roman*.}] \item Contact the Science Collaborations for input on the characterization parameters for extended objects. \end{enumerate}
+\begin{enumerate}[resume,topsep=-15pt,label= \textbf{Action \Roman*.}] \item Confirm whether DM's ISR algorithms will be developed to reduce images with a range of exposure times, dither patterns, etc., and if not, what are the lower and upper limits on exposure time. \end{enumerate}
+
 
 
 % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % 
 \clearpage
-\section{The Current DM Plans for Special Programs} \label{sec:dmdocs}
+\section{The Current DM Plans for Special Programs Data Processing} \label{sec:dmdocs}
 
-In this section we review what is written down in LSST documents with regards to the processing of Special Programs data. Below, we review the relevant contents of the three Data Management documents, and then the non-DM LSST documents. 
+In this section we summarize how DM intends to process the data obtained during Special Programs observations. This high-level "intent" is a combination of specifications that are actually written down in DM-related documents, and unwritten plans that exist in e.g., Mario's Brain. {\it MLG: Note that Sections \ref{ssec:dmdocs_SPinWFD} and \ref{ssec:dmdocs_L3} currently contain a mixture of what is officially written down and what is unofficially planned or expected, usually my interpretation of a conversation with Mario, while Section \ref{ssec:dmdocs_review} is a direct review of the DM documentation. Once the SST and engineering have converged on a treatment plan for Special Programs data via this work, my plan is to return to the official DM documentation and identify where change requests need to be initiated.}
 
-\textbf{Overview:} Although the data from some special programs might be incorporated into the Level 1, 2, and/or MOPS pipelines (see Section \ref{ssec:dmdocs_SPinWFD} below), every special program will also have one or more associated Level 3 processing pipelines. These Level 3 processing pipelines will be assembled by the science users, hopefully using existing LSST codes and schemas (so that e.g., the Level 3 databases that can be joined to the Level 1 and 2 databases), and also with custom codes. It is clearly specified that DM will not write any specialized algorithms for Special Programs data, but that an effort will be made to ensure the DM codes are extendable to Level 3. DM will also ensure that the relevant software infrastructure exists for science users, and for LSST to automatically run user-provided Level 3 pipelines (e.g., difference imaging on deep drilling nightly stacks). To enable science goals, some Level 3 pipelines can be run by LSST with a projected latency of (at most) tens of minutes (as opposed to the 60 second guaranteed for WFD). Level 3 pipelines for stacks and co-adds that do not have the same real-time urgency can simply be run by users through the Science Platform. 
+\textbf{Overview:} Although the data from some Special Programs might be incorporated into the Level 1, 2, and/or MOPS pipelines, every Special Program will probably also need one or more associated Level 3 processing pipelines. These Level 3 processing pipelines will be assembled by the science users, hopefully using existing LSST codes and schemas so that e.g., the Level 3 databases that can be easily joined to the Level 1 and 2 databases. It is clearly specified that DM will not write any specialized algorithms for Special Programs data, but that DM will ensure all pipeline code is extendable to Level 3 and that the relevant software infrastructure exists for science users to create and run their Level 3 pipelines. In addition, LSST will "federate" some Level 3 pipelines, putting them under change control and taking responsibility for their processing (e.g., shift-and-stack for faint moving objects is expected to become a federated Level 3 processing). All user access to processing codes and data products will be through the Science Platform. 
 
+\textbf{Section contents}: \\
+Section \ref{ssec:dmdocs_SPinWFD} -- an overview of whether and how DM will incorporate Special Programs data into the Level 1, 2, and MOPS pipelines and products. \\
+Section \ref{ssec:dmdocs_L3} -- an overview of how federated and user-run Level 3 pipelines will process Special Programs data, incorporate WFD data, and/or join to Level 1 and 2 products. \\
+Section \ref{ssec:dmdocs_review} -- a detailed break-down of Special Programs (or Level 3) related content in the three DM documents (DPDD, DMSR, and DMAD), and non-DM LSST documents. \\
 
-\subsection{Documentation Review}\label{ssec:dmdocs_review}
-
-\noindent \textbf{DMSR, LSE-61} \\
-Data Management Subsystems Requirements \citep{LSE-61} contains the high-level requirements for all processing and products. These have flowed down from the SRD (LPM-17), the SR (LSE-29), and the OSS (LSE-30), which are discussed in the next section. \\
-$\bullet$ The only part of the DMSR that directly references Special Programs (or DDF or mini-surveys) is Section 1.2.2 "Processed Visit Images" (ID: DMS-REQ-0069), which specifies that "Processed science exposures are not archived, and are retained for only a limited time to facilitate down-stream processing. They will be re-generated for users on-demand using the latest processing software and calibrations", but also says that "This aspect of the processing for Special Programs data is specific to each program". \\
-$\rightarrow$ \textcolor{red}{It is unclear whether processed SP data will remain on disk and accessible when required by the science users, or if it will only live a short while}. \\
-$\rightarrow$ \textbf{Confirm whether processed single visits for Special Programs can stay on disk and accessible for Level 3 pipelines for a longer amount of time, by user request.} \\
-$\bullet$ Section 2.9, "Level 3 Production", specifies high-level services of the DMS for Level 3 processing, which are relevant to special programs. \\
-2.9.1. Level 3 Data Import (ID: DMS-REQ-0290): to provide the ability to ingest common file formats (e.g., FITS table of external catalog). \\
-2.9.2. Resource Allocation (ID: DMS-REQ-0119): to provide a mechanism to prioritize Level 3 activities and appropriately allocate processing resources. \\
-2.9.3. Data Product Self-Consistency (ID: DMS-REQ-0120): to provide a means for ensuring Level 3 tasks can be carried out on self-consistent inputs. $\rightarrow$ \textcolor{red}{(?).} \\
-2.9.4. Provenance (ID: DMS-REQ-0121): to provide a means for recording information about processing performed at DACs (DMS-provided input and user inputs) to help users work in a reproducible way. \\
-2.9.5/6. Software Frameworks (ID: DMS-REQ-0125,DMS-REQ-0128): to provide a means for applying user-provided processing to catalog and image data, and for assessing the completeness of that application. \\
-3.1. Software for Community Re-Use (ID: DMS-REQ-0308): algorithms shall be designed to run on both high-performance platforms and users' desktops. $\rightarrow$ \textcolor{red}{I thought that the Science Platform was being developed specifically so that no one needs to process LSST data on their home machines?} \\
-
-\noindent \textbf{DMAD, LDM-151}\\
-LSST Data Management Applications Design \citep{LDM-151} outlines the code and algorithms that will be used in the processing of images in the AP (Level 1), DRP (Level 2), and MOPS. As such, it does not say much about Special Programs. It does say that "LSST DM is required to facilitate the creation of Level 3 data products by providing suitable APIs, software components, and computing infrastructure, but will not by itself create any Level 3 data products." The latter meaning that DM will not create any processing algorithms that are specific to the needs of any Special Programs data. Section 7 briefly describes the Data Access and the Science User Interface and Tool (SUIT), also known as the Science Platform, with a mention that they will be described in full in later documents. The Data Access layer (DAX) will be for sharing, accessing, searching (etc.) products, and the SUIT/Platform will provide an interactive environment for users, and also serve as portal for Level 3 pipeline development (including installed version of the LSST Software Stack), execution, retrieval, and analysis.
-
-\noindent \textbf{DPDD, LSE-163}\\
-Data Products Definitions Document \citep{LSE-163} specifies that the data products for Special Programs will ``be created using the same software and hardware as Levels 1 and 2". Section 7 is devoted to the data products of Special Programs, explaining how the current plan is to have both the Level 1 and 2 processing pipelines run on SP data in the same way that they run on the WFD, and produce all of the same data products and alerts, when possible/desirable. The Level 3 products for SP data can/will be kept in separate (joinable) databases that have identical schema as the WFD databases. \\
-$\bullet$ It is specified that SP data processing will be limited to not use more than 10\% of the DM computational and storage facilities. During the telecon on Wed Mar 29, KT Lam reviewed the computational budget but it seemed mainly for WFD with only passing mention of DDF or special programs. \\
-$\rightarrow$ \textcolor{red}{10\% of the computational budget seems like an underestimate. Although SP data will not be more than 10\% of the total data volume, it will be multiply processed: once as WFD Level 1, again perhaps as Level 2, and then possibly in multiple pipelines as Level 3, some of which are extremely computationally intensive (e.g., shift-and-stack). On top of this, add the Level 3 processing that will be applied to WFD data, and we could easily find that the Special Programs data are processed $\sim4\times$ as much as WFD.} \\
-$\rightarrow$ \textbf{Confirm whether the computational/storage budget requires more than 10\% of the total resources for Special Programs and Level 3 processing.}
-
-
-\noindent \textbf{SRD, LPM-17}\\
-The Science Requirements Document \citep{LPM-17} makes no reference to special programs, deep drilling fields, or mini-surveys; it's scope is the science of the WFD only.
-
-\noindent \textbf{LSST SR, LSE-29}\\
-The System Requirements document \citep{LSE-29} is derived from the LSST Science Requirements Document (SRD, \citep{LPM-17}). It contains the high-level specifications about fraction of total observing time delegated for special programs, minimum exposure times, maximum filter change time, etc., that flow down to the DMSR and OSS (detailed and discussed above and below).
-
-\noindent \textbf{OSS, LSE-30}\\
-The Observatory System Specifications (OSS) document \citep{LSE-30} contains high-level requirements for the Level 3 data products, and their storage and access, that are similar to those in the DMSR (as they both stem from LPM-17 and LSE-29). There are two points worth mentioning: \\
-$\bullet$ 3.6.1.4. Minimum exposure time (ID: OSS-REQ-0291): 1 second (stretch 0.1 seconds). \\
-$\rightarrow$ \textcolor{red}{There is a note that if the exposure time is shortened from 15 seconds, the spacing between exposures may need to be lengthened in order to maintain camera thermal stability, and that thermal stability might also be affected with longer exposure times -- but there doesn't seem to be an official limit on 'thermal stability'.}\\
-$\rightarrow$ \textbf{Confirm the expected thermal tolerances of the CCD and the associated minimum and maximum exposure times and exposure cadence that will keep the camera temperature within specifications.} \\
-$\bullet$ 3.6.2.2. Maximum time for operational filter change (ID: OSS-REQ-0293): 120 seconds \\
-$\rightarrow$ \textcolor{red}{The specified maximum filter change time is 120 seconds, but this could be a debilitating overhead for, e.g., a deep drilling cadence of consecutive 30 second images that rotates through filters.}\\
-$\rightarrow$ \textbf{Find out whether we can expect a filter change time shorter than 120 seconds (the specified maximum), which would enable a DDF to sequence filters.} \\
-$\bullet$ 3.6.2.4. Minimum filter change count (ID: OSS-REQ-0295): day, 8, night, 4 \\
-$\rightarrow$ \textcolor{red}{There is no related specification limiting the maximum number of total filter changes to avoid wear-and-tear on the mechanism?} 
-
-\noindent \textbf{LSE-180}\\
-Level 2 Photometric Calibration for the LSST Survey \cite{LSE-180} is built on OpSim runs that do include some nominal deep drilling fields, but the photometric calibration investigated in this work does not deal with potential issues induced by non-standard visit patterns or exposure times of special programs -- it's scope is that of the WFD Main Survey. 
 
 
 % % % % % % % % % % % % % % % % % % 
 \subsection{Incorporating SP Data into the WFD Main Survey}\label{ssec:dmdocs_SPinWFD}
 
-I haven't found much written down in terms of guidelines or expectations for incorporating Special Programs data into the Level 1 and Alert Stream, Level 2 DRP, and/or MOPS pipelines -- especially when these data deviate from the standard 30 second visit -- but it seems feasible. Here we make these considerations.
+There is not much, if anything, specified regarding guidelines or expectations for incorporating Special Programs data into the Level 1 and Alert Stream, Level 2 DRP, and/or MOPS pipelines that will automatically run on all WFD main survey observations. The concern is that drastic changes in the exposure time or total depth of the observations might negatively impact the science goals that depend on the WFD main survey data products. Here we summarize these concerns.
 
-\noindent \textbf{Incorporating SP data into Level 1 and the Alert Stream.} \\
-It is reasonable to attempt to include as many LSST images into Level 1 and the Alert Stream as possible. When the exposure time is equivalent to a WFD visit image, $\sim 30$ seconds, this is obviously fine. When the exposure time is shorter than a WFD visit image, this should be fine as well. The minimum supported exposure time is currently specified as 1 second, which spans a dynamic range of $r \approx 12.9$ -- $21.0$ magnitudes. A template image built on $15$ second exposures will saturate at $r \approx 15.8$, but this still leaves stars between $15.8$--$21.0$ magnitudes to be used in the PSF-matching (all other filters have a similarly large overlap). The exposure times of a special program image might be longer than the WFD visit image, but given that the template will typically be a stack of a year or two of data (at least), and that it's hard to imagine a reason for even doing $150$ second exposures (given that the saturation would be $r\approx 18.3$ and the cosmic rays would intensify), it seems unlikely that any images would be rejected from Level 1 for having too long an exposure time. This means that the limiting factor of including any/all special programs data into the Level 1 and Alert Stream will be a processing back-up caused by the higher cadence of short exposures, or a lack of template images for special programs that go outside the WFD search area. (Also, I checked with David Reiss and he is not aware of anyone considering problems arising from differencing shorter/longer exposure times.)
+\subsubsection{Level 1 and the Alert Stream}\label{ssec:dmdocs_SPinWFD_L1}
 
-\noindent \textbf{Incorporating SP data into MOPS.} \\
-Needs and capabilities are currently undefined.
+It is beneficial to transient science to include as many LSST images into Level 1 and the Alert Stream as possible. Only products of the Level 1 $60$-second processing pipeline can contribute to the Alert Stream (e.g., no Level 3 difference imaging pipeline can send its detections to the Alert Stream). Only images that qualify for Level 1 processing will contribute to the Alert Stream. The template images that are used in the Level 1 difference imaging pipeline will be built from the Level 2 DRP, and so the first factor affecting a SP image's suitability for Level 1 is to be in a region of sky with an existing template. So long as there is a template, when the exposure time is equivalent to a WFD visit image, $\sim 30$ seconds, treating the image as Level 1 is obviously going to be fine. However, the suitability of shorter and longer exposures is unknown. Here we consider the suitability -- or what we need to do in order to determine the suitability -- of shorter and longer exposures for the Level 1 and Alert Stream. These considerations are made independently of the science motivations of the Special Programs that proposed the different exposure times.
 
-\noindent \textbf{Incorporating SP data into the Level 2 DRP.} \\
-The core science needs for uniform-depth images and catalogs for the WFD main survey probably means this will not happen, but identical Level 3 data pipelines and products may be used for regions with deeper coverage and the two databases can be joined.
+% Shorter exposures: twilight survey, getting bright stars on the same photometric system, variability in brighter stars
+% Longer exposures: the weak lensing community might propose long-exposure fields if they remain concerned that 2x15 seconds is insufficient to obtain a stable PSF with no spatial variation dominated by the atmosphere
 
+(1) Shorter Exposures. The minimum supported exposure time is currently specified as 1 second (stretch goal 0.1 seconds), but this is a camera constraint. The minimum exposure time for an image to be successfully reduced with Instrument Signature Removal (ISR) will be a DM constraint, but is currently unspecified. We consider this issue separately in Section \ref{ssec:issues_calibrations}. Assuming that 1 second exposure can be reduced and calibrated, its detected point sources will span a dynamic range of $r \approx 12.9$ -- $21.0$ magnitudes. A template image built on $15$ second exposures will saturate at $r \approx 15.8$, but this still leaves stars between $15.8$--$21.0$ magnitudes to be used in the PSF-matching (and all other filters have a similarly large overlap). However, in order for an image to be successfully PSF-matched to the template, the PSF must be well formed (i.e., no speckle pattern), and have a spatial variance that the pipeline is capable of modeling (i.e., be smoothly varying on some minimal scale).  Another concern is that the Level 1 pipeline would not be able to deliver the required $60$ second latency if the camera produces more than 1 image in 30 seconds, which would disqualify a contribution to the Alert Stream.
+
+(2) Longer Exposures. There is no maximum exposure time specified for an LSST image. Given that the template image will be a stack of at least a year or two of data, processing a $5$--$10$ times deeper single image through the difference imaging pipeline should be fine. However, a $2\times150$ second exposure would saturate at $r \approx 18.3$, and cosmic-ray rejection completeness might suffer (unknown), which could impact the quality of a difference image and the detected sources. With a longer exposure time the $60$ second latency requirement could still be met, but any system qualities that vary on short (but $>30$ second) timescales could inhibit photometric calibration (e.g., tracking). 
+
+In conversation with DM-AP team members (Reiss, Findeisen, Connolly, Bo) there has not yet been a study of the safe range of exposure times that will be allowed to contribute to the Level 1 and Alert Stream. One possibly useful study is Chang et al. (2012), "Atmospheric point spread function interpolation for weak lensing in short exposure imaging data". They show that a 15 second exposure contains PSF variability on short spatial scales across a 1 square degree image which, for extragalactic fields with few stars (i.e., but good for weak lensing), is hard to characterize. They present a new software package to do mitigate the effects. Alternatively, we may need to use software packages {\tt PhoSim} (Peterson et al. 2015; \url{http://adsabs.harvard.edu/abs/2015ApJS..218...14P}) or {\tt ARROYO} (\url{http://proceedings.spiedigitallibrary.org/proceeding.aspx?articleid=848256}) to at least simply characterize the PSF stability as a function of exposure time.
+
+\begin{enumerate}[topsep=-10pt,label= \textbf{Action \Roman*.}] \item Investigate the minimum and maximum exposure times that can be successfully used in difference imaging and thereby contribute to the Alert Stream. \end{enumerate}
+
+\subsubsection{MOPS}\label{ssec:dmdocs_SPinWFD_MOPS}
+
+The WFD main survey observations will be optimized to meet the mandated goals for moving object discoveries, so it is unclear whether the science goals of MOPS can be much improved by incorporating Special Programs data. While it is expected that MOPS will be able to identify appropriate images and incorporate as much Special Programs data as possible, the capabilities are currently undefined, and we leave it for the MOPS pipeline builders to decide. We note that since MOPS does not run during the night, it does not have the same latency requirements, or the associated issues.
+
+\subsubsection{Level 2 Data Release Pipeline}\label{ssec:dmdocs_SPinWFD_L2}
+
+Unlike with transient detection and the Level 1 Alert Stream, it is not clear whether it is beneficial to the science goals that depend on the Level 2 DRP to include as many LSST images as possible. We propose that the simplest option is probably that LSST DM deliver a single Level 2 DRP {\tt Objects} database that is built from a set of images with nearly constant depth and cadence. When Special Programs data brings additional area up to the same level of depth and cadence as the rest of the WFD main survey, or improves the Level 2 DRP in some other way, it can be included in the Level 2 DRP. For example, photometric calibrations may require that some or all of the (shallower) Galactic Plane Special Program survey area be incorporated in order to suppress edge effects and low-order modes in the photometric solutions. In short, DM should probably not promise to incorporate any specific data into the Level 2 DRP images or catalogs.
+
+% % % % % % % % % % % % % % % % % % 
+\subsection{SP Data Processing with Federated and User-Run Level 3}\label{ssec:dmdocs_L3}
+
+Through the Science Platform, member of the science community can assemble Level 3 processing packages using both LSST and custom codes. The DM team is required to write their codes to be extendable to Level 3, and to provide the infrastructure for users to run them on LSST servers, monitor their progress, and analyze their output (including a prioritization system to allocate processing resources). All Level 3 pipelines will have access to processed single visits from both the WFD main survey and Special Programs, as well as difference images, CoAdds, and catalogs from the Level 1 and 2 pipelines. It is expected that some Level 3 pipelines will become "federated", installed and operated (and change controlled) by the LSST Operations team, such as those developed for time domain science that need to run automatically and repeatedly. For both federated and user-run code, the LSST DM team will encourage and facilitate data product databases that are built with the same schema as -- and can easily be joined with -- the tables of Level 1 and 2.
+
+Level 3 pipelines for Special Programs data for time-domain astronomy will need access to images on a timescale from minutes to weeks after acquisition, as opposed to static-sky Level 3 pipelines that may run on e.g., a yearly schedule like the Level 2 DRP. It is currently unclear what that real-time latency will be, and how processing resources will be allocated; here we break down some of the options.
+
+If the images obtained with a Special Program are incorporated into Level 1 (see Section \ref{ssec:dmdocs_SPinWFD}), then the Level 3 processing can begin as soon as the Level 1 imaging products are available: raw images, processed single visits (a.k.a. calexps), difference images, and their source catalogs. The current maximum time for this is {\tt \textbf{L1PublicT}}, specified by LSE-29 (\citep{LSE-29}) to be 24 hours (LSR-REQ-0104) -- but this seems far too long, especially for federated Level 3 pipelines, given that they are finished within $60$ seconds.
+
+\begin{enumerate}[resume,topsep=-10pt,label= \textbf{Action \Roman*.}] \item Confirm whether a latency shorter than {\tt \textbf{L1PublicT}}=24 hours for Level 1 data products (LSR-REQ-0104) can be provided to federated and/or user-run Level 3 pipelines for Special Programs. \end{enumerate}
+
+If the images obtained with a Special Program cannot be incorporated into Level 1, then the latency with which they will be made available is unspecified. Ultimately, their delivery will depend why they are not incorporated into Level 1, which will probably fall into two categories: (1) there is no template at their location, or (2) their exposure time prohibits difference imaging. In the former case, it seems likely that single processed images can be provided on a timescale of minutes, but this needs to be specified. In the latter case, it will depend on the exposure time. As mentioned in Section\label{ssec:dmdocs_SPinWFD_L1}, the minimum exposure time for an image to be successfully reduced with Instrument Signature Removal (ISR) will be a DM constraint, but is currently unspecified, and discussed separately in Section \ref{ssec:issues_calibrations}. It may be that single-visit processing is simply not supported by DM below some exposure time threshold, and so the latency on raw image delivery should be specified. Although it is likely that slightly shorter/longer exposure images can be reduced and calibrated with the same pipeline as $15$ second exposures, even if they are unsuitable for difference imaging, this has not yet been confirmed, and needs to be investigated and specified.
+
+\begin{enumerate}[resume,topsep=-10pt,label= \textbf{Action \Roman*.}] \item Specify the latencies for delivering raw, reduced, and calibrated Special Programs images that are not processed by the Level 1 pipeline. \end{enumerate}
+
+In the DPDD \citep{LSE-163}, it specifies that Special Programs data processing will be limited to not more than 10\% of the DM computational and storage facilities. During the telecon on Wed Mar 29, KT Lam reviewed the computational budget, but it seemed mainly for WFD with only passing mention of DDF or Special Programs. This 10\% of the computational budget seems like an underestimate: although SP data will not be more than 10\% of the total data volume, it will be multiply processed: once as WFD Level 1, again perhaps as Level 2, and then possibly in multiple pipelines as Level 3, some of which are extremely computationally intensive (e.g., shift-and-stack). It seems that we could easily find that Special Programs data are processed $\sim4\times$ as much as WFD. Furthermore, it is unclear whether the location for all this processing has been identified; Mario asks, for federated real-time Level 3 processing, {\it "whether this the same batch system we make available to the users for running Level 3 codes or the one that?s used to process calibrations. Have these systems been sized?"}.
+
+\begin{enumerate}[resume,topsep=-10pt,label= \textbf{Action \Roman*.}] \item Confirm whether the computational budget for processing the Special Programs data requires more than 10\% of the total resources, and on which batch system the bulk of this processing will take place. \end{enumerate}
+
+
+
+\subsection{In-Depth Documentation Review}\label{ssec:dmdocs_review}
+
+In this section we attempt to track the flow-down requirements through the official LSST and DM documentation. We find some hardware-related constraints in the OSS that will set the maximum possible divergence of Special Programs raw images from WFD main survey images (i.e., exposure times, rate of filter changes), and these will be relevant to DM processing. We also find that some broad, high-level requirements for Level 3 and Special Programs are written down in the DMSR. The next document down-flow, the DMAD, is focused on the Level 1 and 2 algorithms, and although its Section 7 mentions the DAX and SUIT, it says that they are to be detailed in a different document. The DPDD also does not have much content that directly pertains to Special Programs and Level 3 processing.
+
+\noindent \textbf{Science Requirements Document, SRD, LPM-17, \cite{LPM-17}}\\
+The SRD makes no direct reference to Special Programs, deep drilling fields, or mini-surveys. It's scope is the science of the WFD only.
+
+\noindent \textbf{LSST System Requirements, SR, LSE-29, \cite{LSE-29}}\\
+The SR is derived from the SRD. It contains the high-level specifications about fraction of total observing time delegated for Special Programs, minimum exposure times, maximum filter change time, etc., that flow-down to and are repeated in the DMSR and OSS (discussed below).
+
+\noindent \textbf{Observatory System Specifications, OSS, LSE-30, \cite{LSE-30}}\\
+The OSS contains high-level requirements for the Level 3 data products, and their storage and access, that are similar to those in the DMSR (as they both stem from the SRD and SR). There are two points worth mentioning: \\
+$\bullet$ 3.6.1.4. Minimum exposure time (ID: OSS-REQ-0291): 1 second (stretch 0.1 seconds). \\
+$\rightarrow$ There is a note that if the exposure time is shortened from 15 seconds, the spacing between exposures may need to be lengthened in order to maintain camera thermal stability, and that the thermal stability might also be affected with longer exposure times. However, there doesn't seem to be a specified limit on 'thermal stability'. Knowing the full range of exposure times and image cadences that DM must consider is important for estimating the predicted latencies providing raw, reduced and calibrated images (Section \ref{ssec:dmdocs_L3}) and testing the incorporation of non-standard images into the calibration and difference imaging pipelines (Section \ref{ssec:dmdocs_SPinWFD_L1}).
+\begin{enumerate}[resume,topsep=-10pt,label= \textbf{Action \Roman*.}] \item Confirm the expected thermal tolerances of the CCD and the associated minimum and maximum exposure times and exposure cadence that will keep the camera temperature within specifications. \end{enumerate}
+$\bullet$ 3.6.2.2. Maximum time for operational filter change (ID: OSS-REQ-0293): 120 seconds \\
+$\bullet$ 3.6.2.4. Minimum filter change count (ID: OSS-REQ-0295): day, 8, night, 4 \\
+$\rightarrow$ The specified maximum filter change time could be a debilitating overhead for, e.g., a deep drilling cadence of consecutive 30 second images wants to rotate through filters. Furthermore, we might expect that in reality the filter change time will be shorter than 120 seconds, which would enable a DDF to sequence filters. Furthermore, while the minimum filter change count is not an issue, I can't find the nightly (or total lifetime) maximum to limit wear and tear on the mechanism (as I've heard about). However, there is already a change request in progress regarding this issue: \url{https://project.lsst.org/groups/ccb/node/938}.
+
+\noindent \textbf{Data Management Subsystems Requirements, DMSR, LSE-61, \cite{LSE-61}} \\
+The DMSR contains the high-level requirements for all processing and products. There are two main areas that pertain to Special Programs. \\
+$\bullet$ Section 1.2.2 "Processed Visit Images" (ID: DMS-REQ-0069)\\
+$\rightarrow$ Specifies that {\it "Processed science exposures are not archived, and are retained for only a limited time to facilitate down-stream processing. They will be re-generated for users on-demand using the latest processing software and calibrations"}, but also says that {\it "This aspect of the processing for Special Programs data is specific to each program"}. It is unclear whether processed SP data will remain on disk and accessible for as long as it is required by the science users, or if it will only live a short while.
+\begin{enumerate}[topsep=-10pt,label= \textbf{Action \Roman*.},resume] \item Confirm whether processed single visits for Special Programs can stay on disk and accessible for Level 3 pipelines for a longer amount of time, by user request. \end{enumerate}
+$\bullet$ Section 2.9, "Level 3 Production" \\
+Specifies services of the DMS for Level 3 processing which are relevant to Special Programs: \\
+2.9.1. Level 3 Data Import (ID: DMS-REQ-0290): to provide the ability to ingest common file formats (e.g., FITS table of external catalog). \\
+2.9.2. Resource Allocation (ID: DMS-REQ-0119): to provide a mechanism to prioritize Level 3 activities and appropriately allocate processing resources. \\
+2.9.3. Data Product Self-Consistency (ID: DMS-REQ-0120): to provide a means for ensuring Level 3 tasks can be carried out on self-consistent inputs. \\
+2.9.4. Provenance (ID: DMS-REQ-0121): to provide a means for recording information about processing performed at DACs (DMS-provided input and user inputs) to help users work in a reproducible way. \\
+2.9.5/6. Software Frameworks (ID: DMS-REQ-0125,DMS-REQ-0128): to provide a means for applying user-provided processing to catalog and image data, and for assessing the completeness of that application. \\
+3.1. Software for Community Re-Use (ID: DMS-REQ-0308): algorithms shall be designed to run on both high-performance platforms and users' desktops. \\
+$\rightarrow$ \textcolor{red}{Questions}: Regarding 2.9.3, I'm not sure what {\it "self-consistent inputs"} means and so cannot assess any potential issues. Regarding 3.1, I thought that the Science Platform was being developed specifically so that no one needs to process LSST data on their home machines?
+
+\noindent \textbf{Data Management Applications Design, DMAD, LDM-151, \cite{LDM-151}}\\
+LDM-151 outlines the code and algorithms that will be used in the processing of images in the AP (Level 1), DRP (Level 2), and MOPS. As such, it does not say much about Special Programs. It does say that {\it "LSST DM is required to facilitate the creation of Level 3 data products by providing suitable APIs, software components, and computing infrastructure, but will not by itself create any Level 3 data products"}. The latter means that DM will not create any processing algorithms that are specific to the needs of any Special Programs data. Section 7 briefly describes the Data Access and the Science User Interface and Tool (SUIT), also known as the Science Platform, with a mention that they will be described in full in later documents  (probably this one: \url{https://github.com/lsst-dmsst/lsst_science_platform/blob/master/science-platform.pdf}). The Data Access layer (DAX) will be for sharing, accessing, searching (etc.) products, and the SUIT/Platform will provide an interactive environment for users, and also serve as portal for Level 3 pipeline development (including installed version of the LSST Software Stack), execution, retrieval, and analysis.
+
+\noindent \textbf{Data Products Definitions Document, DPDD, LSE-163, \cite{LSE-163}}\\
+The DPDD specifies that the data products for Special Programs will {\it "be created using the same software and hardware as Levels 1 and 2"}. Like LDM-151, Section 7 is devoted to the data products of Special Programs, explaining how the current plan is to have both the Level 1 and 2 processing pipelines run on SP data in the same way that they run on the WFD, and produce all of the same data products and alerts, when possible. It also states that the Level 3 products for SP data can (should) be kept in separate, but joinable, databases that have identical schema as the WFD databases.
+
+\noindent \textbf{Level 2 Photometric Calibration for the LSST Survey, LSE-180, \cite{LSE-180}}\\
+LSE-180 is built on OpSim runs that do include some nominal deep drilling fields, but the photometric calibration investigated in this work does not deal with potential issues induced by non-standard visit patterns or exposure times of Special Programs -- it's scope the WFD Main Survey. 
 
 
 
@@ -169,119 +211,126 @@ The core science needs for uniform-depth images and catalogs for the WFD main su
 \clearpage
 \section{Questions and Potential Issues}\label{sec:issues}
 
-In this section we list questions or potential problems identified only from reading LSST documents \citep{LSE-163,LDM-151}, or issues raised also in Gregory's AHM 2016 slides\footnote{``DM Considerations for Deep Drilling", LSST AHM Aug 2016 presentation by Gregory Dubois-Felsmann \url{https://zenodo.org/record/61402\#.WNVk6hIrIUF}}. Another useful resource is the LSST Database Schema Browser: \url{http://lsst-web.ncsa.illinois.edu/schema/index.php?sVer=baseline}.
+In this section we list questions or potential problems identified from reading LSST documents \citep{LSE-163,LDM-151}, Gregory's AHM 2016 slides\footnote{``DM Considerations for Deep Drilling", LSST AHM Aug 2016 presentation by Gregory Dubois-Felsmann \url{https://zenodo.org/record/61402\#.WNVk6hIrIUF}}, or using our imaginations. Another useful resource is the LSST Database Schema Browser: \url{http://lsst-web.ncsa.illinois.edu/schema/index.php?sVer=baseline}.
 
 For each of these questions or potential issues, a response will be: \\
 \textcolor{blue}{blue if the answer is known} (even if the answer is a negative), \\
-\textcolor{red}{red if the answer is still to be determined}, and \\
-\textbf{bold if an action item is required}.
+\textcolor{red}{red if the answer is still to be determined}. \\
+If it seems particularly urgent or involved to answer, it will spawn an Action Item.
+
 
 % % % % % % % % % % % % % % % % % % 
 \subsection{Alert Stream}\label{ssec:issues_alerts}
 
-$\bullet$ Will the near-real-time (tens of minutes) difference-image processing of Level 3 pipelines be set up to contribute to the same Alert Stream as Level 1? (E.g., transient source detections in nightly stacks of a deep drilling field.) \\
-$\rightarrow$  \textcolor{red}{As it is described in LDM-151, the Alert Stream takes as input only {\tt DIAObjects} and specifies that {\it "all alerts should be transmitted within 60s of the closure of the shutter of the final snap within a visit."} Based on this, any Level 3 difference imaging sources would not contribute to the Alert Stream; only imaging that qualifies as Level 1 will contribute to the Alert Stream.} \\
-$\rightarrow$ \textbf{Confirm whether alternative products can contribute to the Alert Stream.}
+$\bullet$ When we attempt to include short exposures (e.g., 5 seconds) in Level 1, the higher data acquisition rate (e.g., $\sim$6$\times$) might cause a processing back-up at NCSA. Is there a science need for 60 second latency on a consecutive time-series of short exposures, or would e.g., 60 seconds latency on every 6$^{\rm th}$ image, be preferred? (I.e., the main goal of shorter exposures would be to include brighter stars, not necessarily to monitor variability on short timescales). Alternatively, are there options for short-term increases in parallel processing power at NCSA that we could invoke during times of high cadence observations? \\
+$\rightarrow$ \textcolor{red}{Unanswered.}
+\begin{enumerate}[resume,topsep=-10pt,label= \textbf{Action \Roman*.}] \item Query the science community and NCSA about the science needs and processing capabilities, respectively, of $<30$ second cadence imaging. \end{enumerate}
 
-$\bullet$ When we attempt to include short exposures (e.g., 5 seconds) in Level 1 then this higher data acquisition rate (e.g., $\sim$6$\times$) might cause a processing back-up at NCSA. Is there a science need for 60 second latency on a consecutive time-series of short exposures? Or would e.g., 60 seconds latency on every 6$^{\rm th}$ image, be preferred? \\
-$\rightarrow$ \textbf{Query the community about all special program science goals that require 60 second alert latency from non-standard exposure times.}
+$\bullet$ LDM-151, Section 3.3.4 `Alert queuing and persistance' mentions that the {\it ``event message stream and the AlertDB will be synchronized at least once every 24 hours"} and that {\it ``Prior to the start of the subsequent night's observations, the message queue will be flushed and synchronized with the AlertDB. It is possible to persist the message queue on longer timescale but it is a requirement that synchronization be performed within 24 hours of the observations."} Since this is for the main survey in which new alerts are issued for a given field 2--3 times per night, check that this is fine in the case of doing e.g., 200 alert bursts on the same field in a single night from a deep drilling field? \\
+$\rightarrow$  \textcolor{red}{Unanswered.} However, upon review, this requirement seems unrelated to visit locations, and thus not an issue for Special Programs?
 
-$\bullet$ Alerts on a {\tt DIASource} will link to the associated {\tt DIAObject}, but in cases where a special program obtains a sequence of images without switching fields, will the {\tt DIAObject} catalog have had enough time to be updated to include the {\tt DIASource} from the previous image? \\
-$\rightarrow$  \textcolor{blue}{Immediate updates of the {\tt DIAObject} catalog is an expected capability, although it is currently uncertain how it will be accomplished, technically.} 
+$\bullet$ Will near-real-time Level 3 difference-image processing be able to contribute to the same Alert Stream as Level 1? (E.g., transient source detections in nightly stacks of a deep drilling field.) \\
+$\rightarrow$ \textcolor{blue}{Answered.} As described in LDM-151, the Alert Stream takes as input only {\tt DIAObjects} and specifies that {\it "all alerts should be transmitted within 60s of the closure of the shutter of the final snap within a visit."} Based on this, any Level 3 difference imaging sources would not contribute to the Alert Stream; only imaging that qualifies as Level 1 will contribute to the Alert Stream.
 
-$\bullet$ LDM-151, Section 3.3.4 `Alert queuing and persistance' mentions that the {\it ``event message stream and the AlertDB will be synchronized at least once every 24 hours"} and that {\it ``Prior to the start of the subsequent night's observations, the message queue will be flushed and synchronized with the AlertDB. It is possible to persist the message queue on longer timescale but it is a requirement that synchronization be performed within 24 hours of the observations."} Since this is for the main survey in which new alerts are issued for a given field 2--3 times per night, check that this is fine in the case of doing e.g., 200 alert bursts on the same field in a single night from a deep drilling field. \\
-$\rightarrow$  \textcolor{blue}{Upon review, this requirement seems unrelated to visit locations, and thus not an issue for special programs.} \\
+$\bullet$ Alerts on a {\tt DIASource} will link to the associated {\tt DIAObject}, but in cases where a Special Program obtains a sequence of images without switching fields, will the {\tt DIAObject} catalog have had enough time to be updated to include the {\tt DIASource} from the previous image? \\
+$\rightarrow$  \textcolor{blue}{Answered.} Immediate updates of the {\tt DIAObject} catalog is an expected capability, although it is currently uncertain how it will be accomplished, technically. 
 
 
 % % % % % % % % % % % % % % % % % % 
 \subsection{Databases and Schema}\label{ssec:issues_databases}
 
-$\bullet$ The database schema for {\tt DIASource} needs to have an element added to identify the template image that was used; this is relevant for the Main Survey WFD Level 1 and also all Level 3 differencing products. \\
-$\rightarrow$  \textbf{Database schema for {\tt DIASource} needs to have an element added that contains information about the template that was used to create the difference image.}\\
+$\bullet$ The database schema for {\tt DIASource} does not appear to have an element that identifies which template image that was used, but this will be needed for both Levels 1 and 3 differencing pipelines and products. \\
+$\rightarrow$ \textcolor{red}{Unaddressed.}
+\begin{enumerate}[resume,topsep=-10pt,label= \textbf{Action \Roman*.}] \item Database schema for {\tt DIASource} needs to have an element added that contains information about the template that was used to create the difference image. \end{enumerate}
 
-$\bullet$ LDM-151 mentions that forced photometry will be done for externally defined targets (Section 3.2.5), and this may be a particular interest to special programs, but it is unclear how such targets will be identified or flagged as such in the databases. \\
-$\rightarrow$ \textcolor{red}{This is definitely a promised Level 1 product, but it is unclear whether we need to add an element to the database schema. Currently, the {\tt Object} database contains an element {\tt prv\_inputId} which is an {\tt integer}, and is described as the {\it ``Pointer to prv\_InputType. Indicates which input was used to produce a given object."} Is that all we need?} \\
-$\rightarrow$  \textbf{Clarify whether {\tt Object.prv\_inputID} will identify whether an object is an externally provided coordinate for forced photometry.}
+$\bullet$ LDM-151 mentions that forced photometry will be done for externally defined targets (Section 3.2.5), and this may be a particular interest to Special Programs, but it is unclear how such targets will be identified or flagged as such in the databases, and unclear whether we need to add an element to the database schema for this. Currently, the {\tt Object} database contains an element {\tt prv\_inputId} which is an {\tt integer}, and is described as the {\it ``Pointer to prv\_InputType. Indicates which input was used to produce a given object."} Is that all we need? \\
+$\rightarrow$ \textcolor{red}{Unanswered.}
+\begin{enumerate}[resume,topsep=-10pt,label= \textbf{Action \Roman*.}] \item Clarify whether {\tt Object.prv\_inputID} will identify whether an object is an externally provided coordinate for forced photometry. \end{enumerate}
 
-$\bullet$ Will the following element sizes be enough the characterize the different kinds of variability that could be measured with cadences that are quite different from the main survey (i.e., longer or shorter cadenced special programs)? \\
+$\bullet$ Will the following database element sizes be enough to characterize the different kinds of variability that could be measured with Special Programs cadences that are quite different from the main survey (e.g., Miras, flares, and LBV-turned-SNe)? Although these elements could be differently populated in the Level 3 databases in order to meet the science goals of a given Special Program, we need to ensure that they are adequate for the Level 1 database, which might incorporate observations from Special Programs on a variety of timescales. \\
 {\tt Object} and {\tt DIAObject.lcPeriodic} = {\tt float[6 x 32]} = Periodic features extracted from light-curves using generalized Lomb-Scargle periodogram \\
 {\tt Object} and {\tt DIAObject.lcNonPeriodic} = {\tt float[6 x 32]} = Non-periodic features extracted from light-curves using generalized Lomb-Scargle periodogram \\
-$\rightarrow$ \textcolor{red}{Although these elements could be differently populated in the Level 3 databases in order to meet the science goals of a given special program, we need to ensure that they are adequate for the Level 1 data which might incorporate many timescales.}\\
-$\rightarrow$  \textbf{Contact the Science Collaborations for input on whether {\tt float[6 x 32]} for the characterization parameters for variability is adequate to express the additional timescales and depths afforded by a special programs observing strategy.}
+$\rightarrow$ \textcolor{red}{Unanswered.}
+\begin{enumerate}[resume,topsep=-10pt,label= \textbf{Action \Roman*.}] \item Contact the Science Collaborations for input on whether {\tt float[6 x 32]} for the characterization parameters for variability is adequate to express the additional timescales and depths covered by all possible Special Programs observing strategies. \end{enumerate}
 
-$\bullet$ Low surface-brightness features and/or objects are required for some galaxy science, and will show up more in e.g., a DDF than the WFD stack. Will the related shape parameters such as extendedness that will be included in the {\tt Object} database be sufficient to describe the extra level of detail in low-surface brightness features afforded by e.g., DDF stacks? \\
-$\rightarrow$ \textcolor{red}{As above, these elements could be differently populated in the Level 3 databases in order to meet the science goals of a given special program. It's unlikely that extremely deep patches will be included in the Level 2 products, but this needs assessment.}\\
-$\rightarrow$  \textbf{Contact the Science Collaborations for input on the characterization parameters for extended objects.}
+$\bullet$ Low surface-brightness features and/or faint extended objects are required for some galaxy science, and will show up more in e.g., a DDF than a WFD CoAdd. Will the related shape parameters such as extendedness in the {\tt Object} database be sufficient to describe the extra level of detail in low-surface brightness features that might come from deeper Special Programs CoAdds? As above, these elements could be differently populated in the Level 3 databases in order to meet the science goals of a given Special Program. Furthermore, it's unlikely that extremely deep patches will be included in the Level 2 products, but this still should be assessed.\\
+$\rightarrow$ \textcolor{red}{Unassessed.}
+\begin{enumerate}[resume,topsep=-10pt,label= \textbf{Action \Roman*.}] \item Contact the Science Collaborations for input on the characterization parameters for extended objects. \end{enumerate}
 
-$\bullet$ Images obtained during special programs might be used with one or more different types of templates -- the same images could be used as multiple surveys. Is it feasible to have separate databases for each? \\ 
-$\rightarrow$ \textcolor{blue}{Yes, Level 3 pipelines can create as many separate databases as necessary. There should at least be a separate database for each kind of template image. These databases can have the same base schema, and elements of the schema can be ``turned off" if the survey will not use them, to save processing time and disk space.} \\
+$\bullet$ Images obtained during Special Programs might be used with one or more different types of templates -- the same images could be used as multiple surveys. Is it feasible to have separate databases for each? \\ 
+$\rightarrow$ \textcolor{blue}{Answered.} Yes, Level 3 pipelines can create as many separate databases as necessary. There should at least be a separate database for each kind of template image. These databases can have the same base schema, and elements of the schema can be ``turned off" if the survey will not use them, to save processing time and disk space. 
 
-$\bullet$ Data from special programs might be incorporated into the Level 1 and/or 2 databases; if so, how will it be flagged in these databases? \\
-$\rightarrow$  \textcolor{blue}{In the schema for {\tt DIASource} and {\tt Source} there is an element for {\tt ccdVisitId}, and the database {\tt CcdVisit} has entry for {\tt visitId}, and the database {\tt Visit} has an entry for {\tt programId}, which is currently an {\tt integer} containing the {\it ``Observing program id (e.g., universal cadence, or one of the deep drilling programs, etc.)."}.} \\
+$\bullet$ Data from Special Programs might be incorporated into the Level 1 and/or 2 databases; if so, how will it be flagged in these databases? \\
+$\rightarrow$  \textcolor{blue}{Answered.} In the schema for {\tt DIASource} and {\tt Source} there is an element for {\tt ccdVisitId}, and the database {\tt CcdVisit} has entry for {\tt visitId}, and the database {\tt Visit} has an entry for {\tt programId}, which is currently an {\tt integer} containing the {\it ``Observing program id (e.g., universal cadence, or one of the deep drilling programs, etc.)."}. 
 
 $\bullet$ Will a Level 3 database for a Special Program be able to generate and incorporate forced photometry from WFD images? \\
-$\rightarrow$ \textcolor{blue}{Yes. All Level 3 pipelines have access to all LSST data.}
+$\rightarrow$ \textcolor{blue}{Answered.} Yes. All Level 3 pipelines have access to all LSST data.
 
 $\bullet$ Will the Level 1 requirement to generate forced photometry for all new {\tt DIAObjects} within 24 hours be able to run on Level 3 image products of Special Programs data, such as deep nightly stacks of DDF images? \\
-$\rightarrow$ \textcolor{blue}{This seems unlikely to be included as Level 1 (and unnecessary). Performing forced photometry for new {\tt DIAObjects} on a Level 3 image product would itself be a Level 3 pipeline.}
+$\rightarrow$ \textcolor{blue}{Answered.} No. This forced photometry will run only on other images that are incorporated into Level 1, and this will not include the data products of Level 3 pipelines. Performing forced photometry for new {\tt DIAObjects} on a Level 3 image product would itself be a Level 3 pipeline.
 
 
 % % % % % % % % % % % % % % % % % % 
 \subsection{Templates}\label{ssec:issues_templates}
 
 $\bullet$ Typically we think of a template as a single deep coadd of image obtained e.g., $\Delta t \geq 1$ year ago. However, the use of a template with constant $\Delta t$ to the new images (e.g., $\Delta t = 7$ days to mitigate proper motion induced issues in a difference image for a Galactic plane mini-survey), or the use of a template that is simply a specific other image, might be scientifically necessary. Will this be supported by DM? \\
-$\rightarrow$ \textcolor{blue}{Difference imaging with a custom template is Level 3, and the requirement for the generation of custom templates already exists as} \textbf{DMS-REQ-0032:} The DMS shall provide software to perform image differencing, generating Difference Exposures from the comparison of single exposures and/or coadded images \citep{LSE-61}.
+$\rightarrow$ \textcolor{blue}{Answered.} Yes. Difference imaging with a custom template is Level 3, and the requirement for the generation of custom templates already exists as \textbf{DMS-REQ-0032:} The DMS shall provide software to perform image differencing, generating Difference Exposures from the comparison of single exposures and/or coadded images \citep{LSE-61}.
 
 
 % % % % % % % % % % % % % % % % % % 
 \subsection{Snap Handling}\label{ssec:issues_snaps}
 
-$\bullet$ LDM-151 says (Section 3.2.4.1) that the image differencing pipeline will measure the PSF flux on snap difference images for all {\tt DIASources}, but is there a lower limit to exposure time for this? E.g., would not apply to a 1s twilight survey? \\
-$\rightarrow$ \textcolor{red}{Have not yet tried to answer this question, but I wonder if for Special Programs that have single-image visits instead of two snaps, whether the lack of snaps will disqualify them from Level 1 inclusion?}\\
-$\rightarrow$ \textbf{Does a SP visit with a single exposure (no snaps) disqualify it from incorporation into Level 1?}
+$\bullet$ LDM-151 says (Section 3.2.4.1) that the image differencing pipeline will measure the PSF flux on snap difference images for all {\tt DIASources}. Could Special Programs data that is only a single exposure, not a visit that is the combination of two snaps, be incorporated into the Level 1 AP? \\
+$\rightarrow$ \textcolor{red}{Unanswered.} 
 
 
 % % % % % % % % % % % % % % % % % % 
 \subsection{Calibrations}\label{ssec:issues_calibrations}
 
-$\bullet$ The Special Programs data may have a different exposure time or dither pattern than the WFD survey. The concern here is that if the instrument signature removal (ISR) calibration pipeline, and/or the photometric/astrometric calibration pipeline, have been designed to work for WFD data that problems might be encountered for Special Programs data (e.g., dark frames; brighter-fatter correction; artifacts with an exposure time dependence; charge build-up from no-dither with bright stars). \\
-$\rightarrow$ \textcolor{red}{Since there already exists a requirement that DM deliver processed visit images (ID: DMS-REQ-0069) to users (and to internal pipelines), it seems that at least the ISR will be characterized for a variety of exposure times -- but will it for sure?}. \\
-$\rightarrow$ Note that LSE-180 mentions that it is assumed that all factors affecting the system transmission are stable on 15 second timescales (page 10), but not what the upper limit of that might be. \\
-$\rightarrow$ LSE-180 comments on the dither pattern for the WFD survey in that "dither patterns where the overlap is one quarter of the field of view or more produce results meeting the SRD requirements", but this is specific to photometric calibration of the WFD. The LSE-180 also mentions that an inappropriate dither pattern can make it hard to correct for the variation of system bandpass as a function of the focal plane position -- but so long as this is solved in the WFD the corrections can be applied to the much smaller amount of data from the special programs (unless it is a function of exposure time and the special program uses a different exposure time). \\
-$\rightarrow$ \textbf{Confirm whether it is implicit in the LDM-151 that all the ISR algorithms will automatically investigate and derive corrections for a range of exposure times, dither patterns, etc.}
+$\bullet$ \textbf{Image Reduction} The Special Programs data may have a different exposure time or dither pattern than the WFD survey. The concern here is that if the instrument signature removal (ISR) calibration pipeline, and/or the photometric/astrometric calibration pipeline, have been designed to work for WFD data that problems might be encountered for Special Programs data (e.g., dark frames; brighter-fatter correction; artifacts with an exposure time dependence; charge build-up from no-dither with bright stars). Since there already exists a requirement that DM deliver processed visit images (ID: DMS-REQ-0069) to users (and to internal pipelines), it seems that at least the ISR must be developed for a variety of exposure times, but is this truly the case? Or are there exposure time boundaries beyond which DM will not guarantee delivery of processed images? \\
+$\rightarrow$ \textcolor{red}{Unanswered.}
+\begin{enumerate}[resume,topsep=-10pt,label= \textbf{Action \Roman*.}] \item Confirm whether DM's ISR algorithms will be developed to reduce images with a range of exposure times, dither patterns, etc., and if not, what are the lower and upper limits on exposure time. \end{enumerate}
 
-$\bullet$ Planting fake sources may be both more manageable and more important to some special programs. How will DM support this? (Answer needs to distinguish between planting fakes in the single images for detection efficiencies vs. planting fakes in the coadds for point-source limiting magnitudes). \\
-$\rightarrow$ The word 'fake' appears just once across LDM-151, LSE-61, and LSE-180 combined, and it is in Section 5.6.3 'MakeSelectionMaps' of LDM-151, which comments on how the depth and detection efficiency maps will be created, suggesting that fake implanting is one way. \\
-$\rightarrow$ \textcolor{red}{Everything related to fake sources remains very unclear, even at Level 1 and 2.} \\
-$\rightarrow$ \textbf{Figure out fake planting for detection efficiencies etc.?}
+$\bullet$ Regarding the above point, LSE-180 offers some relevant information regarding the reduction and calibration of non-WFD images: \\
+$\rightarrow$ LSE-180 mentions that it is assumed that all factors affecting the system transmission are stable on 15 second timescales (page 10), but not what the upper limit of that might be. \\
+$\rightarrow$ LSE-180 comments on the dither pattern for the WFD survey in that "dither patterns where the overlap is one quarter of the field of view or more produce results meeting the SRD requirements", but this is specific to photometric calibration of the WFD. The LSE-180 also mentions that an inappropriate dither pattern can make it hard to correct for the variation of system bandpass as a function of the focal plane position -- but so long as this is solved in the WFD the corrections can be applied to the much smaller amount of data from the Special Programs (unless it is a function of exposure time and the Special Program uses a different exposure time).
 
-$\bullet$ Multiple special programs request short-exposure survey, which would provide less/different stars for photometric/astrometric calibration. Would a 1s exposure contain enough stars for calibration? \\
-$\rightarrow$ \textcolor{blue}{A 1 second exposure will contain stars from $12.9<r<21.0$, which should be more than enough for a full photometric calibration.} \\
-$\rightarrow$ Note that LSE-180 only considers calibration for the standard WFD data.
+$\bullet$ \textbf{Image Detection Efficiency} Characterizing the detection efficiencies will be just as important to Special Programs data as the Wide-Fast-Deep survey. Options such as planting fake sources may be both more manageable and more important to some Special Programs science goals. What are the requirements on DM to provide detection efficiencies, and what are the current plans for providing this? (The answer should distinguish between planting fakes in the single images for transient detection efficiencies with difference imaging, $vs.$ planting fakes in the CoAdds for point-source limiting magnitudes). \\
+$\rightarrow$ The DPDD (LSE-163) does not have any specific data product related to detection efficiencies, but Section 3.2 "Image Characterization Data" does specify that {\it "Each processed image .. will record information on the pixel variance ... as well as the per-pixel masks ... These will allow the users to determine the validity and usefullness of each pixel in estimating the flux density recorded in that area of the sky"}. \\
+$\rightarrow$ The DMSR (LSE-61), Section 1.2.11 "Level 1 Data Quality Report Definition" (ID: DMS-REQ-0097): {\it "The DMS shall produce a Level 1 Data Quality Report that contains indicators of data quality that result from running the DMS pipelines, including at least ... detection efficiency for point sources vs. mag for each utilized filter."} However, this is a nightly data quality assessment and not a per-image product. \\
+$\rightarrow$ The DMAD (LDM-151), Section 5.6.3 "MakeSelectionMaps", states that this calibration step {\it "is responsible for producing multi-scale maps that describe LSST's depth and efficiency at detecting different classes of object. The details of what metrics will be mapped, the format and scale of the maps (e.g. hierarchical pixelizations vs. polygons), and the way the metrics will be computed are all unknown"}. It also states that this must be extendable to Level 3, but that {\it "the details of what DM will provide still needs to be clarified to the community"}, and notes that the reprocessing time for fake plants could be prohibitive. (Section 3 "Alert Production" also specifies that in LDM-151 {\it "we do not address estimation of the selection function for alert generation through the injection of simulated sources ... Source detection thresholds can be estimated through the use of sky sources"}.)\\
+$\rightarrow$ Suchyta et al. (2016) presents {\tt balrog}, a fake-embedding software package for detection efficiencies, and applies it in demonstration to DES data (it's not just for point sources, but uses {\tt galsim} to embed shapes built of e.g., Sersic profiles). \\
+$\rightarrow$ In a UW DM Brown Bag lunch meeting, it became clear that while there are many opinions on how to plant fake sources, not only are there no actual plans to do this, but there is no funding or FTQs allotted to figure out how the deliverable of detection efficiencies should be achieved. \\
+$\rightarrow$ \textcolor{red}{Unassessed.} But I would like to take this on in the near future with an assessment of our options, their costs, and the scientific payoff. 
+
+$\bullet$ Multiple Special Programs request short-exposure survey, which would provide less/different stars for photometric/astrometric calibration. Would a 1s exposure contain enough stars for calibration? \\
+$\rightarrow$ \textcolor{blue}{Answered.} 1 second exposure will contain stars from $12.9<r<21.0$, which should be more than enough for a full photometric calibration. However, LSE-180 only considers calibration for the standard WFD data, and so this has not been tested.
+
 
 % % % % % % % % % % % % % % % % % % 
 \subsection{Custom Co-Adds}\label{ssec:issues_coadds}
 
-$\bullet$ Building deep co-adds with no transient contamination (e.g., SN hosts, cosmology uses host parameters correlated with intrinsic SN brightness), or creating deep stacks across filters for faint-object detection at $<5\sigma$ in a single filter. \\
-$\rightarrow$ \textcolor{blue}{Creating custom co-adds will be a Level 3 capability that will be possible with the Level 2 DRP pipeline algorithms described in LDM-151. This includes multi-filter stacks (DMSR Section 1.3.4. 'Multi-band Coadds' ID:DMS-REQ-0281).}
+$\bullet$ Building deep co-adds with no transient contamination (e.g., SN hosts, cosmology uses host parameters correlated with intrinsic SN brightness), or creating deep stacks across filters for faint-object detection at $<5\sigma$ in a single filter, may be a desired capability for Special Programs data. Will this be possible? \\
+$\rightarrow$ \textcolor{blue}{Answered.} Yes. Creating custom co-adds will be a Level 3 capability that will be possible with the Level 2 DRP pipeline algorithms described in LDM-151. This includes multi-filter stacks (DMSR Section 1.3.4. 'Multi-band Coadds' ID:DMS-REQ-0281).
 
 
 % % % % % % % % % % % % % % % % % % 
 \subsection{Moving Objects}\label{ssec:issues_mops}
 
-$\bullet$ For faint moving objects, users will develop shift-and-stack (SAS) pipelines in Level 3 (MOPS does not SAS). Will they have all the necessary infrastructure for this intensive process? Will they be able to use the LSST real/bogus on their shift-and-stacked frames? \\
-$\rightarrow$ \textcolor{red}{In particular, people may want to SAS on difference images, which would require DM making these available for some time.} \\
-$\rightarrow$ \textbf{Confirm that science users could write a Level 3 SAS with the existing planned algorithms? E.g., see Section \ref{ssec:science_dmsumex}.}
+$\bullet$ For faint moving objects, users will develop shift-and-stack (SAS) pipelines in Level 3 (MOPS does not SAS). Will they have all the necessary infrastructure for this intensive process? Will they be able to use the LSST real/bogus on their shift-and-stacked frames? Will they be able to access the difference images over long time scales? \\
+$\rightarrow$ \textcolor{red}{Unanswered.} All of this seems likely, as each of these questions is covered by the DM requirement to {\it "make all codes extendable to Level 3"}, but ensuring that the answer is yes to each of them will be more involved in reality, and probably happen only with time as the SAS Level 3 pipeline is developed and integrated?
 
 $\bullet$ Can MOPS link newly discovered {\tt sources} to those discovered earlier on the same night (e.g., in a 4-visits-per-night scenario), or does it have a similar potential problem to {\tt DIASource} and {\tt DIAObject}? \\
-$\rightarrow$  \textcolor{blue}{MOPS does not run during the night in real time. This is not a problem.}.
+$\rightarrow$  \textcolor{blue}{Answered.} MOPS does not run during the night in real time. This is not a problem.
+
+
 
 
 \clearpage
 % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % 
 \section{Science Cases and their DM Requirements} \label{sec:science}
 
-In this section we review science documents from LSST and the community. We compile information about the nominal observing plans for special programs that are already written down (Section \ref{ssec:science_plans}), and summarize the science motivations for special programs that have so far been proposed (Section \ref{ssec:science_descriptions}). Potential issues for DM are inferred from these science motivations and have been incorporated into our list of issues in Section \ref{sec:issues}.
+In this section we review science documents from LSST and the community. We compile information about the nominal observing plans for Special Programs that are already written down (Section \ref{ssec:science_plans}), and summarize the science motivations for Special Programs that have so far been proposed (Section \ref{ssec:science_descriptions}). Potential issues for DM are inferred from these science motivations and have been incorporated into our list of issues in Section \ref{sec:issues}. In Section \ref{ssec:science_dmsums}, we explore some Special Programs processing case studies as an additional avenue to identify potential issues.
 
 \noindent Resources: \\
 $\bullet$ ``LSST: from Science Drivers to Reference Design and Anticipated Data Products" \cite{2008arXiv0805.2366I} \\
@@ -292,12 +341,10 @@ $\bullet$ ``LSST's DC [Deep CoAdd] Bias Against Planets and Galactic-Plane Scien
 $\bullet$ Chapter 10 ``Special Surveys" of the Observing Strategy White Paper \cite{OSWP} \\
 $\bullet$ List of LSST Deep Drilling white papers: \url{https://project.lsst.org/content/whitepapers32012} \\
 
-
+% % % % % % % % % % % % % % % % % % 
 \subsection{Nominal Observing Plans for DDF and MS}\label{ssec:science_plans}
 
-\cite{2008arXiv0805.2366I}, Section 3.2.1 ``Mini-Surveys": describes a nominal DDF data set as $\sim50$ consecutive $15$ second exposures in each of four filters in one hour per night, once every two nights, for four months. Each observation would have a limit of $r\sim24.5$; a one-hour nightly stack would have a limit of $r\sim26.5$; and and assuming a $60\%$ completion rate (weather), the four-month $\sim40$ hours stacked together with the $\sim180$ main survey visits would yield a limit of $r\sim28$. The LSST Science Requirements Document \cite{LPM-17} doesn't contain the terms ``deep drilling field" or ``mini-survey"; I assume that the SRD is only for WFD survey.
-
-Four extragalactic deep drilling fields have already been specified (Table \ref{tab:ddfms}). From a scouring of mainly the presentations of Brandt and Ridgway at the 2016 AHM, an {\it incomplete} list of potential mini-surveys that people are thinking about in Table \ref{tab:ddfms} also.
+Ivezi\'{c} et al. (2008, \cite{2008arXiv0805.2366I}), Section 3.2.1 ``Mini-Surveys": describes a nominal DDF data set as $\sim50$ consecutive $15$ second exposures in each of four filters in one hour per night, once every two nights, for four months. Each observation would have a limit of $r\sim24.5$; a one-hour nightly stack would have a limit of $r\sim26.5$; and and assuming a $60\%$ completion rate (weather), the four-month $\sim40$ hours stacked together with the $\sim180$ main survey visits would yield a limit of $r\sim28$. The LSST Science Requirements Document \cite{LPM-17} doesn't contain the terms ``deep drilling field" or ``mini-survey". Four extragalactic deep drilling fields have already been specified (Table \ref{tab:ddfms}). From a scouring of mainly the presentations of Brandt and Ridgway at the 2016 AHM, an {\it incomplete} list of potential mini-surveys that people are thinking about in Table \ref{tab:ddfms} also.
 
 \begin{table}[h]
 \begin{center}
@@ -328,82 +375,138 @@ Old Open Cluster M67      & dec +12 & compact survey above Galactic plane  \\
 \end{center}
 \end{table}
 
-
+% % % % % % % % % % % % % % % % % % 
 \subsection{Science Descriptions (Not Comprehensive)}\label{ssec:science_descriptions}
 
-The following is a collection of rough notes on the science goals and potential data processing/product issues for some proposed special programs, classified by field. It is not comprehensive. The questions for DM that were inspired by considering the proposed special programs are still mingled in amongst these notes, but have also been incorporated into Section \ref{sec:issues}, and so the answers and solutions to any questions or problems are all in Section \ref{sec:issues} also.
+The following is a collection of rough notes on the science goals for some proposed Special Programs, classified by area of astronomy. It is not comprehensive. Any major questions that were inspired by compiling these science goals have been incorporated into Section \ref{sec:issues}, so no Action Items are spawned in this section (although there are some low-level unanswered questions).
 
 \medskip
 \noindent \textbf{Solar System Objects}\\
-$\bullet$ Strategy would be to observe 3x3 grid of 9 fields centered on coordinate of an ecliptic latitude equal to 0 and a longitude at a conjunction of Trojan clouds of Jupiter and Neptune, 4 groups of 2 visits on a 2--3 day revisit schedule, with the 4 groups targeted at e.g., opposition, all done in $r$-band ($g$ suitable too). (Is this within the North Ecliptic Spur?) \citep{BeckerWP}. \\
-$\bullet$ North Ecliptic Spur region will yield more $\geq140$ m NEOs (Brandt talk).  \\
-$\bullet$ Are the three SSO special programs described in Chapter 10.2 of \cite{OSWP} mandated by NASA? \\
-$\bullet$ SSO science goals require enabling the discovery of faint SSO via shift-and-stack of images in specific fields where SSO discovery is maximized \citep{BeckerWP}. \\
-$\bullet$ Does MOPS processing do shift-and-stack, and/or is the MOPS database schema ready to incorporate a shift-and-stack output? \\
-$\bullet$ Regarding shift-and-stack, \cite{BeckerWP} says that ``the multi-fit algorithm ... naturally provides a base infrastructure for this process. In particular, the marshaling of the pixels to attempt a given photometric measurement is non-trivial when tens of thousands of images are required. However, the multi-fit middleware is required to do exactly this, so we expect that this issue will be resolved by the time SAS is needed." True? \\
-$\bullet$ To detect Earth impactors {\it ``hours before impact"} using the four visits per night will require real-time linking of new {\tt DIASource}s -- or maybe the MOPS handles this differently? \\
+$\bullet$ Observations in the North Ecliptic Spur region will yield more $\geq140$ m NEOs (Brandt talk). \\
+$\bullet$ Detecting faint SSO down to $r\sim27$ by applying shift-and-stack processing to a mini-survey (Trans-Neptunian Objectss, Trojans, asteroids, long-period comets, dwarf planets). \citep{BeckerWP} \\
+$\rightarrow$ Regarding shift-and-stack, \cite{BeckerWP} says that ``the multi-fit algorithm ... naturally provides a base infrastructure for this process. In particular, the marshaling of the pixels to attempt a given photometric measurement is non-trivial when tens of thousands of images are required. However, the multi-fit middleware is required to do exactly this, so we expect that this issue will be resolved by the time SAS is needed." Is this true? \textcolor{red}{Unanswered}. \\
+$\bullet$ Mini-moons, temporarily captured satellites of the Earth. (Section 10.2, \cite{OSWP}) \\
+$\bullet$ Find meter-sized impactors $<2$ weeks before impact.  (Section 10.2, \cite{OSWP}) \\
+$\bullet$ Sweetspot: twilight fields to find NEOs in Earth-like orbits (never in opposition fields). (Section 10.2, \cite{OSWP}) 
 
 \noindent \textbf{Stars in the Milky Way and Magellanics} \\
-$\bullet$ Special programs will provide images deeper than the main survey in order to identify useful stellar populations; getting the images over a short time span mitigates proper motion losses and increase flare detection rates \citep{DhitalWP}. \\
-$\bullet$ Target Galactic plane regions and/or open clusters, typically 1 to 3 filters needed for detections of e.g., faint stars already detected in $z$ and $y$ but needing $i$ to distinguish from red galaxies \cite{DhitalWP}. \\
-$\bullet$ Characterize stellar variability over the full L/SMC galaxies to $M_V<6.5$ on timescales from 15s to 3d \cite{SzkodyWP}. \\
-$\bullet$ Special co-adds may be required, e.g., ``To reach variability levels of 0.1 to 0.005 mag will require co-adds depending on the timescale of the particular variables" \citep{SzkodyWP}. \\
-$\bullet$ Light curve characterization parameters in the databases should include one for very short events like flares; ensure there's adequate space in the database for multiple variability parameterizations. \\
-$\bullet$ How might LC-characterization parameters fail on e.g., an LBV-turned-SN? \\
-$\bullet$ A Twilight Short Exposure survey would need good on-the-fly sky subtraction of a rapidly changing background; ensure plans are adeqaute? \\
-$\bullet$ A short-exposure survey of M67, Chapter 10.4 of \cite{OSWP}, suggests using {\it ``custom pixel masks to accurately perform photometry on stars as much as 6 magnitudes brighter than the saturation level"}; feasible? \\
+$\bullet$ Deep imaging acquired over a short time span to mitigate proper motion loss (and increase flare detection rates) will identify useful stellar populations. \citep{DhitalWP}. \\
+$\rightarrow$ When targeting Galactic plane regions and/or open clusters, typically 1 to 3 filters are needed for detections of e.g., faint stars already detected in $z$ and $y$ but needing $i$ to distinguish from red galaxies \cite{DhitalWP}. \\
+$\bullet$ A nominal deep-drilling observing strategy over the full L/SMC galaxies will characterize stellar variability to $M_V<6.5$ on timescales from 15s to 3d \cite{SzkodyWP}. \\
+$\rightarrow$ Special co-adds may be required, e.g., {\it "To reach variability levels of 0.1 to 0.005 mag will require co-adds depending on the timescale of the particular variables"}. \citep{SzkodyWP}. \\
+$\bullet$ A Twilight Short Exposure survey would enable bright stars (with many historical observations) to be put solidly on the same photometric system as the deeper LSST WFD main survey catalog. \\
+$\bullet$ A short-exposure survey of M67, Chapter 10.4 of \cite{OSWP}, suggests using {\it ``custom pixel masks to accurately perform photometry on stars as much as 6 magnitudes brighter than the saturation level"}, but is this feasible? \textcolor{red}{Unanswered.} 
 
 \noindent \textbf{Exoplanets} \\ 
 $\bullet$ Transits. The nominal DDF plan described in \cite{2008arXiv0805.2366I} would allow for $1\%$ variability detection over hour-long timescales, which is suitable for detecting transits. A DDF field at Galactic latitude $30$ degrees would yield $10^6$ stars at $r<21$ that would have ${\rm SNR}>100$ in each single exposure of the sequence. Microlensing events can also be detected with this data set. In both cases, follow-up is required. The Galactic Plane MS is proposed for this. \cite{2013arXiv1304.3455G} describes how transits can be extract from the same data set.\\
-$\bullet$ Microlensing. Slower than a transit, \cite{2013arXiv1304.3455G} suggests that $\sim22$ mag imaging every 3-4 days (i.e., the WFD nominal cadence) can find microlensing candidates (for follow-up with e.g., LCO). However, more Galactic regions must be included, and this will require image differencing in crowded fields. \cite{2013arXiv1304.3455G} claims that imaging in the necessary regions of the galaxy has been disfavored by the project on the basis that the eventual deep co-adds would be uselessly confusion limited. I don't think DM could fix this fact, and deep co-adds (and all DRP) could possibly just be skipped for these regions. Otherwise, the already-planned AP should work fine for Galactic plane survey.\\
+$\bullet$ Microlensing. Slower than a transit, \cite{2013arXiv1304.3455G} suggests that $\sim22$ mag imaging every 3-4 days (i.e., the WFD nominal cadence) can find microlensing candidates (for follow-up with e.g., LCO). However, more Galactic regions must be included, and this will require image differencing in crowded fields. \cite{2013arXiv1304.3455G} claims that imaging in the necessary regions of the galaxy has been disfavored by the project on the basis that the eventual deep co-adds would be uselessly confusion limited. (But was this before the Galactic Plane region was defined?)
 
-\noindent \textbf{Supernovae:} \\
-$\bullet$ The nominal DDF plan described in \cite{2008arXiv0805.2366I} would allow for nightly stacks with a limit of $r\sim26.5$, extending the SN sample to $z\sim1.2$ and providing more densely sampled light curves for cosmological analyses. \\
-$\bullet$ \cite{CrottsWP} doesn't say much specific. \\
-$\bullet$ \cite{KesslerWP} describes their optimal exposure time distribution as 6, 5, 10, 10, 9, 10 in $ugrizy$, which adds up to $<60$ minutes and could presumably be done with the standard 30s exposures. \\
-$\bullet$ Template generation: e.g., supernovae will want a DDF template from $>30$ days ago (minimum for SNeIa); $>100$ days is better (SNII), and $>200$ days safest (SLSNe, SNIIn). So, last DRP will be fine. But some last longer, thousands of days, and so users will want to know the date of the template. \\
-$\bullet$ Building special, deep-as-possible, SN-free host galaxy images in order to measure correlated properties and make corrections to the LC, and do host science. The regular DRP will be inadequate for this (this could be a Level 3 tool to stack requested epochs only?). With short runs on a DDF this might be impossible, would have to revisit.  \cite{FergusonWP} also mentions {\it ``characterization of ultra-faint SN host galaxies"} in their Galaxies WP. \\
-$\bullet$ A short-exposure survey could include nearby SNeIa on the same photometric system -- but can we calibrate as well with the limited set of stars? \\
+\noindent \textbf{Supernovae} \\
+$\bullet$ Extend the SN sample to $z\sim1.2$ and providing more densely sampled light curves for cosmological analyses with the nominal DDF plan described in \cite{2008arXiv0805.2366I}, which builds nightly stacks with a limit of $r\sim26.5$. \\
+%$\bullet$ \cite{CrottsWP} doesn't say much specific. \\
+$\rightarrow$ The optimal exposure time distribution might be 6, 5, 10, 10, 9, 10 in $ugrizy$, which adds up to $<60$ minutes and could presumably be done with the standard 30s exposures. \cite{KesslerWP} \\
+$\bullet$ Generating the best-possible individual SN light curves by building special, deep-as-possible, SN-free host galaxy images and using them as a template. This will be necessary for SNe that appear in the template image (e.g., that last $>1000$ days). SN-free images will also be needed to measure correlated properties for cosmology and to do host-galaxy science. \\
+$\rightarrow$ The Level 2 DRP codes to create CoAdds should be adequate for this. \\
+$\rightarrow$ \cite{FergusonWP} also mentions {\it ``characterization of ultra-faint SN host galaxies"} in their Galaxies WP. \\
+$\bullet$ A short-exposure survey could include nearby SNeIa on the same photometric system -- but again this comes back to the short-exposure questions of whether we can do photometric calibration as well.
 
-\noindent \textbf{Galaxies:} \\
-$\bullet$ \cite{FergusonWP} mentions {\it ``identification of nearby isolated low-redshift dwarf galaxies via surface-brightness fluctuations"} and {\it ``characterization of low-surface-brightness extended features around both nearby and distant galaxies"} -- building a large collection of low-$\mu$ objects is a science driver but do these even get in the {\tt Object} database (\textbf{check on the `extendedness'-related parameters, e.g. {\sc Galfit} modeling? to what $\mu$?}), or is this assumed entirely Level 3? \\
-$\bullet$ It seems that e.g., characterization of high-$z$ clusters will depend on ability to deblend extended objects. \\
-$\bullet$ AGN monitoring in well-characterized galaxies \citep{FergusonWP}, and for a long-term DDF on many timescales \citep{GawiserWP} \\
-$\bullet$ Effect of AGN on e.g., bulge-disk decomposition parameters? \\
+\noindent \textbf{Galaxies} \\
+$\bullet$ To build  a large collection of low-$\mu$ objects: \cite{FergusonWP} mentions {\it ``identification of nearby isolated low-redshift dwarf galaxies via surface-brightness fluctuations"} and {\it ``characterization of low-surface-brightness extended features around both nearby and distant galaxies"}. \\
+$\bullet$ Characterization of high-$z$ clusters (will will depend on ability to deblend extended objects). \\
+$\bullet$ AGN monitoring on a variety of timescales in well-characterized galaxies \citep{FergusonWP}  \citep{GawiserWP} \\
+$\rightarrow$ Study the effects of AGN on e.g., bulge-disk decomposition parameters?
 
-\noindent \textbf{Weak lensing:} \\
+\noindent \textbf{Weak Lensing} \\
 $\bullet$ DDF can help with shear systematics and the effects of magnification in the analysis of WFD data (community forum, Jim Bosch) \\
-$\bullet$ ``Will need to process at least some deep drilling fields (high-latitude ones) in the same way we process a full data release production before running the full data release production, so we can use the results to build priors and/or calibrate shear estimates on the wide survey" (community forum, Jim Bosch) \\
-$\bullet$ Will need to process various wide-depth subsets of some deep drilling fields (again, high-latitude ones) using the regular DRP pipeline. We'll definitely want best-seeing, worst-seeing, and probably a couple of independent typical-seeing subsets, but there may be other ways we'd want to subdivide as well. (community forum, Jim Bosch)  \\
-$\bullet$ photo-$z$ are very important \citep{MaWP} and so perhaps the implemented method should be chosen with weak lensing science prioritized \\
+$\bullet$ {\it "Will need to process at least some deep drilling fields (high-latitude ones) in the same way we process a full data release production before running the full data release production, so we can use the results to build priors and/or calibrate shear estimates on the wide survey"} (community forum, Jim Bosch) \\
+$\bullet$ {\it "Will need to process various wide-depth subsets of some deep drilling fields (again, high-latitude ones) using the regular DRP pipeline. We'll definitely want best-seeing, worst-seeing, and probably a couple of independent typical-seeing subsets, but there may be other ways we'd want to subdivide as well."} (community forum, Jim Bosch)  \\
+$\bullet$ Photo-$z$ are very important to weak lensing \citep{MaWP} and so perhaps the implemented method should be chosen with weak lensing science prioritized.
 
 
-\subsection{An Example of a ``Special Programs Processing Summary"}\label{ssec:science_dmsumex}
-
-For further insight to the DM-related needs of potential Special Programs, we can write out all of the acquisition and processing steps, in order. This kind of section describing the reductions and analysis would be typical in some kinds of observing proposal, and would be a reasonable expectation for a whitepaper.
 
 
-\noindent By Mario 
+% % % % % % % % % % % % % % % % % % 
+\subsection{Special Programs Processing Case Studies}\label{ssec:science_dmsums}
 
-It would be extremely useful to describe a few concrete examples of how special programs processing would unfold, to make sure everyone is on the same page (first DM internally, then the science collaboration). Here's a *very rough* example I tried to put together while thinking about this.
+For further insight to the DM-related needs of potential Special Programs, we can write out all of the data acquisition and processing steps, in order, that some of the proposed Special Programs might use. This kind of thought experiment of describing the reductions and processing could also be a required section of all future white paper proposals. Note that we are not including any analysis in these descriptions. Also, they aren't that fully realized yet, and could use some more thought and input, which is why none of the questions associated with these case studies have spawned any "Action Items".
 
-\noindent \textbf{DDF searches for TNOs}
+Generic steps currently include: \\
+Step 1. Data Acquisition. \\
+Step 2. Inclusion in Level 1 AP. \\
+Step 3. Delivery of LSST Processed Images. \\
+Step 4. Level 3 Processing. \\
+Step 5. Level 3 Products. \\
+(Step 6. Inclusion in Level 2.) \\
 
-(1) The scheduler is configured to repeatedly (e.g., 10 times) observe a field during the same night with longer exposure than usual (e.g., 120 sec). [and we should take the actual numbers from the TNO-DDF whitepaper; don't have the internet right now or I would]. {\it MLG: For example, \citep{BeckerWP} proposes four ``re-visit" sequences per field, each composed of two sets of $2$ $\times$ $15$ second exposures obtained 2-3 nights apart. The four sequences are obtained a (week?)/month/year apart.}
+\subsubsection{A Mini-Survey Searching for TNOs with Shift-and-Stack}
 
-(2) The images are processed as regular "Level 1" products within 60 seconds, and transmitted as alerts, with results stored into the regular L1 database. This will happen automatically for all images (perhaps within some range of exposure times?). {\it MLG: Yes, images from 1 to 120 seconds all seem OK to include in Level 1; doing shorter/longer exposures for any reason seems doubtful. However, this has not yet been tested (let alone confirmed) in LSST simulations of difference imaging (that I know of).}
+This Special Programs processing summary is based on Becker et al. (2011) white paper to find TNOs with shift-and stack \citep{BeckerWP}. {\it MLG: See Section \ref{sssec:science_dmsums_generic} for a more general processing case-study written by Mario, for a shift-and-stack Level 3 pipeline running regularly on a large amount of data.}
 
-(3) The raw images (and all necessary calibrations), calexps, and standard L1 diffims are made available within 10 minutes to the batch system for processing with special programs-specific codes. This is the same batch system we make available to the users for running Level 3 codes [Q for us: is it? or is is the same one that's used to process calibrations? have these systems been sized?].
+Step 1. Data Acquisition. The observational sequence is triggered. In a single night, the 9 adjacent fields in a 3x3 grid are observed with $336$ $\times$ $15$ second $r$-band exposures. This sequence is always repeated 2-3 nights later. This re-visit sequence is repeated 3 more times: 1.5 months, 3 months, and 13.5 months later. Data obtained in the $g$-band filter is also acceptable. \citep{BeckerWP}
 
-(3a) The code running the shift-and-stack processing will be externally developed and delivered, but will be installed and operated (and change controlled!) by the LSST Operations team. That is, we don't expect someone external to the ops team to babysit the code on a nightly basis. In fact, it's the opposite: once the codes are delivered, any changes will go through LSST's software change control process. {\it MLG: I'm unsure of even which document would contain details this specific at this point -- not sure this can be written down anywhere yet?}
+Step 2. Inclusion in Level 1 AP. Each $2\times15$ second visit is processed as Level 1 and Alerts are released within 60 seconds.
 
-(4) There will be a facility to trigger program-specific processing on the batch system upon the arrival of a new image (above); this processing will then be queued up for execution. We assume that the policy for processing of special programs data may give it preferential treatment relative to general-purpose L3. {\it MLG: I think this is covered by the DMSR Section 3.3.5 ``Provide Pipeline Execution Services" (ID: DMS-REQ-0156) and associated sub-requirements to provide production orchestration, monitoring, and fault tolerance software. The wording does not reference Level 1, 2, or Calibrations pipelines and so must apply generically to Level 3 as well.}
+Step 3. Delivery of LSST Processed Images. The raw, reduced, and calibrated exposures and difference images from the Level 1 pipeline are made available within {\tt \textbf{L1PublicT}} (currently 24 hours, but see Section \ref{ssec:dmdocs_L3}). However, this Special Program appears to require a year of dispersed observations before the Level 3 processing would run. \\
+\textcolor{red}{Question:} Will there be a Science Platform capability set up so that users are notified not just when any data for their Special Program is taken, but when certain sets are finished and ready for processing?
 
-(5) Once the processing finishes, the results of will be stored to a program-specific database. No alerts (in VOEvent sense) will be issued. We will provide a generic notification facility (perhaps something as simple as an RSS feed) that new data has been made available in a certain database/data store. [This is an example where I'd want to make sure somebody within DM is planning to provide such a facility.]. {\it MLG: This kind of notification does not appear to be covered by any item in the DMSR, but it seems more appropriate to be described in the Science Platform deliverables?}
+Step 4. Level 3 Processing. The Level 3 pipeline running the shift-and-stack processing will be set up and submitted for batch processing by the user through the Science Platform (this particular Special Program does not appear to need regular or urgent processing, and so its Level 3 code will probably not be federated). Pipeline inputs will be the 336 processed exposures per field per re-visit sequence. The Level 2 difference imaging routine will be used with the same template tract/patch for all. Custom code will shift the difference images, then Level 2 routines will stack and do source detection and characterization (including real/bogus?) and generate an object database. Custom code will derive orbital parameters for the detections and add them to the database. The user is notified with processing status updates. \\
+\textcolor{red}{Question:} Does the Level 3 pipeline have to include the steps to regenerate the processed exposures, or will DM deliver a service to automatically initiate regeneration by e.g., simply calling for an exposure or difference image? \\
+\textcolor{red}{Question:} Will the internal real/bogus routine be able to run on shift-and-stack difference images? \\
+\textcolor{red}{Question:} Is it yet known how users will apply for batch processing priority and how they will be notified their jobs have finished, e.g., RSS feed? I could imagine that this is a requirement that would be defined in a future document on the Science Platform deliverables?
 
-(6) The outputs stored can be special-program specific (i.e., tables with nearly arbitrary schemas -- some columns -- like ra/dec for spatial joins -- should be present in main tables). The outputs can also contain images (stored in also special-program specific repository), or custom products (treated like opaque files). The visualizations available for these (catalogs, images, arbitrary files) through the Portal will be limited (e.g., generic table visualizations or x-y plots).
+Step 5. Level 3 Products. The shifted-and-stacked images. Databases of sources detected by the shift-and-stack process with the desired schema, some of which will overlap with Level 1, 2, and/or MOPS to facilitate table joins, some of which will be generated by custom codes. \\
+\textcolor{red}{Question:} Will it be possible for Level 3 databases to add arbitrary schema elements, or can they only subselect from pre-defined options? \\
 
-(7) When the images are made available to the batch system (step 3), they also become available to *everyone*. I.e., someone else could also run a custom L3 pipeline on these data, feeding their custom L3 database. [this isn't in the requirements right now -- right now we say that images will become available in 24hrs. But I'd like to get K-T's reaction to this sort of proposal -- this kind of facility would be extremely powerful, and from a technical perspective my hunch is that once you have 3, you get 6 for free as well.]
+(Step 6. Inclusion in Level 2. Given the extreme difference in final depth of these fields, it is unlikely that they will be incorporated into the Level 2. However, external Level 3 processing could certainly make deep CoAdds for these fields, join them to the Level 2 DRP catalog, and use them for other science.)
+
+\subsubsection{Searching for Supernovae in Deep Drilling Fields}
+
+Step 1. Data Acquisition. On a single deep drilling field, the scheduler obtains e.g., 5, 10, 10, 9, and 10 visits with $2\times15$ second exposures in $grizy$ (or similar for the night's filter set) and a small dither pattern between visits.
+
+Step 2. Inclusion in Level 1 AP. Each $2\times15$ second visit is processed as Level 1 and Alerts are released within 60 seconds.
+
+Step 3. Delivery of LSST Processed Images. The raw, reduced, and calibrated exposures and difference images from the Level 1 pipeline are made available within {\tt \textbf{L1PublicT}} (currently 24 hours, but see Section \ref{ssec:dmdocs_L3}).
+
+Step 4. Level 3 Processing. The federated pipeline runs automatically upon delivery of the Level 1 processed images. If a deep template image does not already exist (this would be a Level 3 product), a Level 2 stacking routine will be used to make them. This Level 2 stacking routine is also used to make the nightly deep CoAdd in each filter, and then a Level 1 or 2 routine will generate the difference images and run source detection (and real/bogus?). These sources will be added to Level 3 equivalents of the {\tt DIAObject} and {\tt DIASource} databases. 
+\textcolor{red}{Question:} Will the internal real/bogus routine be able to run on nightly CoAdd DDF difference images?
+
+Step 5. Level 3 Products. A deep template for this field, the nightly stacked CoAdds and difference images, and analogs of the {\tt DIAObject} and {\tt DIASource} databases but built only for this specific Deep Drilling Field. \\
+\textcolor{red}{Question:} How long can some Level 3 products remain on disk, such as template images for nightly CoAdd image subtraction?
+
+(Step 6. Inclusion in Level 2. Unlikely.)
+
+\subsubsection{A Twilight Survey of Bright Stars}
+
+Future work.
+
+\subsubsection{The Galactic Plane Survey for Variable Stars}
+
+Future work.
+
+\subsubsection{GW Optical Counterpart Search}
+
+Future work.
+
+
+\subsubsection{A More Generic Level 3 Shift-and-Stack Case Study}\label{sssec:science_dmsums_generic}
+
+A Level 3 processing case study for shift-and-stack on a large number images. By Mario.
+
+\#1. The scheduler is configured to repeatedly (e.g., 10 times) observe a field during the same night with longer exposure than usual (e.g., 120 sec). [ and we should take the actual numbers from the TNO-DDF whitepaper; don't have the internet right now or I would].
+
+\#2. The images are processed as regular "Level 1" products within 60 seconds, and transmitted as alerts, with results stored into the regular L1 database. This will happen automatically for all images (perhaps within some range of exposure times?).
+
+\#3. The raw images (and all necessary calibrations), calexps, and standard L1 diffims are made available within 10 minutes to the batch system for processing with special programs-specific codes. This is the same batch system we make available to the users for running Level 3 codes [Q for us: is it? or is is the same one that's used to process calibrations? have these systems been sized?].
+
+\#3 a). The code running the shift-and-stack processing will be externally developed and delivered, but will be installed and operated (and change controlled!) by the LSST Operations team. That is, we don't expect someone external to the ops team to babysit the code on a nightly basis. In fact, it's the opposite: once the codes are delivered, any changes will go through LSST's software change control process.
+
+\#4. There will be a facility to trigger program-specific processing on the batch system upon the arrival of a new image (above); this processing will then be queued up for execution. We assume that the policy for processing of special programs data may give it preferential treatment relative to general-purpose L3.
+
+\#5. Once the processing finishes, the results of will be stored to a program-specific database. No alerts (in VOEvent sense) will be issued. We will provide a generic notification facility (perhaps something as simple as an RSS feed) that new data has been made available in a certain database/data store. [This is an example where I'd want to make sure somebody within DM is planning to provide such a facility.].
+
+\#6. The outputs stored can be special-program specific (i.e., tables with nearly arbitrary schemas -- some columns -- like ra/dec for spatial joins -- should be present in main tables). The outputs can also contain images (stored in also special-program specific repository), or custom products (treated like opaque files). The visualizations available for these (catalogs, images, arbitrary files) through the Portal will be limited (e.g., generic table visualizations or x-y plots).
+
+\#7. When the images are made available to the batch system (step \#3), they also become available to *everyone*. I.e., someone else could also run a custom L3 pipeline on these data, feeding their custom L3 database. [this isn't in the requirements right now -- right now we say that images will become available in 24hrs. But I'd like to get K-T's reaction to this sort of proposal -- this kind of facility would be extremely powerful, and from a technical perspective my hunch is that once you have \#3, you get \#6 for free as well.]
 
 
 
@@ -415,8 +518,6 @@ Conclusions section.
 %\acknowledgments
 %Acknowledgments.
 %
-%\appendix
-%Appendix.
 
 \bibliography{ms,lsst,refs,books,refs_ads}
 
