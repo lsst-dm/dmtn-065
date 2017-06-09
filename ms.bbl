@@ -1,0 +1,102 @@
+\begin{thebibliography}{18}
+\expandafter\ifx\csname natexlab\endcsname\relax\def\natexlab#1{#1}\fi
+\expandafter\ifx\csname url\endcsname\relax
+  \def\url#1{\texttt{ #1}}\fi
+\expandafter\ifx\csname urlprefix\endcsname\relax\def\urlprefix{URL }\fi
+
+\bibitem[{Becker(2011)}]{BeckerWP}
+Becker, A.e.a., 2011, {Science White Paper for LSST Deep-Drilling Field
+  Observations Opportunities for Solar System Science}, \newline
+  {\tt{\url{https://project.lsst.org/content/whitepapers32012}}}
+
+\bibitem[{Claver \& {The LSST Systems Engineering Integrated Project
+  Team}(LSE-29)}]{LSE-29}
+\textbf{[LSE-29]}, Claver, C.F., {The LSST Systems Engineering Integrated
+  Project Team}, 2016,  \emph{ LSST System Requirements}, \textsf{ LSE-29},
+  \urlprefix\url{https://ls.st/LSE-29}
+
+\bibitem[{Claver \& {The LSST Systems Engineering Integrated Project
+  Team}(LSE-30)}]{LSE-30}
+\textbf{[LSE-30]}, Claver, C.F., {The LSST Systems Engineering Integrated
+  Project Team}, 2016,  \emph{ LSST System Requirements}, \textsf{ LSE-30},
+  \urlprefix\url{https://ls.st/LSE-30}
+
+\bibitem[{Crotts(2011)}]{CrottsWP}
+Crotts, A.e.a., 2011, {Standard Candle Relations and Photo-diversity of Type Ia
+  Supernovae}, \newline
+  {\tt{\url{https://project.lsst.org/content/whitepapers32012}}}
+
+\bibitem[{Dhital(2011)}]{DhitalWP}
+Dhital, S.e.a., 2011, {Science White Paper for LSST Deep-Drilling Field
+  Observations Mapping the Milky Way?s Ultracool Dwarfs, Subdwarfs, and White
+  Dwarfs}, \newline
+  {\tt{\url{https://project.lsst.org/content/whitepapers32012}}}
+
+\bibitem[{Dubois-Felsmann(LSE-61)}]{LSE-61}
+\textbf{[LSE-61]}, Dubois-Felsmann, G., 2016,  \emph{ LSST Data Management
+  Subsystem Requirements}, \textsf{ LSE-61},
+  \urlprefix\url{https://ls.st/LSE-61}
+
+\bibitem[{Ferguson(2011)}]{FergusonWP}
+Ferguson, H.C.e.a., 2011, {Science White Paper for LSST Deep-Drilling Field
+  Observations: LSST Deep Drilling for Galaxies}, \newline
+  {\tt{\url{https://project.lsst.org/content/whitepapers32012}}}
+
+\bibitem[{Gawiser(2011)}]{GawiserWP}
+Gawiser, E.e.a., 2011, {Science White Paper for LSST Deep-Drilling Field
+  Observations: Ultra-deep $ugrizy$ Imaging to Reduce Main Survey Photo-z
+  Systematics and to Probe Faint Galaxy Clustering, AGN, and Strong Lenses},
+  \newline {\tt{\url{https://project.lsst.org/content/whitepapers32012}}}
+
+\bibitem[{{Gould}(2013)}]{2013arXiv1304.3455G}
+{Gould}, A., 2013, ArXiv e-prints,
+  \href{http://adsabs.harvard.edu/abs/2013arXiv1304.3455G}{ADS Link}
+
+\bibitem[{{Ivezi{\'c}} \& {The LSST Science Collaboration}(LPM-17)}]{LPM-17}
+\textbf{[LPM-17]}, {Ivezi{\'c}}, {\v Z}., {The LSST Science Collaboration},
+  2011,  \emph{ LSST Science Requirements Document}, \textsf{ LPM-17},
+  \urlprefix\url{https://ls.st/LPM-17}
+
+\bibitem[{{Ivezi\'{c}} et~al.(2008){Ivezi\'{c}}, {Tyson}, {Abel}
+  et~al.}]{2008arXiv0805.2366I}
+{Ivezi\'{c}}, {\v Z}., {Tyson}, J.A., {Abel}, B., et~al., 2008, ArXiv e-prints,
+  \href{http://adsabs.harvard.edu/abs/2008arXiv0805.2366I}{ADS Link}
+
+\bibitem[{Jones(LSE-180)}]{LSE-180}
+\textbf{[LSE-180]}, Jones, L., 2013,  \emph{ Level 2 Photometric Calibration
+  for the LSST Survey}, \textsf{ LSE-180},
+  \urlprefix\url{https://ls.st/LSE-180}
+
+\bibitem[{Juri\'c et~al.(LDM-151)Juri\'c, Lupton, \& et~al.}]{LDM-151}
+\textbf{[LDM-151]}, Juri\'c, M., Lupton, R., et~al., T.A., 2013,  \emph{ Data
+  Management Applications Design}, \textsf{ LDM-151},
+  \urlprefix\url{https://ls.st/LDM-151}
+
+\bibitem[{Juric et~al.(LSE-163)}]{LSE-163}
+\textbf{[LSE-163]}, Juric, M., et~al., 2017,  \emph{ LSST Data Products
+  Definition Document}, \textsf{ LSE-163},
+  \urlprefix\url{https://ls.st/LSE-163}
+
+\bibitem[{Kessler(2011)}]{KesslerWP}
+Kessler, R.e.a., 2011, {Science White Paper for LSST Deep-Drilling Field
+  Observations: Supernova Light Curves}, \newline
+  {\tt{\url{https://project.lsst.org/content/whitepapers32012}}}
+
+\bibitem[{Ma(2011)}]{MaWP}
+Ma, Z.e.a., 2011, {Science White Paper for LSST Deep-Drilling Field
+  Observations: Using LSST Deep Drilling Fields to Improve Weak Lensing
+  Measurements}, \newline
+  {\tt{\url{https://project.lsst.org/content/whitepapers32012}}}
+
+\bibitem[{Marshall et~al.(2017)}]{OSWP}
+Marshall, P., et~al., 2017, {Science-Driven Optimization of the LSST Observing
+  Strategy}, in preparation, \newline
+  {\tt{\url{https://github.com/LSSTScienceCollaborations/ObservingStrategy}}}
+
+\bibitem[{Szkody(2011)}]{SzkodyWP}
+Szkody, P.e.a., 2011, {Science White Paper for LSST Deep-Drilling Field
+  Observations High Cadence Observations of the Magellanic Clouds and Select
+  Galactic Cluster Fields}, \newline
+  {\tt{\url{https://project.lsst.org/content/whitepapers32012}}}
+
+\end{thebibliography}
