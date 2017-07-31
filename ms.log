@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.16 (TeX Live 2015) (preloaded format=pdflatex 2015.5.24)  9 JUN 2017 14:56
+This is pdfTeX, Version 3.14159265-2.6-1.40.16 (TeX Live 2015) (preloaded format=pdflatex 2015.5.24)  31 JUL 2017 16:13
 entering extended mode
  restricted \write18 enabled.
  file:line:error style messages enabled.
@@ -691,6 +691,9 @@ LaTeX Warning: Label `C15' multiply defined.
 LaTeX Warning: Label `C16' multiply defined.
 
 
+LaTeX Warning: Label `C16a' multiply defined.
+
+
 LaTeX Warning: Label `C17' multiply defined.
 
 
@@ -926,7 +929,7 @@ LaTeX Font Info:    Font shape `T1/zi4/bx/n' in size <10.95> not available
 (Font)              Font shape `T1/zi4/b/n' tried instead on input line 95.
 File: lsst_logo_notext.png Graphic file (type png)
  <use lsst_logo_notext.png>
-Package pdftex.def Info: lsst_logo_notext.png used on input line 106.
+Package pdftex.def Info: lsst_logo_notext.png used on input line 104.
 (pdftex.def)             Requested size: 84.55244pt x 21.30264pt.
  [3
 
@@ -934,158 +937,170 @@ Package pdftex.def Info: lsst_logo_notext.png used on input line 106.
 File: lsst_logo_notext.png Graphic file (type png)
 
 <use lsst_logo_notext.png>
-Package pdftex.def Info: lsst_logo_notext.png used on input line 116.
+Package pdftex.def Info: lsst_logo_notext.png used on input line 117.
 (pdftex.def)             Requested size: 84.55244pt x 21.30264pt.
  [4]
-Underfull \hbox (badness 10000) in paragraph at lines 123--127
+Underfull \hbox (badness 10000) in paragraph at lines 124--128
 
  []
 
 File: lsst_logo_notext.png Graphic file (type png)
 <use lsst_logo_notext.png>
-Package pdftex.def Info: lsst_logo_notext.png used on input line 134.
+Package pdftex.def Info: lsst_logo_notext.png used on input line 135.
 (pdftex.def)             Requested size: 84.55244pt x 21.30264pt.
  [5
 
 ]
 File: lsst_logo_notext.png Graphic file (type png)
  <use lsst_logo_notext.png>
-Package pdftex.def Info: lsst_logo_notext.png used on input line 143.
+Package pdftex.def Info: lsst_logo_notext.png used on input line 144.
 (pdftex.def)             Requested size: 84.55244pt x 21.30264pt.
  [6]
-Overfull \hbox (3.96307pt too wide) in paragraph at lines 146--147
+Overfull \hbox (3.96307pt too wide) in paragraph at lines 147--148
 \T1/zi4/m/n/10.95 spiedigitallibrary . org / proceeding . aspx ? articleid = 84
 8256$[]\T1/fos/m/n/10.95 ) to at least sim-ply char-ac-ter-ize the
  []
 
 File: lsst_logo_notext.png Graphic file (type png)
 <use lsst_logo_notext.png>
-Package pdftex.def Info: lsst_logo_notext.png used on input line 157.
+Package pdftex.def Info: lsst_logo_notext.png used on input line 158.
 (pdftex.def)             Requested size: 84.55244pt x 21.30264pt.
  [7]
 File: lsst_logo_notext.png Graphic file (type png)
  <use lsst_logo_notext.png>
-Package pdftex.def Info: lsst_logo_notext.png used on input line 166.
+Package pdftex.def Info: lsst_logo_notext.png used on input line 167.
 (pdftex.def)             Requested size: 84.55244pt x 21.30264pt.
  [8]
 File: lsst_logo_notext.png Graphic file (type png)
 
 <use lsst_logo_notext.png>
-Package pdftex.def Info: lsst_logo_notext.png used on input line 174.
+Package pdftex.def Info: lsst_logo_notext.png used on input line 175.
 (pdftex.def)             Requested size: 84.55244pt x 21.30264pt.
  [9]
 File: lsst_logo_notext.png Graphic file (type png)
  <use lsst_logo_notext.png>
-Package pdftex.def Info: lsst_logo_notext.png used on input line 193.
+Package pdftex.def Info: lsst_logo_notext.png used on input line 194.
 (pdftex.def)             Requested size: 84.55244pt x 21.30264pt.
  [10]
 File: lsst_logo_notext.png Graphic file (type png)
 
 <use lsst_logo_notext.png>
-Package pdftex.def Info: lsst_logo_notext.png used on input line 212.
+Package pdftex.def Info: lsst_logo_notext.png used on input line 213.
 (pdftex.def)             Requested size: 84.55244pt x 21.30264pt.
  [11]
 File: lsst_logo_notext.png Graphic file (type png)
  <use lsst_logo_notext.png>
-Package pdftex.def Info: lsst_logo_notext.png used on input line 218.
+Package pdftex.def Info: lsst_logo_notext.png used on input line 219.
 (pdftex.def)             Requested size: 84.55244pt x 21.30264pt.
  [12]
 File: lsst_logo_notext.png Graphic file (type png)
 
 <use lsst_logo_notext.png>
-Package pdftex.def Info: lsst_logo_notext.png used on input line 225.
+Package pdftex.def Info: lsst_logo_notext.png used on input line 226.
 (pdftex.def)             Requested size: 84.55244pt x 21.30264pt.
  [13]
+Underfull \hbox (badness 10000) in paragraph at lines 240--241
+
+ []
+
 File: lsst_logo_notext.png Graphic file (type png)
- <use lsst_logo_notext.png>
-Package pdftex.def Info: lsst_logo_notext.png used on input line 246.
+<use lsst_logo_notext.png>
+Package pdftex.def Info: lsst_logo_notext.png used on input line 241.
 (pdftex.def)             Requested size: 84.55244pt x 21.30264pt.
  [14
 
 ]
 File: lsst_logo_notext.png Graphic file (type png)
-
-<use lsst_logo_notext.png>
-Package pdftex.def Info: lsst_logo_notext.png used on input line 268.
+ <use lsst_logo_notext.png>
+Package pdftex.def Info: lsst_logo_notext.png used on input line 258.
 (pdftex.def)             Requested size: 84.55244pt x 21.30264pt.
  [15]
-Overfull \hbox (5.51076pt too wide) in paragraph at lines 274--276
+File: lsst_logo_notext.png Graphic file (type png)
+
+<use lsst_logo_notext.png>
+Package pdftex.def Info: lsst_logo_notext.png used on input line 273.
+(pdftex.def)             Requested size: 84.55244pt x 21.30264pt.
+ [16]
+Overfull \hbox (5.51076pt too wide) in paragraph at lines 275--277
 \T1/fos/m/n/10.95 There should at least be a sep-a-rate database for each kind 
 of tem-plate im-age. These databases
  []
 
 File: lsst_logo_notext.png Graphic file (type png)
 <use lsst_logo_notext.png>
-Package pdftex.def Info: lsst_logo_notext.png used on input line 279.
-(pdftex.def)             Requested size: 84.55244pt x 21.30264pt.
- [16]
-File: lsst_logo_notext.png Graphic file (type png)
- <use lsst_logo_notext.png>
-Package pdftex.def Info: lsst_logo_notext.png used on input line 302.
+Package pdftex.def Info: lsst_logo_notext.png used on input line 293.
 (pdftex.def)             Requested size: 84.55244pt x 21.30264pt.
  [17]
 File: lsst_logo_notext.png Graphic file (type png)
-
-<use lsst_logo_notext.png>
-Package pdftex.def Info: lsst_logo_notext.png used on input line 319.
+ <use lsst_logo_notext.png>
+Package pdftex.def Info: lsst_logo_notext.png used on input line 312.
 (pdftex.def)             Requested size: 84.55244pt x 21.30264pt.
  [18]
 File: lsst_logo_notext.png Graphic file (type png)
- <use lsst_logo_notext.png>
-Package pdftex.def Info: lsst_logo_notext.png used on input line 322.
+
+<use lsst_logo_notext.png>
+Package pdftex.def Info: lsst_logo_notext.png used on input line 320.
 (pdftex.def)             Requested size: 84.55244pt x 21.30264pt.
  [19]
 File: lsst_logo_notext.png Graphic file (type png)
-
-<use lsst_logo_notext.png>
-Package pdftex.def Info: lsst_logo_notext.png used on input line 343.
+ <use lsst_logo_notext.png>
+Package pdftex.def Info: lsst_logo_notext.png used on input line 337.
 (pdftex.def)             Requested size: 84.55244pt x 21.30264pt.
  [20]
-Overfull \hbox (16.0519pt too wide) in paragraph at lines 349--357
+File: lsst_logo_notext.png Graphic file (type png)
+
+<use lsst_logo_notext.png>
+Package pdftex.def Info: lsst_logo_notext.png used on input line 344.
+(pdftex.def)             Requested size: 84.55244pt x 21.30264pt.
+ [21]
+Overfull \hbox (16.0519pt too wide) in paragraph at lines 350--358
 \T1/fos/m/n/10.95 Brandt []$\T1/zi4/m/n/10.95 https : / / project . lsst . org 
 / meetings / lsst2016 / sites / lsst . org . meetings . lsst2016 / files /
  []
 
 
-Overfull \hbox (3.2398pt too wide) in paragraph at lines 349--357
+Overfull \hbox (3.2398pt too wide) in paragraph at lines 350--358
 \OMS/cmsy/m/n/10.95 ^^O$ \T1/fos/m/n/10.95 List of LSST Deep Drilling white pa-
 pers: []$\T1/zi4/m/n/10.95 https : / / project . lsst . org / content / whitepa
 pers32012$[] 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 349--357
+Underfull \hbox (badness 10000) in paragraph at lines 350--358
 
  []
 
 File: lsst_logo_notext.png Graphic file (type png)
 <use lsst_logo_notext.png>
-Package pdftex.def Info: lsst_logo_notext.png used on input line 362.
+Package pdftex.def Info: lsst_logo_notext.png used on input line 363.
 (pdftex.def)             Requested size: 84.55244pt x 21.30264pt.
- [21
+ [22
 
 ]
-Overfull \hbox (9.48541pt too wide) in paragraph at lines 368--389
+Overfull \hbox (9.48541pt too wide) in paragraph at lines 369--390
  [] 
  []
 
 File: lsst_logo_notext.png Graphic file (type png)
 <use lsst_logo_notext.png>
-Package pdftex.def Info: lsst_logo_notext.png used on input line 405.
-(pdftex.def)             Requested size: 84.55244pt x 21.30264pt.
- [22]
-File: lsst_logo_notext.png Graphic file (type png)
- <use lsst_logo_notext.png>
-Package pdftex.def Info: lsst_logo_notext.png used on input line 426.
+Package pdftex.def Info: lsst_logo_notext.png used on input line 406.
 (pdftex.def)             Requested size: 84.55244pt x 21.30264pt.
  [23]
-File: lsst_logo_notext.png Graphic file (type png)
+Underfull \hbox (badness 10000) in paragraph at lines 419--428
 
+ []
+
+File: lsst_logo_notext.png Graphic file (type png)
 <use lsst_logo_notext.png>
-Package pdftex.def Info: lsst_logo_notext.png used on input line 446.
+Package pdftex.def Info: lsst_logo_notext.png used on input line 428.
 (pdftex.def)             Requested size: 84.55244pt x 21.30264pt.
  [24]
-Underfull \hbox (badness 10000) in paragraph at lines 447--454
+File: lsst_logo_notext.png Graphic file (type png)
+ <use lsst_logo_notext.png>
+Package pdftex.def Info: lsst_logo_notext.png used on input line 440.
+(pdftex.def)             Requested size: 84.55244pt x 21.30264pt.
+ [25]
+Underfull \hbox (badness 10000) in paragraph at lines 449--456
 
  []
 
@@ -1093,72 +1108,72 @@ File: lsst_logo_notext.png Graphic file (type png)
 <use lsst_logo_notext.png>
 Package pdftex.def Info: lsst_logo_notext.png used on input line 464.
 (pdftex.def)             Requested size: 84.55244pt x 21.30264pt.
- [25]
-File: lsst_logo_notext.png Graphic file (type png)
- <use lsst_logo_notext.png>
-Package pdftex.def Info: lsst_logo_notext.png used on input line 478.
-(pdftex.def)             Requested size: 84.55244pt x 21.30264pt.
  [26]
 File: lsst_logo_notext.png Graphic file (type png)
-
-<use lsst_logo_notext.png>
-Package pdftex.def Info: lsst_logo_notext.png used on input line 495.
+ <use lsst_logo_notext.png>
+Package pdftex.def Info: lsst_logo_notext.png used on input line 475.
 (pdftex.def)             Requested size: 84.55244pt x 21.30264pt.
  [27]
 File: lsst_logo_notext.png Graphic file (type png)
- <use lsst_logo_notext.png>
-Package pdftex.def Info: lsst_logo_notext.png used on input line 510.
+
+<use lsst_logo_notext.png>
+Package pdftex.def Info: lsst_logo_notext.png used on input line 490.
 (pdftex.def)             Requested size: 84.55244pt x 21.30264pt.
  [28]
 File: lsst_logo_notext.png Graphic file (type png)
-
-<use lsst_logo_notext.png>
-Package pdftex.def Info: lsst_logo_notext.png used on input line 533.
+ <use lsst_logo_notext.png>
+Package pdftex.def Info: lsst_logo_notext.png used on input line 508.
 (pdftex.def)             Requested size: 84.55244pt x 21.30264pt.
  [29]
 File: lsst_logo_notext.png Graphic file (type png)
- <use lsst_logo_notext.png>
-Package pdftex.def Info: lsst_logo_notext.png used on input line 547.
+
+<use lsst_logo_notext.png>
+Package pdftex.def Info: lsst_logo_notext.png used on input line 529.
 (pdftex.def)             Requested size: 84.55244pt x 21.30264pt.
- [30] (./ms.bbl
+ [30]
+File: lsst_logo_notext.png Graphic file (type png)
+ <use lsst_logo_notext.png>
+Package pdftex.def Info: lsst_logo_notext.png used on input line 548.
+(pdftex.def)             Requested size: 84.55244pt x 21.30264pt.
+ [31] (./ms.bbl
 File: lsst_logo_notext.png Graphic file (type png)
 
 <use lsst_logo_notext.png>
-Package pdftex.def Info: lsst_logo_notext.png used on input line 35.
+Package pdftex.def Info: lsst_logo_notext.png used on input line 28.
 (pdftex.def)             Requested size: 84.55244pt x 21.30264pt.
- [31]
+ [32]
 File: lsst_logo_notext.png Graphic file (type png)
  <use lsst_logo_notext.png>
-Package pdftex.def Info: lsst_logo_notext.png used on input line 101.
+Package pdftex.def Info: lsst_logo_notext.png used on input line 95.
 (pdftex.def)             Requested size: 84.55244pt x 21.30264pt.
- [32])
-Package atveryend Info: Empty hook `BeforeClearDocument' on input line 563.
+ [33])
+Package atveryend Info: Empty hook `BeforeClearDocument' on input line 566.
 File: lsst_logo_notext.png Graphic file (type png)
 
 <use lsst_logo_notext.png>
-Package pdftex.def Info: lsst_logo_notext.png used on input line 563.
+Package pdftex.def Info: lsst_logo_notext.png used on input line 566.
 (pdftex.def)             Requested size: 84.55244pt x 21.30264pt.
- [33]
-Package atveryend Info: Empty hook `AfterLastShipout' on input line 563.
+ [34]
+Package atveryend Info: Empty hook `AfterLastShipout' on input line 566.
  (./ms.aux)
-Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 563.
-Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 563.
+Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 566.
+Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 566.
 Package rerunfilecheck Info: File `ms.out' has not changed.
 (rerunfilecheck)             Checksum: 5E272C15E935F2299BC3F57D572E52DC;2362.
 
 
 LaTeX Warning: There were multiply-defined labels.
 
-Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 563.
+Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 566.
  ) 
 Here is how much of TeX's memory you used:
- 12594 strings out of 493089
- 179626 string characters out of 6134842
- 314443 words of memory out of 5000000
- 15642 multiletter control sequences out of 15000+600000
+ 12598 strings out of 493089
+ 179653 string characters out of 6134842
+ 313531 words of memory out of 5000000
+ 15643 multiletter control sequences out of 15000+600000
  106729 words of font info for 134 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
- 37i,16n,48p,1343b,540s stack positions out of 5000i,500n,10000p,200000b,80000s
+ 37i,16n,48p,1437b,540s stack positions out of 5000i,500n,10000p,200000b,80000s
 {/usr/local/texlive/2015/texmf-dist/fonts/enc/dvips/opensans/opensans-04.enc}
 {/usr/local/texlive/2015/texmf-dist/fonts/enc/dvips/opensans/opensans-03.enc}{/
 usr/local/texlive/2015/texmf-dist/fonts/enc/dvips/inconsolata/i4-t1-0.enc}{/usr
@@ -1176,10 +1191,10 @@ public/amsfonts/cm/cmmi8.pfb></usr/local/texlive/2015/texmf-dist/fonts/type1/pu
 blic/amsfonts/cm/cmr10.pfb></usr/local/texlive/2015/texmf-dist/fonts/type1/publ
 ic/amsfonts/cm/cmr8.pfb></usr/local/texlive/2015/texmf-dist/fonts/type1/public/
 amsfonts/cm/cmsy10.pfb>
-Output written on ms.pdf (38 pages, 1051748 bytes).
+Output written on ms.pdf (39 pages, 1055414 bytes).
 PDF statistics:
- 593 PDF objects out of 1000 (max. 8388607)
- 532 compressed objects within 6 object streams
- 129 named destinations out of 1000 (max. 500000)
+ 599 PDF objects out of 1000 (max. 8388607)
+ 537 compressed objects within 6 object streams
+ 132 named destinations out of 1000 (max. 500000)
  243 words of extra memory for PDF output out of 10000 (max. 10000000)
 
