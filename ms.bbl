@@ -3,6 +3,22 @@
 \expandafter\ifx\csname url\endcsname\relax
   \def\url#1{\texttt{ #1}}\fi
 \expandafter\ifx\csname urlprefix\endcsname\relax\def\urlprefix{URL }\fi
+\makeatletter
+\relax
+\def\mn@urlcharsother{\let\do\@makeother \do\$\do\&\do\#\do\^\do\_\do\%\do\~}
+\def\mn@doi{\begingroup\mn@urlcharsother \@ifnextchar [ {\mn@doi@}
+  {\mn@doi@[]}}
+\def\mn@doi@[#1]#2{\def\@tempa{#1}\ifx\@tempa\@empty \href {http://doi.org/#2}
+  {doi:#2}\else \href {http://doi.org/#2} {#1}\fi \endgroup}
+\def\mn@eprint#1#2{\mn@eprint@#1:#2::\@nil}
+\def\mn@eprint@arXiv#1{\href {http://arxiv.org/abs/#1} {\texttt{arXiv:#1}}}
+\def\mn@eprint@dblp#1{\href {http://dblp.uni-trier.de/rec/bibtex/#1.xml}
+  {dblp:#1}}
+\def\mn@eprint@#1:#2:#3:#4\@nil{\def\@tempa {#1}\def\@tempb {#2}\def\@tempc
+  {#3}\ifx \@tempc \@empty \let \@tempc \@tempb \let \@tempb \@tempa \fi \ifx
+  \@tempb \@empty \def\@tempb {arXiv}\fi \@ifundefined
+  {mn@eprint@\@tempb}{\@tempb:\@tempc}{\expandafter \expandafter \csname
+  mn@eprint@\@tempb\endcsname \expandafter{\@tempc}}}
 
 \bibitem[{Becker(2011)}]{BeckerWP}
 Becker, A.e.a., 2011, {Science White Paper for LSST Deep-Drilling Field
@@ -21,16 +37,17 @@ Becker, A.e.a., 2011, {Science White Paper for LSST Deep-Drilling Field
   Project Team}, 2016,  \emph{ LSST System Requirements}, \textsf{ LSE-30},
   \urlprefix\url{https://ls.st/LSE-30}
 
-\bibitem[{Crotts(2011)}]{CrottsWP}
-Crotts, A.e.a., 2011, {Standard Candle Relations and Photo-diversity of Type Ia
-  Supernovae}, \newline
-  {\tt{\url{https://project.lsst.org/content/whitepapers32012}}}
-
 \bibitem[{Dhital(2011)}]{DhitalWP}
 Dhital, S.e.a., 2011, {Science White Paper for LSST Deep-Drilling Field
   Observations Mapping the Milky Way?s Ultracool Dwarfs, Subdwarfs, and White
   Dwarfs}, \newline
   {\tt{\url{https://project.lsst.org/content/whitepapers32012}}}
+
+\bibitem[{{Drout} et~al.(2014){Drout}, {Chornock}, {Soderberg}
+  et~al.}]{2014ApJ...794...23D}
+{Drout}, M.R., {Chornock}, R., {Soderberg}, A.M., et~al., 2014, \apj, 794, 23
+  (\mn@eprint {arXiv} {1405.3668}), \mn@doi{10.1088/0004-637X/794/1/23},
+  \href{http://adsabs.harvard.edu/abs/2014ApJ...794...23D}{ADS Link}
 
 \bibitem[{Dubois-Felsmann(LSE-61)}]{LSE-61}
 \textbf{[LSE-61]}, Dubois-Felsmann, G., 2016,  \emph{ LSST Data Management
@@ -49,7 +66,7 @@ Gawiser, E.e.a., 2011, {Science White Paper for LSST Deep-Drilling Field
   \newline {\tt{\url{https://project.lsst.org/content/whitepapers32012}}}
 
 \bibitem[{{Gould}(2013)}]{2013arXiv1304.3455G}
-{Gould}, A., 2013, ArXiv e-prints,
+{Gould}, A., 2013, ArXiv e-prints (\mn@eprint {arXiv} {1304.3455}),
   \href{http://adsabs.harvard.edu/abs/2013arXiv1304.3455G}{ADS Link}
 
 \bibitem[{{Ivezi{\'c}} \& {The LSST Science Collaboration}(LPM-17)}]{LPM-17}
@@ -59,7 +76,8 @@ Gawiser, E.e.a., 2011, {Science White Paper for LSST Deep-Drilling Field
 
 \bibitem[{{Ivezi\'{c}} et~al.(2008){Ivezi\'{c}}, {Tyson}, {Abel}
   et~al.}]{2008arXiv0805.2366I}
-{Ivezi\'{c}}, {\v Z}., {Tyson}, J.A., {Abel}, B., et~al., 2008, ArXiv e-prints,
+{Ivezi\'{c}}, {\v Z}., {Tyson}, J.A., {Abel}, B., et~al., 2008, ArXiv e-prints
+  (\mn@eprint {arXiv} {0805.2366}),
   \href{http://adsabs.harvard.edu/abs/2008arXiv0805.2366I}{ADS Link}
 
 \bibitem[{Jones(LSE-180)}]{LSE-180}
@@ -82,16 +100,17 @@ Kessler, R.e.a., 2011, {Science White Paper for LSST Deep-Drilling Field
   Observations: Supernova Light Curves}, \newline
   {\tt{\url{https://project.lsst.org/content/whitepapers32012}}}
 
+\bibitem[{{LSST Science Collaboration} et~al.(2017){LSST Science
+  Collaboration}, {Marshall}, {Anguita} et~al.}]{2017arXiv170804058L}
+{LSST Science Collaboration}, {Marshall}, P., {Anguita}, T., et~al., 2017,
+  ArXiv e-prints (\mn@eprint {arXiv} {1708.04058}),
+  \href{http://adsabs.harvard.edu/abs/2017arXiv170804058L}{ADS Link}
+
 \bibitem[{Ma(2011)}]{MaWP}
 Ma, Z.e.a., 2011, {Science White Paper for LSST Deep-Drilling Field
   Observations: Using LSST Deep Drilling Fields to Improve Weak Lensing
   Measurements}, \newline
   {\tt{\url{https://project.lsst.org/content/whitepapers32012}}}
-
-\bibitem[{Marshall et~al.(2017)}]{OSWP}
-Marshall, P., et~al., 2017, {Science-Driven Optimization of the LSST Observing
-  Strategy}, in preparation, \newline
-  {\tt{\url{https://github.com/LSSTScienceCollaborations/ObservingStrategy}}}
 
 \bibitem[{Szkody(2011)}]{SzkodyWP}
 Szkody, P.e.a., 2011, {Science White Paper for LSST Deep-Drilling Field
@@ -99,4 +118,5 @@ Szkody, P.e.a., 2011, {Science White Paper for LSST Deep-Drilling Field
   Galactic Cluster Fields}, \newline
   {\tt{\url{https://project.lsst.org/content/whitepapers32012}}}
 
+\makeatother
 \end{thebibliography}
