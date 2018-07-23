@@ -75,6 +75,8 @@ Here we consider the technical boundaries on the diversity of data products that
 
 {\bf Telescope Slew -- } As described in \citeds{Document-28382}, large slews would have considerable overheads, but there are no technical boundaries on the size of a single slew or the accrued slew distance.
 
+{\bf Telescope Tracking --} The requirement that the LSST system be able to perform non-sidereal tracking is set by OSS-REQ-0380 in \citeds{LSE-30}. This capability will include angular rates of up to $220$ arcseconds per second in both azimuth and elevation. 
+
 {\bf Camera Rotation -- } There requirements on the rotator's capabilities do not set any limits on the per-night or total lifetime rotation (OSS-REQ-0301, -0300; \citeds{LSE-30}) which might put boundaries on the distance between successive visits or the ability to jump between two widely separated fields. JIRA ticket DM-12573 is currently open and asking for clarification from the camera team on this. Until then, we assume there are no technical boundaries imposed by camera rotation constraints on the potential diversity of data products. 
 
 
@@ -91,7 +93,7 @@ In this section we go into greater detail regarding the Projects' role in proces
 
 As described in Section \ref{sec:data}, Special Programs will be able -- and likely -- to request observing modes with shorter (or longer) exposure times, long sequences of visits to the same field, and/or imaging of very crowded fields. We review the capability of DM's planned pipelines to process such each of these kinds of diverse data, keeping in mind that the processing boundaries might ultimately be defined not by what is technically possible, but by the resulting image quality parameters such as the number of stars with sufficient flux for photometric calibration or the source area density (crowding). Furthermore, that these boundaries imposed by the data quality might not be constrained until the final performance of DM's algorithms, as described in the Data Management Applications Design (\citeds{LDM-151}) document, is fully characterized.
 
-\subsubsection{Exposure Times}
+\subsubsection{Exposure Times}\label{sssec:dmplans_NSV_expt}
 
 Images which deviate significantly from the $15$ second duration for the WFD main survey may encounter issues in the instrument signature removal routine, in the correction for differential chromatic refraction, in the difference imaging analysis pipeline, and/or in the photometric and astrometric calibrations due to a differently sampled set of standard stars per CCD. We discuss shorter and longer exposure in turn.
 
@@ -121,6 +123,14 @@ There is no processing constraint on the number of consecutive exposures that co
 \subsubsection{Images in Very Crowded Fields}
 
 The LSST pipelines' performance in crowded fields is documented in \citeds{DMTN-077}, which finds that, e.g., in Galactic Plane regions with a source density of $500000$ sources per square degree, the completeness drops to 50\% at $20.2$ magnitudes. The slide deck at \citeds{Document-27962} also describes DM's plans for processing crowded fields. These may or may not be appropriate for Special Programs data, depending on the science goals.
+
+\subsubsection{Twilight Images with a Bright Background}
+
+Images obtained during twilight for scientific purposes are also likely to have shorter exposure times, and so the issues described in Section \ref{sssec:dmplans_NSV_expt} also apply here. Whether or not bright-background images can (or shall) be fully processed -- reduced, calibrated, background-subtracted, and delivered with astrometric and photometric solutions -- or whether this will require a User-Generated pipeline, is TBD (see also the example in Section \ref{ssec:SPCS_Twilight}). This may depend on the exposure time and the number of stars available in the image.
+
+\subsubsection{Images Obtained with Non-Sidereal Tracking}
+
+Non-sidereal tracking leads to images in which stars are streaked, but the moving object appears as a point source. Full processing -- providing reduced, calibrated, background-subtracted images that are delivered with astrometric and photometric solutions -- of these images is beyond the scope of the DM pipelines as it would require the development of new algorithms, and will need to be done as a User-Generated pipeline. The first steps of such a pipeline, such as Instrument Signature Removal, will probably be possible to achieve by reconfiguring the relevant DM software tasks.
 
 
 % % % % % % % % % % % % % % % % % %
