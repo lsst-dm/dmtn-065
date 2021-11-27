@@ -19,7 +19,7 @@
 \setDocChangeRecord{%
 \addtohist{0}{2017-11-14}{Status: internal working document.}{Melissa Graham}
 \addtohist{1}{2018-06-17}{Updated to finalize and issue.}{Melissa Graham}
-\addtohist{2}{2021-12-01}{Updated per DM-20375.}{Melissa Graham}
+\addtohist{2}{2021-12-01}{Minor updates as per DM-20375.}{Melissa Graham}
 }
 
 \begin{document}
@@ -103,7 +103,8 @@ As described in Section \ref{sec:data}, Special Programs will be able -- and lik
 
 Images which deviate significantly from the $15$ second duration for the WFD main survey may encounter issues in the instrument signature removal routine, in the correction for differential chromatic refraction, in the difference imaging analysis pipeline, and/or in the photometric and astrometric calibrations due to a differently sampled set of standard stars per CCD. We discuss shorter and longer exposure in turn.
 
-\textbf{Shorter Exposures.} The camera constraint on the minimum supported exposure time is currently 1 second (stretch goal 0.1 seconds; LSR-REQ-0111 in \citeds{LSE-29}).
+\textbf{Shorter Exposures.}
+The LSST System Requirements document states that {\it ``The LSST shall be capable of obtaining and processing exposures not taken in a standard visit mode including those with a minimum exposure time of} {\tt minExpTime}", which is 1 second (stretch goal 0.1 seconds; LSR-REQ-0111 in \citeds{LSE-29}).
 As with all requirements, this one would be verified during commissioning.
 Assuming that 1 second exposure can be reduced and calibrated, its detected point sources will span a dynamic range of $r \approx 12.9$ -- $21.0$ magnitudes.
 A template image built on $15$ second exposures will saturate at $r \approx 15.8$, but this still leaves stars between $15.8$--$21.0$ magnitudes to be used in the PSF-matching (and all other filters have a similarly large overlap).
@@ -311,6 +312,11 @@ Step 6. User-Generated Pipelines and Products. \\
 It seems likely that science users will want to deploy their alternative deblending algorithms on this data set and create their own catalogs.
 
 %\input{spcs_sas}
+
+% % % % % % %
+\subsection{Gravitational Wave Event Follow-Up}\label{ssec:SPCS_GW}
+
+For a description of how target of opportunity data to search for the optical counterparts of gravitational wave events would be processed, sen \citeds{rtn-008}.
 
 
 \clearpage
