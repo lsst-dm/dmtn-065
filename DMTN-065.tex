@@ -2,7 +2,7 @@
 \usepackage{graphicx}
 \usepackage{url}
 \usepackage{latexsym}
-\usepackage{color}
+% \usepackage{color}
 % black, blue, brown, cyan, darkgray, gray, green, lightgray, lime, magenta, blue, orange, pink, purple, red, teal, violet, white, yellow.
 \usepackage{enumitem}
 
@@ -14,7 +14,13 @@
 \date{\today}
 \setDocUpstreamLocation{\url{https://github.com/lsst-dm/dmtn-065}}
 
-\setDocAbstract{This document provides an in-depth description of the role of the LSST Project in preparing software and providing computational resources to process the data from Special Programs (deep drilling fields and/or mini-surveys). The plans and description in this document flow down from the requirements in \citeds{LSE-61} regarding processing for Special Programs. The main target audience is the LSST Data Management (DM) team, but members of the community who are preparing white papers on science-driven observing strategies may also find this document useful. The potential diversity of data from Special Programs is summarized, including boundaries imposed by technical limitations of the LSST hardware. The capability of the planned Data Management system to processes this diversity of Special Programs data is the main focus of this document. Case studies are provided as examples of how the LSST software and/or user-generated pipelines may be combined to process the data from Special Programs.}
+\setDocAbstract{
+This document provides an in-depth description of the role of the LSST Project in preparing software and providing computational resources to process the data from Special Programs (deep drilling fields and/or mini-surveys).
+The plans and description in this document flow down from the requirements in \citeds{LSE-61} regarding processing for Special Programs.
+The main target audience is the LSST Data Management (DM) team, but members of the community who are planning to use Special Programs to reach their science goals may also find this document useful.
+The potential diversity of data from Special Programs is summarized, including boundaries imposed by technical limitations of the LSST hardware.
+The capability of the planned Data Management system to processes this diversity of Special Programs data is the main focus of this document.
+Case studies are provided as examples of how the LSST software and/or user-generated pipelines may be combined to process the data from Special Programs.}
 
 \setDocChangeRecord{%
 \addtohist{0}{2017-11-14}{Status: internal working document.}{Melissa Graham}
@@ -32,25 +38,27 @@
 % \verb|\citep[][]|: \citep[e.g.,][are interesting]{LPM-17,LSE-29} \\
 % \verb|\cite|: \cite{LPM-17,LSE-29}
 
-
-
 % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % %
 \section{Introduction} \label{sec:intro}
 
-The main LSST science goals will be met by the Wide-Fast-Deep (WFD) Main Survey, but this is expected to be accomplished with $85$--$90$\% of the observing time available over the $10$ year survey. The remaining $10$--$15$\% of the time will be spent on Special Programs: alternative survey areas and/or observing strategies driven by a specific science goal. A call for white papers that provide scientific motivation and observing strategies for the WFD survey and Special Programs, \citeds{Document-28382}, released in June 2018, has a deadline of November 30 2018. It is conceivable that Special Programs might obtain imaging data that are significantly different from the WFD main survey, and/or requires special processing in order to achieve the program's science goals. This document provides an in-depth description of the role of the LSST Project in preparing to process the data from Special Programs (expanding on the general description in Section 6 of \citeds{LSE-163}). The main target audience is the LSST Data Management (DM) team, but members of the science community who are preparing white paper proposals may also find this document useful.
+The main LSST science goals will be met by the Wide-Fast-Deep (WFD) Main Survey, but this is expected to be accomplished with $85$--$90$\% of the observing time available over the $10$ year survey.
+The remaining $10$--$15$\% of the time will be spent on Special Programs: alternative survey areas and/or observing strategies driven by a specific science goal.
+%A call for white papers that provide scientific motivation and observing strategies for the WFD survey and Special Programs, \citeds{Document-28382}, released in June 2018, has a deadline of November 30 2018.
+It is conceivable that Special Programs might obtain imaging data that are significantly different from the WFD main survey, and/or requires special processing in order to achieve the program's science goals.
+This document provides an in-depth description of the role of the LSST Project in preparing to process the data from Special Programs (expanding on the general description in Section 6 of \citeds{LSE-163}).
+The main target audience is the LSST Data Management (DM) team, but members of the science community who are preparing white paper proposals may also find this document useful.
 
 {\bf Special Programs Terminology -- } The WFD main survey will survey the sky with a series of {\bf visits}, and each field will be visited $>800$ times over $10$ years. A {\bf standard visit} is composed of $2\times15$ second exposures (commonly referred to as ``snaps") and an {\bf alternative standard visit} is composed of a single $30$ second exposure. A {\bf non-standard visit} is any other exposure time(s) or number of snaps. Special Programs are typically divided into two types: {\bf Deep Drilling}, a single pointing for which many exposures are obtained in a relatively short amount of time (e.g., $>2\times$ as many visits in six months as the WFD will obtain in 10 years); and {\bf Mini-Surveys}, which refer to either new sky areas observed with a WFD-like survey, or sky areas within the WFD but observed with a specialized strategy. 
 
 {\bf The LSST Project's Role in Processing Special Programs Data -- } The formal requirements regarding LSST's role in processing Special Programs data are in \citeds{LSE-61}, and the following statements have been derived from those requirements. The LSST Project will not take formal responsibility for specialized data reduction algorithms needed to process data, including images taken in non-standard modes. The term "specialized algorithms" refers to software that is not already within scope of the LSST Data Management (DM) science pipelines, and may include, for example: difference imaging for short exposures in which the PSF is not well-formed, shift-and-stack for faint moving objects, or any software with computational needs that significantly surpass the processing budget per image (compared to the processing of a WFD image). The Project will incorporate Special Programs data into the Prompt and/or Data Release processing pipelines and data products of the WFD Main Survey, such as {\tt Alerts}, {\tt CoAdds}, or {\tt Source} and {\tt Object} catalogs (with appropriate flags; LSST data products are described in \citeds{LSE-163}), whenever this (1) can be accomplished with existing software, and (2) is scientifically beneficial to that data product. The Project will also reconfigure its pipelines to generate separate imaging and catalog data products for Special Programs, whenever this can be accomplished with existing software. Finally, the Project will enable user-generated processing via the Science Platform (\citeds{LSE-319}), which will provide software tools and computational resources for (re)processing LSST data.
 
-{\bf Document Overview -- } The purpose of this document is to assess the potential diversity of imaging data that might be obtained by Special Programs (Section \ref{sec:data}), and to explore and clarify whether -- and to what extent -- DM's planned pipelines and user services will be able to handle this diversity of data (Section \ref{sec:dmplans}). As described in the call for white papers on cadence optimization (\citeds{Document-28382}), Special Programs that may require specialized or computationally-intense algorithms to meet their science goals are required to describe how these processing needs will be met. Sections \ref{sec:data} and \ref{sec:dmplans} have been designed to help white paper authors figure out whether their proposed Science Program(s) require processing that would be considered out of DM's scope, and in Section \ref{sec:SPCS} we have provided a series of science-driven case studies as examples. 
+{\bf Document Overview -- }
+The purpose of this document is to assess the potential diversity of imaging data that might be obtained by Special Programs (Section \ref{sec:data}), and to explore and clarify whether -- and to what extent -- DM's planned pipelines and user services will be able to handle this diversity of data (Section \ref{sec:dmplans}). 
+Special Programs that may require specialized or computationally-intense algorithms to meet their science goals are required to describe how these processing needs will be met.
+Sections \ref{sec:data} and \ref{sec:dmplans} have been designed to help the science community figure out whether proposed Science Program(s) require processing that would be considered out of DM's scope, and in Section \ref{sec:SPCS} we have provided a series of science-driven case studies as examples. 
 
 % In Appendix \ref{sec:docrev}, we endeavor to ensure that the DM's plans for Special Programs processing are appropriately expressed in all of the major Project documents and that the computational system and human work-hours needed to accomplish Special Programs processing have been accurately evaluated. This content will only be of interest to the DM team.
 
-
-
-% % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % %
-% % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % %
 % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % %
 \clearpage
 \section{The Potential Diversity of Special Programs Data} \label{sec:data}
@@ -85,9 +93,6 @@ Filter loads are only done in the day, and there will never be data in more than
 {\bf Camera Rotation -- } There requirements on the rotator's capabilities do not set any limits on the per-night or total lifetime rotation (OSS-REQ-0301, -0300; \citeds{LSE-30}) which might put boundaries on the distance between successive visits or the ability to jump between two widely separated fields.
 Currently, there are no technical boundaries imposed by camera rotation constraints on the potential diversity of data products.
 
-
-% % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % %
-% % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % %
 % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % %
 \clearpage
 \section{Processing Special Programs Data with LSST DM Pipelines} \label{sec:dmplans}
