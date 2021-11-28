@@ -46,7 +46,7 @@ The remaining $10$--$15$\% of the time will be spent on Special Programs: altern
 %A call for white papers that provide scientific motivation and observing strategies for the WFD survey and Special Programs, \citeds{Document-28382}, released in June 2018, has a deadline of November 30 2018.
 It is conceivable that Special Programs might obtain imaging data that are significantly different from the WFD main survey, and/or requires special processing in order to achieve the program's science goals.
 This document provides an in-depth description of the role of the LSST Project in preparing to process the data from Special Programs (expanding on the general description in Section 6 of \citeds{LSE-163}).
-The main target audience is the LSST Data Management (DM) team, but members of the science community who are preparing white paper proposals may also find this document useful.
+The main target audience is the LSST Data Management (DM) team, but members of the community who are planning to use Special Programs to reach their science goals may also find this document useful.
 
 {\bf Special Programs Terminology -- } The WFD main survey will survey the sky with a series of {\bf visits}, and each field will be visited $>800$ times over $10$ years. A {\bf standard visit} is composed of $2\times15$ second exposures (commonly referred to as ``snaps") and an {\bf alternative standard visit} is composed of a single $30$ second exposure. A {\bf non-standard visit} is any other exposure time(s) or number of snaps. Special Programs are typically divided into two types: {\bf Deep Drilling}, a single pointing for which many exposures are obtained in a relatively short amount of time (e.g., $>2\times$ as many visits in six months as the WFD will obtain in 10 years); and {\bf Mini-Surveys}, which refer to either new sky areas observed with a WFD-like survey, or sky areas within the WFD but observed with a specialized strategy. 
 
@@ -201,8 +201,7 @@ During Operations, there will be a method for the system to allocation processin
 
 If the user-generated processing pipeline for Special Programs data requires requires significantly more computational resources than have been allocated -- where that allocation has been sized approximately, based on image processing for WFD main survey data (i.e., difference imaging, source detection, and/or stacking) -- then external computational resources may be necessary.
 To support such external processing DM intends to make the data and its code base accessible to and exportable by users in the science community.
-
-No user-generated pipeline may contribute Alerts to the Alert Stream, although a separate stream should be possible if the packet and transport formats are adopted (see also Section \ref{ssec:dmplans_user}).
+No user-generated pipeline may contribute Alerts to the Alert Stream. %, although a separate stream should be possible if the packet and transport formats are adopted (see also Section \ref{ssec:dmplans_user}).
 
 It is furthermore expected that, over time, some user-designed pipelines might become ``adopted", installed and operated (and change controlled) by the LSST Operations team.
 For both adopted and user-run code, whether they are for Special Programs or WFD survey data, the LSST DM team will encourage and facilitate data product databases that are built with the same schema as -- and can easily be joined with -- the tables of the Prompt and DRP data products.
@@ -212,7 +211,8 @@ An alternative option to ``adopted" code is ``adopted" data products: situations
 \clearpage
 \section{Special Programs Processing Case Studies}\label{sec:SPCS}
 
-For further insight to the DM-related needs of potential Special Programs, we can write out all of the data acquisition and processing steps, in order, that some of the proposed Special Programs might use. This kind of thought experiment of describing the reductions and processing could also be a required section of all future white paper proposals. Note that we are not including any analysis in these descriptions, only processing and products. These are not necessarily complete and may even be incorrect in some places, as we are not experts in the science needs of these potential Special Programs; they could use some more thought and input.
+For further insight to the DM-related needs of potential Special Programs, we can write out all of the data acquisition and processing steps, in order, that some of the proposed Special Programs might use.
+Note that we are not including any analysis in these descriptions, only processing and products. These are not necessarily complete and may even be incorrect in some places, as we are not experts in the science needs of these potential Special Programs; they could use some more thought and input.
 
 Basic steps that we use to describe a processing case study: \\
 Step 1. Data Acquisition. \\
