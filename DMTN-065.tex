@@ -8,24 +8,27 @@
 
 \title[LSST Special Programs]{Data Management \\ and LSST Special Programs}
 
-\author{M.~L.~Graham, M.~Juri\'{c}, K.-T.~Lim, and E.~Bellm}
+\author{M.~L.~Graham, M.~Juri\'{c}, K.-T.~Lim, E.~Bellm, G.~Dubois-Felsmann, L.~Guy, and the Data Management System Science Team}
 
 \setDocRef{DMTN-065}
 \date{\today}
 \setDocUpstreamLocation{\url{https://github.com/lsst-dm/dmtn-065}}
 
 \setDocAbstract{
-This document provides an in-depth description of the role of the LSST Project in preparing software and providing computational resources to process the data from Special Programs (deep drilling fields and/or mini-surveys).
-The plans and description in this document flow down from the requirements in \citeds{LSE-61} regarding processing for Special Programs.
-The main target audience is the LSST Data Management (DM) team, but members of the community who are planning to use Special Programs to reach their science goals may also find this document useful.
-The potential diversity of data from Special Programs is summarized, including boundaries imposed by technical limitations of the LSST hardware.
-The capability of the planned Data Management system to processes this diversity of Special Programs data is the main focus of this document.
-Case studies are provided as examples of how the LSST software and/or user-generated pipelines may be combined to process the data from Special Programs.}
+The core LSST science goals will be met by the Wide-Fast-Deep (WFD) Main Survey, which is expected to be accomplished with 85--90\% of the observing time.
+The remaining 10--15\% of the time will be spent on Special Programs: additional survey areas and/or observing strategies that are driven by specific science goals which either build on, or are outside of, the core science pillars of the LSST.
+
+This document provides a summary of the Special Programs being considered, the potential diversity of data they might produce (e.g., shorter or longer exposure times), and the role of Rubin Observatory in reducing, processing, and serving data products from Special Programs (including the flow-down of related requirements, and the capabilities of the LSST Science Pipelines and the Rubin Science Platform).
+
+The specialized, science-specific aspects of Special Programs processing and analysis that are best left to the science community are also described, and illustrated with case-study examples.
+
+The main target audience of this document is Rubin Observatory staff -- the construction-era Data Management (DM) team and the operations-era Data Production (RDP) team -- but members of the science community who are planning to use Special Programs to reach their science goals may also find this document useful.
+}
 
 \setDocChangeRecord{%
 \addtohist{0}{2017-11-14}{Status: internal working document.}{Melissa Graham}
 \addtohist{1}{2018-06-17}{Updated to finalize and issue.}{Melissa Graham}
-\addtohist{2}{2021-12-01}{Minor updates as per DM-20375.}{Melissa Graham}
+\addtohist{2}{2021-12-01}{Updates per DM-20375.}{Melissa Graham}
 }
 
 \begin{document}
@@ -38,148 +41,123 @@ Case studies are provided as examples of how the LSST software and/or user-gener
 % \verb|\citep[][]|: \citep[e.g.,][are interesting]{LPM-17,LSE-29} \\
 % \verb|\cite|: \cite{LPM-17,LSE-29}
 
-% % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % %
-\section{Introduction} \label{sec:intro}
+% % % % % % % % % % % % % % % % % % 
+\section{Terms and Definitions} \label{sec:terms}
 
-The main LSST science goals will be met by the Wide-Fast-Deep (WFD) Main Survey, but this is expected to be accomplished with $85$--$90$\% of the observing time available over the $10$ year survey.
-The remaining $10$--$15$\% of the time will be spent on Special Programs: alternative survey areas and/or observing strategies driven by a specific science goal.
-%A call for white papers that provide scientific motivation and observing strategies for the WFD survey and Special Programs, \citeds{Document-28382}, released in June 2018, has a deadline of November 30 2018.
-It is conceivable that Special Programs might obtain imaging data that are significantly different from the WFD main survey, and/or requires special processing in order to achieve the program's science goals.
-This document provides an in-depth description of the role of the LSST Project in preparing to process the data from Special Programs (expanding on the general description in Section 6 of \citeds{LSE-163}).
-The main target audience is the LSST Data Management (DM) team, but members of the community who are planning to use Special Programs to reach their science goals may also find this document useful.
+\subsection{Wide-Fast-Deep (WFD) Main Survey}\label{ssec:terms_wfd}
+The WFD Main Survey is the core science program of the LSST, designed to achieve the science goals defined by the Science Requirements Document (SRD; \citeds{LPM-17}).
+The WFD will cover at least $\sim$18000 deg$^2$ and is expected to be accomplished with 85--90\% of the observing time.
+As of the Phase 1 SCOC recommendations in \citeds{PSTN-053}, the WFD Main Survey is thought of as several contiguous areas.
+The largest is the low-dust-extinction survey area, which would also receive the most ($>$800) visits over the 10-year survey and be completed to uniform depth, likely with a rolling cadence.
+Smaller regions cover the higher-extinction high stellar density Galactic Bulge and Magellanic Clouds, the North Ecliptic Spur (NES), and the remainder of the Galactic Plane and the South Celestial Pole.
+Boundaries, re-visit cadences, and depths for all WFD areas remain to be determined \citedsp{PSTN-053}.
 
-{\bf Special Programs Terminology -- } The WFD main survey will survey the sky with a series of {\bf visits}, and each field will be visited $>800$ times over $10$ years. A {\bf standard visit} is composed of $2\times15$ second exposures (commonly referred to as ``snaps") and an {\bf alternative standard visit} is composed of a single $30$ second exposure. A {\bf non-standard visit} is any other exposure time(s) or number of snaps. Special Programs are typically divided into two types: {\bf Deep Drilling}, a single pointing for which many exposures are obtained in a relatively short amount of time (e.g., $>2\times$ as many visits in six months as the WFD will obtain in 10 years); and {\bf Mini-Surveys}, which refer to either new sky areas observed with a WFD-like survey, or sky areas within the WFD but observed with a specialized strategy. 
+\subsubsection{Mini-Surveys}\label{sssec:terms_wfd_mini}
+As of the Phase 1 SCOC recommendations in \citeds{PSTN-053}, the term ``mini-survey" was being used to refer to the areas of the WFD / Main Survey outside of the large, low-dust-extinction survey area.
+This term used to refer to non-WFD regions (Special Programs).
+
+\subsection{Special Programs}\label{ssec:terms_sp}
+Special Programs are additional survey areas and/or observing strategies that are driven by specific science goals which either build on, or are outside of, the core science pillars of the LSST.
+Special Programs will fill the remaining 10--15\% of the available survey time, and include both ``deep drilling" fields and ``micro-surveys".
+
+\subsubsection{Deep Drilling Field (DDF)}\label{sssec:terms_sp_ddf}
+A DDF is a single pointing for which many exposures are obtained during the night.
+The five DDFs (below) are expected to take $\sim$5\% of the total available time.
+Generally, the LSST observing strategy for a DDF is to obtain some or all of these exposures consecutively, and to maintain a high inter-night cadence over a short season (e.g., returning every two nights over four months, \citealt{2019ApJ...873..111I}) -- but the exact strategies and total time for the LSST DDFs remain to be determined \citedsp{PSTN-053}.
+
+\begin{itemize}
+\item Elias S1 (00:37:48, -44:00:00)
+\item XMM-LSS (02:22:50, -04:45:00)
+\item Extended Chandra Deep Field-South (03:32:30, -28:06:00)
+\item COSMOS (10:00:24, +02:10:55)
+\item Euclid Deep Field South  (04:04:58, -48:25:23)\footnote{\url{https://www.cosmos.esa.int/web/euclid/euclid-survey}}
+\end{itemize}
+
+\subsubsection{Micro-Surveys}\label{sssec:terms_sp_micro}
+As of the Phase 1 SCOC recommendations in \citeds{PSTN-053}, the term ``micro-survey" refers to either new sky areas observed with a WFD-like survey, or sky areas within the WFD but observed with a specialized strategy.
+Micro-surveys are expected to take up the remaining $\sim$10\% of the total available survey time over LSST's 10 years, and those which would use $>$0.3\% of the time and are currently being considered by the SCOC are listed below (see also \citeds{PSTN-053}).
+
+\begin{itemize}
+\item short-exposure twilight visits (for near-Sun and near-Earth objects; NEOs)
+\item a static short-exposure (5 sec) map of the sky in $ugrizy$ in the first year (for calibration)
+\item an extended short-exposure survey of the sky in $ugrizy$ (for transient detection and static-sky calibration)
+\item target-of-opportunity (ToO) follow-up (to identify optical counterparts to gravitational wave sources)
+\item coverage of the Roman microlensing bulge field (potentially as a DDF)
+\item deeper $g$-band imaging of 10 local volume galaxies
+\item a high-cadence survey of 2 fields in the SMC (for microlensing)
+\item annual week-long surveys of the Carina nebula and surrounding star-forming regions
+\item a limited-visit (i.e., shallow) ``northern stripe" survey to declination $<$+30 degrees
+\item a survey of the Virgo cluster to WFD depth
+\end{itemize}
+
+Note that there remains some grey area between what is a mini-survey within the WFD, and what is a WFD-like micro-survey.
+For example, the last two on the list above (the northern stripe and the Virgo cluster) could also (or might be in the future) considered WFD mini-surveys and not Special Programs.
+
+\subsection{Visit Types}\label{ssec:terms_visits}
+A visit is an observation of a single pointing at a given time, of which there are three types as listed below.
+As of the Phase 1 SCOC recommendations in \citeds{PSTN-053}, most WFD and DDF visits would be standard or alternative standard visits.
+However, non-standard visits with longer exposure times are being considered, especially for $u$-bands, and several of the micro-surveys are considering shorter exposure times.
+The full potential for diversity in Special Programs data is reviewed in Section~\ref{ssec:proc_datadiv}.
+
+\begin{itemize}
+\item Standard Visit -- Composed of $2\times15$ second exposures (commonly referred to as ``snaps").
+\item Alternative Standard Visit -- Composed of a single $30$ second exposure.
+\item Non-Standard Visit -- Any other exposure time(s) or number of snaps.
+\end{itemize}
+
+
+
+\clearpage
+% % % % % % % % % % % % % % % % % % 
+\section{Reduction and Processing for Special Programs Data Products}\label{sec:proc}
+
+
+\subsection{Requirements Related to Special Programs}
+
+{\it Use the docrev.tex file to update this.}
+
+\citeds{LSE-61}, which contains several requirements related to the processing of data from Special Programs (DMS-REQ-0069, 0320, 0321, 0322, and 0344). 
+
+
+\subsection{Special Programs in the DPDD}
+
+{\it Just quote what the DPDD says. Maybe reference any relevant RFC/LCR that made those changes?}
+
+
+
+\subsection{The Potential Diversity of Special Programs Data} \label{ssec:proc_datadiv}
+
+As discussed in Section~\ref{sec:terms}, most of the Special Programs that are currently under consideration will use standard or alternative standard visits.
+However, some are likely to require non-standard visits with shorter exposures (5 sec).
+Furthermore, some are likely to acquire images with a significantly brighter sky background (e.g., twilight images) than most nighttime survey images.
+
+The cadence and patterns of Special Programs might also differ from the WFD, such as long series of exposures obtained of the same field (e.g., DDFs), or a strategy optimized to find very fast-moving objects (e.g., NEOs).
+
+It does not appear that any of the currently-proposed Special Programs are likely to violate boundaries imposed by the Rubin Observatory hardware, but there remain a few open questions about boundaries on data processing imposed by the LSST Science Pipelines.
+
+\subsubsection{Hardware Boundaries}
+
+Appendix~\ref{sec:hardbounds} lists all of the hardware boundaries that might constrain the potential diversity of Special Programs data.
+
+The minimum exposure time is 1 second (stretch goal: 0.1 seconds), and there is currently a hardware boundary that limits the readout rate to 1 every 15 seconds.
+This would affect the image acquisition rate and increase the overheads of the proposed short-exposure micro-surveys.
+
+Hardware imposes no other boundaries on how data can be obtained, but Special Programs that request a high number of filter changes and/or long slews could be inefficient due to large overheads.
+
+\subsubsection{Processing Boundaries}
+
+Appendix~\ref{sec:procbounds} describes the boundaries on what types of visits can be processed and calibrated by the LSST Science Pipelines, which are designed to process standard (or alternative standard) visits.
+
+Very short ($<$2 sec) exposures could be difficult to reduce due to an incompletely-formed PSF, and very short or very long ($>$150 sec) exposures could be difficult to calibrate due to having too few (or too few unsaturated) stars.
+
+It is currently unclear whether images with very bright sky backgrounds (twilight images) can be processed with the LSST Science Pipelines, or whether user generated pipelines will be needed.
+
+The full reduction and calibration of images obtained with non-sidereal tracking, in which the stars are streaked, is currently beyond the scope of the LSST Science Pipelines, and will require a user generated pipeline.
+
+
+\subsection{Anticipated Rubin-Processed Special Programs Data Products}
 
 {\bf The LSST Project's Role in Processing Special Programs Data -- } The formal requirements regarding LSST's role in processing Special Programs data are in \citeds{LSE-61}, and the following statements have been derived from those requirements. The LSST Project will not take formal responsibility for specialized data reduction algorithms needed to process data, including images taken in non-standard modes. The term "specialized algorithms" refers to software that is not already within scope of the LSST Data Management (DM) science pipelines, and may include, for example: difference imaging for short exposures in which the PSF is not well-formed, shift-and-stack for faint moving objects, or any software with computational needs that significantly surpass the processing budget per image (compared to the processing of a WFD image). The Project will incorporate Special Programs data into the Prompt and/or Data Release processing pipelines and data products of the WFD Main Survey, such as {\tt Alerts}, {\tt CoAdds}, or {\tt Source} and {\tt Object} catalogs (with appropriate flags; LSST data products are described in \citeds{LSE-163}), whenever this (1) can be accomplished with existing software, and (2) is scientifically beneficial to that data product. The Project will also reconfigure its pipelines to generate separate imaging and catalog data products for Special Programs, whenever this can be accomplished with existing software. Finally, the Project will enable user-generated processing via the Science Platform (\citeds{LSE-319}), which will provide software tools and computational resources for (re)processing LSST data.
-
-{\bf Document Overview -- }
-The purpose of this document is to assess the potential diversity of imaging data that might be obtained by Special Programs (Section \ref{sec:data}), and to explore and clarify whether -- and to what extent -- DM's planned pipelines and user services will be able to handle this diversity of data (Section \ref{sec:dmplans}). 
-Special Programs that may require specialized or computationally-intense algorithms to meet their science goals are required to describe how these processing needs will be met.
-Sections \ref{sec:data} and \ref{sec:dmplans} have been designed to help the science community figure out whether proposed Science Program(s) require processing that would be considered out of DM's scope, and in Section \ref{sec:SPCS} we have provided a series of science-driven case studies as examples. 
-
-% In Appendix \ref{sec:docrev}, we endeavor to ensure that the DM's plans for Special Programs processing are appropriately expressed in all of the major Project documents and that the computational system and human work-hours needed to accomplish Special Programs processing have been accurately evaluated. This content will only be of interest to the DM team.
-
-% % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % %
-\clearpage
-\section{The Potential Diversity of Special Programs Data} \label{sec:data}
-
-To define the extent to which Data Management will be able to process data from Special Programs, a comprehensive understanding of the potential diversity of data from Special Programs -- compared to the WFD's sky survey of standard visits -- is needed. 
-
-To build up this comprehensive understanding, in Section \ref{ssec:data_bounds} we considered any technical limitations that the facility and instrumentation will or might place on the data. We find that the hardware imposes few boundaries on how data can be obtained, but that a high number of filter changes and/or long slews are inefficient due to their large overheads. The minimum exposure time is $1$ second (stretch goal: $0.1$ seconds), but there is currently a technical boundary that limits the readout rate to $1$ every $15$ seconds.
-
-Next, we considered the Special Programs that have been openly discussed so far in the Science Community (Appendix \ref{sec:data_prev}). Based on this consideration, most of the proposed Special Programs are likely to use visits that are similar to the WFD Main Survey, but some will require exposures that are significantly shorter, or that are obtained with a bright sky background during twilight. The cadence and patterns may also differ from the WFD main survey, such as long series of exposures obtained of the same field (i.e., deep drilling), or a strategy optimized to find very fast-moving objects. In addition, images of very crowded fields in the Galactic Plane may be included (at all or more often than the WFD Main Survey). It does not appear that any of the previously proposed Special Programs violate the hardware-imposed boundaries discussed in Section \ref{ssec:data_bounds}.
-
-% % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % %
-\subsection{Hardware Boundaries}\label{ssec:data_bounds}
-
-Here we consider the technical boundaries on the diversity of data products that are expected to (or may) be imposed by limitations from the camera, telescope, and/or site (boundaries imposed by DM processing capabilities are considered in Section \ref{sec:dmplans}). 
-
-{\bf Filter Changes -- } The maximum time for filter change is $120$ seconds: $30$ seconds for the telescope to reorient the camera to its nominal zero angle position on the rotator, and $90$ seconds to the camera subsystem for executing the change (OSS-REQ-0293; \citeds{LSE-30}).
-Assuming that most Special Programs would be designed to keep overheads $<100\%$ and would be using standard $30$ second visits, the filter change time indicates that it is likely that at least $4$ exposures in a given filter would be obtained between filter changes, but this is not actually a technical boundary. 
-The filter change mechanism is designed to undergo a total of $100000$ changes over its lifetime, and each filter is designed to support up to $30000$ changes over its lifetime, where lifetime is $15$ years (an average of $17$ changes per night after accounting for filter changes during calibrations).
-During a given observing night, the system could support as many changes involving the 5 filters loaded in the carousel as desired (see filter change memorandum \url{ls.st/spt-494}).
-
-{\bf Filter Carousel Loads -- } The filter carousel can hold five of the six LSST filters at a time.
-The system is designed to support $3000$ loads in $15$ years (\url{ls.st/spt-494}).
-Filter loads are only done in the day, and there will never be data in more than five filters in a given night.
-
-{\bf Exposure Times -- } The minimum exposure time is $1$ second, with a stretch goal of $0.1$ seconds (OSS-REQ-0291; \citeds{LSE-30}). The maximum exposure time is not restricted. The readout time is $2$ seconds, and would be significant overhead on short exposures. Images with exposure times $<15$ seconds may still have to be separated by $15$ seconds for thermal tolerance; i.e., that the minimum readout rate is one image every $15$ seconds, regardless of exposure time (OSS-REQ-0291; \citeds{LSE-30}). We therefore consider the $15$ interval between images a technical boundary on the potential diversity of data products.
-% $\bullet$ However, for exposure times there are other considerations. The minimum exposure time needed to create an image with a PSF that is well-formed enough for difference imaging is a separate question. Changing the exposure time also affects the photometric and astrometric calibrations. Assuming a 1 second exposure can be reduced and calibrated, its detected point sources will span $13 < r < 21$ magnitudes, whereas a 15 second exposure saturates at $r\sim15.8$ mag. A 150 second image would saturate at $r\sim18.3$, perhaps leaving too few stars overlapping with e.g., templates or WFD images, for astrometric and photometric calibrations. Additionally, the impact on CR rejection routines is untested for long exposures.
-
-{\bf Telescope Slew -- } As described in \citeds{Document-28382}, large slews would have considerable overheads, but there are no technical boundaries on the size of a single slew or the accrued slew distance.
-
-{\bf Telescope Tracking --} The requirement that the LSST system be able to perform non-sidereal tracking is set by OSS-REQ-0380 in \citeds{LSE-30}. This capability will include angular rates of up to $220$ arcseconds per second in both azimuth and elevation. 
-
-{\bf Camera Rotation -- } There requirements on the rotator's capabilities do not set any limits on the per-night or total lifetime rotation (OSS-REQ-0301, -0300; \citeds{LSE-30}) which might put boundaries on the distance between successive visits or the ability to jump between two widely separated fields.
-Currently, there are no technical boundaries imposed by camera rotation constraints on the potential diversity of data products.
-
-% % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % %
-\clearpage
-\section{Processing Special Programs Data with LSST DM Pipelines} \label{sec:dmplans}
-
-In this section we go into greater detail regarding the Projects' role in processing data from Special Programs, as introduced in Section \ref{sec:intro}. We discuss the ability of the planned DM pipelines to: process diverse imaging data that are unlike the WFD's standard visits in Section \ref{ssec:dmplans_NSV}; incorporate Special Programs data into the Prompt and Data Release pipelines and data products for the WFD main survey in Section \ref{ssec:dmplans_WFD}; reconfigure the pipelines and generate unique sets of data products for each Special Program in Section \ref{ssec:dmplans_reconfig}; and enable user-generated pipelines and data products in Section \ref{ssec:dmplans_user}.
-
-% % % % % % % % % % % % % % % % % %
-\subsection{Processing Diverse Imaging Data Unlike the WFD Main Survey}\label{ssec:dmplans_NSV}
-
-As described in Section \ref{sec:data}, Special Programs will be able -- and likely -- to request observing modes with shorter (or longer) exposure times, long sequences of visits to the same field, and/or imaging of very crowded fields. We review the capability of DM's planned pipelines to process such each of these kinds of diverse data, keeping in mind that the processing boundaries might ultimately be defined not by what is technically possible, but by the resulting image quality parameters such as the number of stars with sufficient flux for photometric calibration or the source area density (crowding). Furthermore, that these boundaries imposed by the data quality might not be constrained until the final performance of DM's algorithms, as described in the Data Management Applications Design (\citeds{LDM-151}) document, is fully characterized.
-
-\subsubsection{Exposure Times}\label{sssec:dmplans_NSV_expt}
-
-Images which deviate significantly from the $15$ second duration for the WFD main survey may encounter issues in the instrument signature removal routine, in the correction for differential chromatic refraction, in the difference imaging analysis pipeline, and/or in the photometric and astrometric calibrations due to a differently sampled set of standard stars per CCD. We discuss shorter and longer exposure in turn.
-
-\textbf{Shorter Exposures.}
-The LSST System Requirements document states that {\it ``The LSST shall be capable of obtaining and processing exposures not taken in a standard visit mode including those with a minimum exposure time of} {\tt minExpTime}", which is 1 second (stretch goal 0.1 seconds; LSR-REQ-0111 in \citeds{LSE-29}).
-As with all requirements, this one would be verified during commissioning.
-Assuming that 1 second exposure can be reduced and calibrated, its detected point sources will span a dynamic range of $r \approx 12.9$ -- $21.0$ magnitudes.
-A template image built on $15$ second exposures will saturate at $r \approx 15.8$, but this still leaves stars between $15.8$--$21.0$ magnitudes to be used in the PSF-matching (and all other filters have a similarly large overlap).
-However, in order for an image to be successfully PSF-matched to the template, the PSF must be well formed (no speckle pattern), and have a spatial variance that the pipeline is capable of modeling (be smoothly varying on some minimal scale).
-As a simple demonstration, Figure \ref{fig:expt} shows that perhaps exposure times shorter than $2$ seconds do not have a well-formed PSF (using the centroid of a 2D Gaussian fit as a proxy for "well-formed").
-
-\begin{figure}
-\begin{center}
-\includegraphics[width=14cm,trim={0cm 0cm 0cm 0cm}, clip]{figures/exptime.png}
-\caption{At left, Arroyo atmosphere-only simulated PSF for LSST (with oversampled pixels) with exposure times of 0.5, 2, and 15 seconds (top to bottom), courtesy of Bo Xin. At right, blue and purple lines show the location of the centroid derived from a 2D Gaussian fit to the PSF as a function of exposure time, with the red dashed line showing the true center. We can see that for exposure times greater than 2 seconds, the centroid converges near its true value. \label{fig:expt}}
-\end{center}
-\end{figure}
-
-\textbf{Longer Exposures.} There is no maximum exposure time specified for an LSST image.
-Given that the template image will be a stack of at least a year or two of data, processing a $5$--$10$ times deeper single image through the difference imaging pipeline should be fine.
-However, a $2\times150$ second exposure would saturate at $r \approx 18.3$, and cosmic-ray rejection completeness might suffer (unknown), which could impact the quality of a difference image and the detected sources.
-Additionally, any system qualities that vary on short (but $>30$ second) timescales could inhibit photometric calibration (e.g., tracking).
-
-% In conversation with DM-AP team members (Reiss, Findeisen, Connolly, Bo) there has not yet been a study of the safe range of exposure times that will be allowed to contribute to the Level 1 and Alert Stream. One possibly useful study is Chang et al. (2012), "Atmospheric point spread function interpolation for weak lensing in short exposure imaging data". They show that a 15 second exposure contains PSF variability on short spatial scales across a 1 square degree image which, for extragalactic fields with few stars (i.e., but good for weak lensing), is hard to characterize. They present a new software package to do mitigate the effects. Alternatively, we may need to use software packages \texttt{PhoSim} (Peterson et al. 2015; \citep{2015ApJS..218...14P}) or \texttt{ARROYO} \citep{2004SPIE.5497..290B} to at least simply characterize the PSF stability as a function of exposure time.
-% In conversation with K.-T., exposure times of 10 to 120 seconds will not be a problem for the processing pipeline to accommodate, but the ingest rate of images and the number of exposure per visit are the aspects that could cause issues (discussed below).
-% Is it conceivable that the LSST would spend time on a Special Program that will acquire short exposures if DM's algorithms cannot be shown to adequately reduce and calibrate them? This is probably best left ot a policy issue (beyond the scope of this document).
-
-\subsubsection{Number of Exposures per Visit (Long Sequences of a Single Field)}
-
-There is no processing constraint on the number of consecutive exposures that could be obtained of a single field. From a DM perspective, it would be best if these exposures were packaged into visits of no more than 2 exposures per visit, to minimize the need to reconfigure of the pipelines, and because the camera only ``clears" between visits. 
-
-% K.-T. Lim has pointed out that an odd number of exposures is a non-standard visit; two snaps is hardwired into the code. This is baked-in to a configuration so that the pipeline can have a definition of what kind of timing delay constitutes ``late".  Moving away from 2 exposures per visit requires a configuration change to the pipelines, which incurs an overhead (up to 1 minute) -- in fact, K.-T. things that between $10$ and $120$ seconds exposure times can easily be handled by the pipeline (i.e., can be run through ISR using scaled calibration frames), so long as they come in pairs. The real problem is knowing how long the processing should take, and not killing a process that is taking longer because there were 4 snaps in the visit instead of 2. To accommodate non-standard visits requires that the scheduler pass on the information of the number of snaps in the visit (\ref{DMSR-1}). Then the processing pipeline will know to, e.g., not attempt to difference the two snaps in the case were there is an odd number of snaps in a visit. \textit{MLG -- I've heard rumors of a CR regarding alternate standard visits of $1\times30$ seconds, but do not know the status or implications of this.}
-
-% K.-T. has also pointed out that currently, a deep drilling field would be interpreted as a single visit of 50 exposures by the scheduler. One implication of this is that since the camera only ``clears" prior to a new visit, it would not do this for the entire 50-exposure sequence. The processing pipeline would need to know how to divide this sequence up into visits. As there is no current requirement for DM to receive the information that the scheduler is about to do a 50 exposure visit, we need \ref{DMSR-1} to add the proposal ID and the number of exposures per visit to the meta data, and then it should be OK for DM to parse this visit information in the reduction pipeline.
-
-\subsubsection{Images in Very Crowded Fields}
-
-The LSST pipelines' performance in crowded fields is documented in \citeds{DMTN-077}, which finds that, e.g., in Galactic Plane regions with a source density of $500000$ sources per square degree, the completeness drops to 50\% at $20.2$ magnitudes. The slide deck at \citeds{Document-27962} also describes DM's plans for processing crowded fields. These may or may not be appropriate for Special Programs data, depending on the science goals.
-
-\subsubsection{Twilight Images with a Bright Background}
-
-Images obtained during twilight for scientific purposes are also likely to have shorter exposure times, and so the issues described in Section \ref{sssec:dmplans_NSV_expt} also apply here. Whether or not bright-background images can (or shall) be fully processed -- reduced, calibrated, background-subtracted, and delivered with astrometric and photometric solutions -- or whether this will require a User-Generated pipeline, is TBD (see also the example in Section \ref{ssec:SPCS_Twilight}). This may depend on the exposure time and the number of stars available in the image.
-
-\subsubsection{Images Obtained with Non-Sidereal Tracking}
-
-Non-sidereal tracking leads to images in which stars are streaked, but the moving object appears as a point source. Full processing -- providing reduced, calibrated, background-subtracted images that are delivered with astrometric and photometric solutions -- of these images is beyond the scope of the DM pipelines as it would require the development of new algorithms, and will need to be done as a User-Generated pipeline. The first steps of such a pipeline, such as Instrument Signature Removal, will probably be possible to achieve by reconfiguring the relevant DM software tasks.
-
-
-% % % % % % % % % % % % % % % % % %
-\subsection{Including Special Programs Data in the WFD Main Survey's Data Products}\label{ssec:dmplans_WFD}
-
-As described in Section \ref{sec:intro}, the Project may incorporate Special Programs data into the WFD main survey's pipelines and data products whenever this is (1) possible and (2) scientifically beneficial. This will likely be at the discretion of the data quality assessment team during Operations. In the following three sections we project when and how Special Programs data might be incorporated into the pipelines and data products of the Prompt pipeline and the Alert stream (Section \ref{ssec:dmplans_prompt}) and the annual Data Release pipeline (Section \ref{ssec:dmplans_drp}).
-
-\subsubsection{The Prompt Pipeline and Alert Generation}\label{ssec:dmplans_prompt}
-
-It would be beneficial to transient science to include as many LSST images into the Difference Imaging Analysis (DIA) pipeline and the Alert Stream as possible. Only images that can be processed with the Prompt DIA pipeline with the $60$-second timeline can contribute to the Alert Stream. As discussed in Section \ref{sec:data}, this might prohibit exposures shorter than $<15$ seconds and/or visit cadences shorter than $1$ per $\sim30$ seconds. This might also prohibit the inclusion of very crowded fields that require more computational resources. A field must have an LSST template image to be processed by the DIA pipeline, which would prohibit immediate Alerts from new survey fields. It should be possible to load and use an alternative template image (than what would be used for that field if and when it is covered by the WFD main survey) in the Prompt pipeline for fields from a Special Program. 
-
-There may be a couple of issues encountered with Alerts from many consecutive visits of Deep Drilling fields. One is that, since the Alert contains the full record of all associated {\tt DIASources} from the past 12 months (\citeds{LSE-163}), for a Deep Drilling Field with significantly more visits over the year, the size of the Alert might become prohibitively large (TBD). Another is that the self-consistency of the \texttt{DIAObjects} catalog may suffer during consecutive visits of a single field. For example, the processing for image $2$ of a sequence would begin when the processing for image $1$ is only halfway complete. Any new {\tt DIASource} in image $1$ that cannot be associated (by coordinate) with an existing {\tt DIAObject} becomes a new {\tt DIAObject}. When this source is again detected in image $2$, another new {\tt DIAObject} would be created if the catalog has not yet been updated.
-
-% \textbf{Templates:} The template images that are used in the Level 1 difference imaging pipeline will be built from the Level 2 DRP, and so the first factor affecting a Special Programs image's suitability for Level 1 is to be in a region of sky with an existing template. So long as there is a template, when the exposure time is equivalent to a WFD visit image, $\sim 30$ seconds, treating the image as Level 1 is going to be fine. When processing Special Programs data with the Level 1 pipeline, certain science cases might call for the capability to load and use a certain template that is different from the WFD template (i.e., built over a different timescale). K.-T. confirms that there is not enough memory allotted to store more than one template over the whole sky, but for sub-regions, storing and using an alternative template should be possible. This is not an issue limited to Special Programs, since during commissioning it is conceivable that multiple template versions. K.-T. also confirms that the capability for the processing pipeline to choose a given template based on the programID in the raw image metadata will exist.
-
-% \textbf{Processing backup:} Are there options for short-term increases in parallel processing power at NCSA? (Such options might be needed anyway to process crowded fields with $>$10k \texttt{DIASources}.) The bandwidth needed to load templates at a faster rate is also a concern, since templates have twice as many pixels, if the data acquistion rate is surveying at twice the WFD main survey rate, that's a $4\times$ additional bandwidth load. However, at NCSA there should be ways to elastically change the amount of processing power available. This is also an issue for crowded fields (below).
-
-% Special Programs are more likely to include crowded fields than the WFD main survey area. Due to the increased number of sources, the number of \texttt{DIASources} -- and therefore the number of Alerts -- increases as well. In turn, this increases the processing time and in some cases, may exceed the 60 second limit for Alert Production. A policy is needed on whether Alerts from crowded fields should be allowed a delay, or allowed to be incomplete. K.-T. reports that the control system can easily kill processes that are running over time and move forward with existing outputs -- but that perhaps it will be just as easy to let it keep running and elastically grab additional NCSA resources as needed. This appears possible because the batch system is larger than the Level 1 allocation, although we might not know that this is possible until Level 1 integration happens at NCSA (see Document LDM-230, the operations concepts).
-
-{\bf Solar System Processing -- } Since Solar System Processing takes \texttt{DIASources} as input, any Special Programs images that can be run through the Alert Pipeline can also be incorporated into Solar System Processing.
-As discussed under "Solar System Objects (SSO)" in Appendix \ref{sec:data_prev}, most of the Special Programs data associated with SS science will obtain standard visit images anyway.
-%There was some concern that a large number of small-separation sources might overwhelm the processing system (i.e., from a deep drilling field with many exposures in a sequence), but upon further consideration this worry was rejected.
-
-\subsubsection{The Data Release Pipeline (DRP)}\label{ssec:dmplans_drp}
-
-This document is not the place for a full consideration of whether or not it would be ``scientifically beneficial" to include any Special Programs data in the DRP data products -- namely, the deep image CoAdds and their corresponding {\tt Source} and {\tt Object} catalogs (\citeds{LSE-163}) -- and we leave that decision for the data quality assessment team in LSST Operations. One example might be when Special Programs data brings additional area up to the same level of depth and cadence as the rest of the WFD main survey. Another may be if including some or all of the shallower Galactic Plane coverage suppresses edge effects or low-order modes in the all-sky photometric solutions.
-
-% % % % % % % % % % % % % % % % % %
-\subsection{Reconfiguring DM Pipeline Components for Special Programs}\label{ssec:dmplans_reconfig}
 
 Whether or not Special Programs images are incorporated into the WFD main survey's data products, it is anticipated that most of the Special Program's science goals will require (or benefit from) separate data products (i.e., CoAdds and/or catalogs). For this reason, LSST intends to reconfigure the DM's pipelines in order to generate unique and separate -- but joinable -- imaging and catalog products for Special Programs data, whenever possible. In this context, ``possible" means that no new algorithms need to be written and that an intensive amount of additional computational resources is not required for the processing.
 
@@ -192,8 +170,7 @@ DMS-REQ-0320 states that "it shall be possible for special programs to trigger t
 A header keyword identifying an image as related to a Special Program will be included (e.g., the survey name), and that will be sufficient to send it to a dedicated processing pipeline. 
 
 
-% % % % % % % % % % % % % % % % % %
-\subsection{Support for User-Driven Processing of Special Programs Data}\label{ssec:dmplans_user}
+\subsection{Anticipated User-Generated Special Programs Data Products}\label{ssec:dmplans_user}
 
 In cases where the science goals of a Special Program require specialized algorithms and cannot be achieved by reconfiguring DM's software, then user-generated pipelines will be needed.
 Towards this end, LSST DM is making all of its software open-source, and preparing the Science Platform (\citeds{LSE-319}), through which users can access the tools and computational resources to assemble data processing pipelines to achieve their science goals (whether related to Special Programs data or not).
@@ -207,9 +184,50 @@ It is furthermore expected that, over time, some user-designed pipelines might b
 For both adopted and user-run code, whether they are for Special Programs or WFD survey data, the LSST DM team will encourage and facilitate data product databases that are built with the same schema as -- and can easily be joined with -- the tables of the Prompt and DRP data products.
 An alternative option to ``adopted" code is ``adopted" data products: situations in which user-generated code is run externally, a data catalog is returned to LSST to be ingested, verified, and made public.
 
-% % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % %
+
+
+\subsection{Including Special Programs Data in the WFD Main Survey's Data Products}\label{ssec:dmplans_WFD}
+
+The Project may incorporate Special Programs data into the WFD main survey's pipelines and data products whenever this is (1) possible and (2) scientifically beneficial. This will likely be at the discretion of the data quality assessment team during Operations. In the following three sections we project when and how Special Programs data might be incorporated into the pipelines and data products of the Prompt pipeline and the Alert stream (Section \ref{ssec:dmplans_prompt}) and the annual Data Release pipeline (Section \ref{ssec:dmplans_drp}).
+
+\subsubsection{The Prompt Pipeline and Alert Generation}\label{ssec:dmplans_prompt}
+
+It would be beneficial to transient science to include as many LSST images into the Difference Imaging Analysis (DIA) pipeline and the Alert Stream as possible. Only images that can be processed with the Prompt DIA pipeline with the $60$-second timeline can contribute to the Alert Stream. As discussed in Section \ref{ssec:proc_datadiv}, this might prohibit exposures shorter than $<15$ seconds and/or visit cadences shorter than $1$ per $\sim30$ seconds. This might also prohibit the inclusion of very crowded fields that require more computational resources. A field must have an LSST template image to be processed by the DIA pipeline, which would prohibit immediate Alerts from new survey fields. It should be possible to load and use an alternative template image (than what would be used for that field if and when it is covered by the WFD main survey) in the Prompt pipeline for fields from a Special Program. 
+
+There may be a couple of issues encountered with Alerts from many consecutive visits of Deep Drilling fields. One is that, since the Alert contains the full record of all associated {\tt DIASources} from the past 12 months (\citeds{LSE-163}), for a Deep Drilling Field with significantly more visits over the year, the size of the Alert might become prohibitively large (TBD). Another is that the self-consistency of the \texttt{DIAObjects} catalog may suffer during consecutive visits of a single field. For example, the processing for image $2$ of a sequence would begin when the processing for image $1$ is only halfway complete. Any new {\tt DIASource} in image $1$ that cannot be associated (by coordinate) with an existing {\tt DIAObject} becomes a new {\tt DIAObject}. When this source is again detected in image $2$, another new {\tt DIAObject} would be created if the catalog has not yet been updated.
+
+% \textbf{Templates:} The template images that are used in the Level 1 difference imaging pipeline will be built from the Level 2 DRP, and so the first factor affecting a Special Programs image's suitability for Level 1 is to be in a region of sky with an existing template. So long as there is a template, when the exposure time is equivalent to a WFD visit image, $\sim 30$ seconds, treating the image as Level 1 is going to be fine. When processing Special Programs data with the Level 1 pipeline, certain science cases might call for the capability to load and use a certain template that is different from the WFD template (i.e., built over a different timescale). K.-T. confirms that there is not enough memory allotted to store more than one template over the whole sky, but for sub-regions, storing and using an alternative template should be possible. This is not an issue limited to Special Programs, since during commissioning it is conceivable that multiple template versions. K.-T. also confirms that the capability for the processing pipeline to choose a given template based on the programID in the raw image metadata will exist.
+
+% \textbf{Processing backup:} Are there options for short-term increases in parallel processing power at NCSA? (Such options might be needed anyway to process crowded fields with $>$10k \texttt{DIASources}.) The bandwidth needed to load templates at a faster rate is also a concern, since templates have twice as many pixels, if the data acquistion rate is surveying at twice the WFD main survey rate, that's a $4\times$ additional bandwidth load. However, at NCSA there should be ways to elastically change the amount of processing power available. This is also an issue for crowded fields (below).
+
+% Special Programs are more likely to include crowded fields than the WFD main survey area. Due to the increased number of sources, the number of \texttt{DIASources} -- and therefore the number of Alerts -- increases as well. In turn, this increases the processing time and in some cases, may exceed the 60 second limit for Alert Production. A policy is needed on whether Alerts from crowded fields should be allowed a delay, or allowed to be incomplete. K.-T. reports that the control system can easily kill processes that are running over time and move forward with existing outputs -- but that perhaps it will be just as easy to let it keep running and elastically grab additional NCSA resources as needed. This appears possible because the batch system is larger than the Level 1 allocation, although we might not know that this is possible until Level 1 integration happens at NCSA (see Document LDM-230, the operations concepts).
+
+{\bf Solar System Processing -- } Since Solar System Processing takes \texttt{DIASources} as input, any Special Programs images that can be run through the Alert Pipeline can also be incorporated into Solar System Processing.
+As discussed under "Solar System Objects (SSO)" in Appendix \ref{ssec:proc_datadiv_prev}, most of the Special Programs data associated with SS science will obtain standard visit images anyway.
+%There was some concern that a large number of small-separation sources might overwhelm the processing system (i.e., from a deep drilling field with many exposures in a sequence), but upon further consideration this worry was rejected.
+
+\subsubsection{The Data Release Pipeline (DRP)}\label{ssec:dmplans_drp}
+
+This document is not the place for a full consideration of whether or not it would be ``scientifically beneficial" to include any Special Programs data in the DRP data products -- namely, the deep image CoAdds and their corresponding {\tt Source} and {\tt Object} catalogs (\citeds{LSE-163}) -- and we leave that decision for the data quality assessment team in LSST Operations. One example might be when Special Programs data brings additional area up to the same level of depth and cadence as the rest of the WFD main survey. Another may be if including some or all of the shallower Galactic Plane coverage suppresses edge effects or low-order modes in the all-sky photometric solutions.
+
+
 \clearpage
-\section{Special Programs Processing Case Studies}\label{sec:SPCS}
+% % % % % % % % % % % % % % % % % % 
+\section{Enabling the Discovery and Analysis of Special Programs Data Products}\label{sec:analysis}
+
+\subsection{Anticipated Rubin Science Platform Capabilities for Special Programs }
+
+\begin{itemize}
+\item discoverability of SP data when browsing an all-sky map
+\end{itemize}
+
+
+
+
+
+\clearpage
+% % % % % % % % % % % % % % % % % %
+\section{Special Programs Processing Examples}\label{sec:SPCS}
 
 For further insight to the DM-related needs of potential Special Programs, we can write out all of the data acquisition and processing steps, in order, that some of the proposed Special Programs might use.
 Note that we are not including any analysis in these descriptions, only processing and products. These are not necessarily complete and may even be incorrect in some places, as we are not experts in the science needs of these potential Special Programs; they could use some more thought and input.
@@ -222,8 +240,6 @@ Step 4. Reconfigured Processing Pipelines and Separate Data Products. \\
 Step 5. Inclusion in the DRP Data Products for the WFD Main Survey. \\
 Step 6. User-Generated Pipelines and Products. \\
 
-
-% % % % % % %
 \subsection{Searching for TNOs with Shift-and-Stack}\label{ssec:SPCS_TNO}
 
 This Special Programs processing summary is based on Becker et al. (2011) white paper to find TNOs with shift-and stack (SAS) \citedsp{Document-11013}.
@@ -247,7 +263,8 @@ Step 6. User-Generated Pipelines and Products. \\
 The user-generated pipeline running the shift-and-stack processing will be set up and submitted for batch processing by the user through the Science Platform or on an external processor. Pipeline inputs will be the 336 processed exposures per field per re-visit sequence. The DRP difference imaging routine will be used with the same template tract/patch for all. Custom, user-generated algorithms will shift the exposures and create difference images, then DRP routines can stack and do source detection and characterization and generate an object database. Custom code will derive orbital parameters for the detections and add them to a {\tt SSObjects}-like database.
 
 
-% % % % % % %
+%\input{spcs_sas}
+
 \subsection{Searching for Supernovae in Deep Drilling Fields}\label{ssec:SPCS_SNDDF}
 
 Step 1. Data Acquisition. \\
@@ -269,7 +286,6 @@ Step 6. User-Generated Pipelines and Products. \\
 For the science goal of searching for supernovae in nightly stacked DDF images, no separate user-generated software appears necessary.
 
 
-% % % % % % %
 \subsection{A Twilight Survey with Short Exposures}\label{ssec:SPCS_Twilight}
 
 Several kinds of twilight surveys with short exposures have been or might be proposed: to put brighter stars (or transients such as supernovae) that saturate in a $15$ second image onto the LSST photometric system and/or to observe the Sweetspot, 60 degrees from the sun, for near-Earth objects. The processing case study for these is currently limited by unknowns about the first step: the reduction of processed single visit images.
@@ -278,7 +294,7 @@ Step 1. Data Acquisition. \\
 At a specified time (or e.g., 6 degree twilight), the scheduler begins dither pattern of short exposures. Location and exposure times are set by the sky brightness and desired saturation limits.
 
 Step 2. Inclusion in the Prompt Pipeline and Alert Generation. \\
-Pending studies of short-exposure suitability for DIA (see Section \ref{ssec:dmplans_NSV}) and scalable processing capabilities to incorporate a faster image-input rate than $1$ every $30$ seconds, these data could {\it potentially} be incorporated and spawn Alerts.
+Pending studies of short-exposure suitability for DIA (see Section \ref{sec:procbounds}) and scalable processing capabilities to incorporate a faster image-input rate than $1$ every $30$ seconds, these data could {\it potentially} be incorporated and spawn Alerts.
 
 Step 3. Delivery of LSST Processed Images. \\
 Pending the issues mentioned above, the raw, reduced, and calibrated exposures and difference images from the Prompt pipeline are made available within  \texttt{L1PublicT} (currently 24 hours; LSR-REQ-0104).
@@ -294,8 +310,6 @@ If short-exposure images cannot be processed with the existing DM algorithms, a 
 
 Side note: A short-exposure survey of the bright stars of M67, described in Chapter 10.4 of the Observing Strategy White Paper \citep{2017arXiv170804058L}, suggests using the stretch goal of 0.1 second exposures or, if that is not possible, \textit{"custom pixel masks to accurately perform photometry on stars as much as 6 magnitudes brighter than the saturation level"}. This would be considered a user-generated algorithm.
 
-
-% % % % % % %
 \subsection{The Galactic Plane Survey for Variable Stars and/or Exoplanets}\label{ssec:SPCS_GPVSEx}
 
 Step 1. Data Acquisition. \\
@@ -316,40 +330,152 @@ It is quite likely that images from the Galactic Plane will be included into the
 Step 6. User-Generated Pipelines and Products. \\
 It seems likely that science users will want to deploy their alternative deblending algorithms on this data set and create their own catalogs.
 
-%\input{spcs_sas}
-
-% % % % % % %
 \subsection{Gravitational Wave Event Follow-Up}\label{ssec:SPCS_GW}
 
-For a description of how target of opportunity data to search for the optical counterparts of gravitational wave events would be processed, sen \citeds{rtn-008}.
-
+For a description of how target of opportunity data to search for the optical counterparts of gravitational wave events would be processed, see \citeds{rtn-008}.
 
 \clearpage
+% % % % % % % % % % % % % % % % % %
 \bibliography{local,lsst,refs,books,refs_ads}
 
+\clearpage
+% % % % % % % % % % % % % % % % % %
+\appendix
+
+% % % % % % % % % % % % % % % % % %
+\section{Potential Hardware Boundaries on Data Diversity}\label{sec:hardbounds}
+
+The potential boundaries on the diversity of data products that could be imposed by limitations from the Rubin Observatory hardware -- camera, telescope, and/or site -- are considered.
+
+\subsection{Filter Changes}
+The maximum time for filter change is 120 seconds: 30 seconds for the telescope to reorient the camera to its nominal zero angle position on the rotator, and 90 seconds to the camera subsystem for executing the change (OSS-REQ-0293; \citeds{LSE-30}).
+Assuming that most Special Programs would be designed to keep overheads $<$100\% and would be using standard 30 second visits, the filter change time indicates that it is likely that at least 4 exposures in a given filter would be obtained between filter changes, but this is not actually a hardware boundary. 
+The filter change mechanism is designed to undergo a total of 100000 changes over its lifetime, and each filter is designed to support up to 30000 changes over its lifetime, where lifetime is 15 years.
+That is an average of $\sim$27 changes per day, some of which would occur in they day during calibrations (estimate, $\sim$10) and the rest at night.
+As stated in the filter change memorandum (\url{ls.st/spt-494}), {\it ``the system could support as many changes involving the 5 filters loaded in the carousel as desired, without any practical limitation"}.
+
+\subsection{Filter Carousel Loads}
+The filter carousel can hold five of the six LSST filters at a time.
+The system is designed to support $3000$ loads in $15$ years (\url{ls.st/spt-494}).
+Filter loads are only done in the day, and there will never be data in more than five filters in a given night.
+
+\subsection{Exposure Times}
+The minimum exposure time is $1$ second, with a stretch goal of $0.1$ seconds (OSS-REQ-0291; \citeds{LSE-30}).
+The maximum exposure time is not restricted.
+
+\subsection{Readout Time}
+The readout time is $2$ seconds, and would be significant overhead on short exposures.
+
+\subsection{Inter-Image Time}
+Images with exposure times $<15$ seconds {\it might} still have to be separated by $15$ seconds for thermal tolerance; i.e., the minimum readout rate might be one image every $15$ seconds, regardless of exposure time (OSS-REQ-0291; \citeds{LSE-30}).
+The $15$ interval between images is a potential hardware boundary on the potential diversity of data products.
+
+\subsection{Telescope Slew}
+As described in \citeds{Document-28382}, large slews would have considerable overheads, but there are no hardware boundaries on the size of a single slew or the accrued slew distance.
+
+\subsection{Telescope Tracking}
+The requirement that the LSST system be able to perform non-sidereal tracking is set by OSS-REQ-0380 in \citeds{LSE-30}.
+This capability will include angular rates of up to 220 arcseconds per second in both azimuth and elevation. 
+
+\subsection{Camera Rotation}
+The requirements on the rotator's capabilities do not set any limits on the per-night or total lifetime rotation (OSS-REQ-0301, -0300; \citeds{LSE-30}) which might put boundaries on the distance between successive visits or the ability to jump between two widely separated fields.
+Currently, there are no hardware boundaries imposed by camera rotation constraints on the potential diversity of data products.
+
+
+
+% % % % % % % % % % % % % % % % % %
+\section{Potential Processing Boundaries on Data Diversity}\label{sec:procbounds}
+
+The capability of the LSST Science Pipelines to process diverse data is explored below.
+
+Note that processing boundaries might ultimately be defined not by what is technically possible, but by the resulting image quality parameters (e.g., the number of stars with sufficient flux for photometric calibration).
+Furthermore, the processing boundaries might not be fully constrained until the final performance of the LSST Science Pipelines, as described in the Data Management Applications Design, \citeds{LDM-151}) document, is fully characterized.
+
+{\bf Summary of the conclusions below:}\\
+Very short ($<$2 sec) exposures could be difficult to reduce due to an incompletely-formed PSF, and very short or very long ($>$150 sec) exposures could be difficult to calibrate due to having too few (or too few unsaturated) stars.
+It is currently unclear whether images with very bright sky backgrounds (twilight images) can be processed with the LSST Science Pipelines, or whether user generated pipelines will be needed.
+The full reduction and calibration of images obtained with non-sidereal tracking, in which the stars are streaked, is currently beyond the scope of the LSST Science Pipelines, and will require a user generated pipeline.
+
+
+
+\subsection{Exposure Times}\label{ssec:procbounds_expt}
+
+Images which deviate significantly from the $15$ second duration for the WFD main survey may encounter issues in the instrument signature removal routine, in the correction for differential chromatic refraction, in the difference imaging analysis pipeline, and/or in the photometric and astrometric calibrations due to a differently sampled set of standard stars per CCD.
+
+
+\subsubsection{Short Exposures (Non-Standard Visits of $<$30 sec)}
+The LSST System Requirements document states that {\it ``The LSST shall be capable of obtaining and processing exposures not taken in a standard visit mode including those with a minimum exposure time of} {\tt minExpTime}", which is 1 second (stretch goal 0.1 seconds; LSR-REQ-0111 in \citeds{LSE-29}).
+
+However, for exposure times there are other considerations, as changing the exposure time also affects the photometric and astrometric calibrations.
+Assuming that 1 second exposure can be reduced and calibrated, its detected point sources will span a dynamic range of $r$$\approx$ 13--21 magnitudes.
+A template image built on 15 second exposures will saturate at $r$$\approx$15.8 mag, but this still leaves stars between 15.8--21.0 magnitudes to be used in the PSF-matching (and all other filters have a similarly large overlap).
+
+In order for an image to be successfully PSF-matched to the template, the PSF must be well formed (no speckle pattern), and have a spatial variance that the pipeline is capable of modeling (be smoothly varying on some minimal scale).
+As a simple demonstration, Figure \ref{fig:expt} shows that perhaps exposure times shorter than $2$ seconds do not have a well-formed PSF (using the centroid of a 2D Gaussian fit as a proxy for "well-formed").
+
+\begin{figure}
+\begin{center}
+\includegraphics[width=14cm,trim={0cm 0cm 0cm 0cm}, clip]{figures/exptime.png}
+\caption{At left, Arroyo atmosphere-only simulated PSF for LSST (with oversampled pixels) with exposure times of 0.5, 2, and 15 seconds (top to bottom), courtesy of Bo Xin. At right, blue and purple lines show the location of the centroid derived from a 2D Gaussian fit to the PSF as a function of exposure time, with the red dashed line showing the true center. We can see that for exposure times greater than 2 seconds, the centroid converges near its true value. \label{fig:expt}}
+\end{center}
+\end{figure}
+
+% In conversation with DM-AP team members (Reiss, Findeisen, Connolly, Bo) there has not yet been a study of the safe range of exposure times that will be allowed to contribute Alert Production.
+% One possibly useful study is Chang et al. (2012), "Atmospheric point spread function interpolation for weak lensing in short exposure imaging data".
+% They show that a 15 second exposure contains PSF variability on short spatial scales across a 1 square degree image which, for extragalactic fields with few stars (i.e., but good for weak lensing), is hard to characterize.
+% They also present a new software package to do mitigate the effects.
+% Software packages \texttt{PhoSim} (Peterson et al. 2015; \citep{2015ApJS..218...14P}) or \texttt{ARROYO} \citep{2004SPIE.5497..290B} could be used to characterize the PSF stability as a function of exposure time.
+
+
+\subsubsection{Long Exposures (Non-Standard Visits of $>$30 sec)}
+
+There is no maximum exposure time specified for an LSST image.
+Given that the template image will be a stack of at least a year or two of data, processing a $5$--$10$ times deeper single image through the difference imaging pipeline should be fine.
+However, a $2\times150$ second exposure would saturate at $r \approx 18.3$, perhaps leaving too few stars overlapping with e.g., templates or WFD images, for astrometric and photometric calibrations.
+Furthermore, cosmic-ray rejection completeness might be reduced for longer exposures (unknown), which could impact the quality of a difference image and the detected sources.
+Additionally, any system qualities that vary on short (but $>30$ second) timescales could inhibit photometric calibration (e.g., tracking).
+
+
+\subsection{Twilight Images with a Bright Background}
+
+Images obtained during twilight for scientific purposes are also likely to have shorter exposure times, and so the issues described in Section \ref{ssec:procbounds_expt} also apply here.
+Whether or not bright-background images can (or shall) be fully processed -- reduced, calibrated, background-subtracted, and delivered with astrometric and photometric solutions -- or whether this will require a user generated pipeline, remains to be determined (see also the example in Section \ref{ssec:SPCS_Twilight}).
+This may depend on the exposure time and the number of stars available in the image.
+
+
+\subsection{Images Obtained with Non-Sidereal Tracking}
+
+Non-sidereal tracking leads to images in which stars are streaked, but the moving object appears as a point source.
+Full processing -- providing reduced, calibrated, background-subtracted images that are delivered with astrometric and photometric solutions -- of these images is beyond the scope of the DM pipelines as it would require the development of new algorithms, and will need to be done as a user generated pipeline.
+The first steps of such a pipeline, such as Instrument Signature Removal, will probably be possible to achieve by reconfiguring the relevant DM software tasks.
+
+
+%%% MLG removed the following in Feb 2022, it's no longer a concern.
+% \subsection{Number of Exposures per Visit (Long Sequences of a Single Field)}
+
+% There is no processing constraint on the number of consecutive exposures that could be obtained of a single field.
+% From a DM perspective, it would be best if these exposures were packaged into visits of no more than 2 exposures per visit, to minimize the need to reconfigure of the pipelines, and because the camera only ``clears" between visits. 
+
+% K.-T. Lim has pointed out that an odd number of exposures is a non-standard visit; two snaps is hardwired into the code. This is baked-in to a configuration so that the pipeline can have a definition of what kind of timing delay constitutes ``late".  Moving away from 2 exposures per visit requires a configuration change to the pipelines, which incurs an overhead (up to 1 minute) -- in fact, K.-T. things that between $10$ and $120$ seconds exposure times can easily be handled by the pipeline (i.e., can be run through ISR using scaled calibration frames), so long as they come in pairs. The real problem is knowing how long the processing should take, and not killing a process that is taking longer because there were 4 snaps in the visit instead of 2. To accommodate non-standard visits requires that the scheduler pass on the information of the number of snaps in the visit (\ref{DMSR-1}). Then the processing pipeline will know to, e.g., not attempt to difference the two snaps in the case were there is an odd number of snaps in a visit. \textit{MLG -- I've heard rumors of a CR regarding alternate standard visits of $1\times30$ seconds, but do not know the status or implications of this.}
+
+% K.-T. has also pointed out that currently, a deep drilling field would be interpreted as a single visit of 50 exposures by the scheduler. One implication of this is that since the camera only ``clears" prior to a new visit, it would not do this for the entire 50-exposure sequence. The processing pipeline would need to know how to divide this sequence up into visits. As there is no current requirement for DM to receive the information that the scheduler is about to do a 50 exposure visit, we need \ref{DMSR-1} to add the proposal ID and the number of exposures per visit to the meta data, and then it should be OK for DM to parse this visit information in the reduction pipeline.
+
+
+%%% MLG removed the following in Feb 2022, it's no longer a concern for Special Programs (crowded fields are in the WFD).
+% \subsection{Images in Very Crowded Fields}
+
+% The LSST pipelines' performance in crowded fields is documented in \citeds{DMTN-077}, which finds that, e.g., in Galactic Plane regions with a source density of $500000$ sources per square degree, the completeness drops to 50\% at $20.2$ magnitudes.
+% The slide deck at \citeds{Document-27962} also describes DM's plans for processing crowded fields. These may or may not be appropriate for Special Programs data, depending on the science goals.
 
 
 
 \clearpage
-% % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % 
-% % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % 
-% % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % 
-\appendix
+% % % % % % % % % % % % % % % % % %
+\section{Previously Proposed Special Programs}\label{ssec:proc_datadiv_prev}
 
-% % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % %
-\section{Previously Proposed Special Programs}\label{sec:data_prev}
+{\bf This section has not been updated since 2018.}
 
 In this section we compile information about the science goals and observational methods for Special Programs that have been previously proposed or discussed in the Science Community. We use these to infer the potential deviations from standard visit images, and to get a basic idea of the DM processing needs that would be required to enable the science. The main resources from which we have collected information about the Community's Special Program are: \citep{2008arXiv0805.2366I}; \citep{LPM-17}; the LSST Deep Drilling Field white papers from 2011\footnote{\url{https://project.lsst.org/content/whitepapers32012}}; presentations by Niel Brandt and Stephen Ridgway at the LSST Project and Community Workshop in August 2016\footnote{\url{https://project.lsst.org/meetings/lsst2016/sites/lsst.org.meetings.lsst2016/files/Brandt-DDF-MiniSurveys-01.pdf} and \url{https://project.lsst.org/meetings/lsst2016/sites/lsst.org.meetings.lsst2016/files/Ridgway-SimulationsMetrics_1.pdf}}; \citep{2013arXiv1304.3455G}; and Chapter 10 of \citep{2017arXiv170804058L}.
-
-%\begin{itemize}
-%\item "LSST: from Science Drivers to Reference Design and Anticipated Data Products" Ivezi\'{c} et al. (2008), \citep{2008arXiv0805.2366I} 
-%\item The LSST Science Requirements Document (\SRD), \citeds{LPM-17} 
-%\item LSST Deep Drilling white papers from 2011: \url{https://project.lsst.org/content/whitepapers32012} 
-%\item "General Review of the Proposed DDF and MS", LSST AHM Aug 2016 presentation by Niel Brandt \url{https://project.lsst.org/meetings/lsst2016/sites/lsst.org.meetings.lsst2016/files/Brandt-DDF-MiniSurveys-01.pdf} 
-%\item "Simulations, Metrics and Merit Function for Mini-Surveys and DDF", LSST AHM Aug 2016 presentation by Stephen Ridgway \url{https://project.lsst.org/meetings/lsst2016/sites/lsst.org.meetings.lsst2016/files/Ridgway-SimulationsMetrics_1.pdf} 
-%\item "LSST's DC [Deep CoAdd] Bias Against Planets and Galactic-Plane Science" by A. Gould, \citep{2013arXiv1304.3455G} 
-%\item Chapter 10 "Special Surveys" of the Observing Strategy White Paper \citep{2017arXiv170804058L}
-%\end{itemize}
 
 So far, only one aspect of the LSST Special Programs are set: the locations of the four chosen deep drilling fields\footnote{\url{https://www.lsst.org/scientists/survey-design/ddf}}. There are three mini-survey areas that have been discussed extensively by the Science Community: the North Ecliptic Spur (NES), the South Celestial Pole, and the Galactic Plane (see Figure 8 of \citep{2008arXiv0805.2366I}). In Table \ref{tab:ddfms} we list the four extragalactic deep drilling fields have already been specified, along with an \textit{incomplete} list of potential mini-surveys that have been openly discussed in the Science Community. In Section \ref{sec:SPCS}, we create detailed DM Processing Case Studies for several of these Special Programs in order to identify any potential issues with reconfiguring the DM pipelines to create specific data products for these programs.
 
@@ -403,10 +529,5 @@ Here we consider a variety of scientific fields in turn, the Special Programs th
 %$\bullet$ \textit{Jim Bosch -- "Will need to process at least some deep drilling fields (high-latitude ones) in the same way we process a full data release production before running the full data release production, so we can use the results to build priors and/or calibrate shear estimates on the wide survey"} (\texttt{\Large{Community}} forum) \\
 %$\bullet$ \textit{Jim Bosch -- "Will need to process various wide-depth subsets of some deep drilling fields (again, high-latitude ones) using the regular DRP pipeline. We'll definitely want best-seeing, worst-seeing, and probably a couple of independent typical-seeing subsets, but there may be other ways we'd want to subdivide as well."} (\texttt{\Large{Community}} forum)  \\
 %$\bullet$ \textit{MLG side note -- Photo-$z$ are very important to weak lensing \citedsp{Document-10963} and so perhaps the implemented method should be chosen with weak lensing science prioritized.} \\
-
-
-
-%\input{docrev}
-
 
 \end{document}

@@ -1,11 +1,7 @@
 .. image:: https://img.shields.io/badge/dmtn--065-lsst.io-brightgreen.svg
    :target: https://dmtn-065.lsst.io
-.. image:: https://travis-ci.org/lsst-dm/dmtn-065.svg
-   :target: https://travis-ci.org/lsst-dm/dmtn-065
-..
-  Uncomment this section and modify the DOI strings to include a Zenodo DOI badge in the README
-  .. image:: https://zenodo.org/badge/doi/10.5281/zenodo.#####.svg
-     :target: http://dx.doi.org/10.5281/zenodo.#####
+.. image:: https://github.com/lsst-dm/dmtn-065/workflows/CI/badge.svg
+   :target: https://github.com/lsst-dm/dmtn-065/actions/
 
 #########################################
 Data Management and LSST Special Programs
@@ -14,44 +10,53 @@ Data Management and LSST Special Programs
 DMTN-065
 ========
 
-The purpose of this study is to ensure that the LSST Data Management's plans for processing data from Special Programs (Deep Drilling Fields and Mini-Surveys) will meet the needs of the scientific community, and that these plans have been appropriately sized for computational processing and are accurately represented in the work-hours budget.
+The purpose of this document is to define Special Programs, to describe how Special Programs' data will be processed and served by Rubin Observatory, and to identify cases in which user-generated processing will be needed.
 
-**Links:**
+Links
+=====
 
-- Publication URL: https://dmtn-065.lsst.io
-- Alternative editions: https://dmtn-065.lsst.io/v
-- GitHub repository: https://github.com/lsst-dm/dmtn-065
-- Build system: https://travis-ci.org/lsst-dm/dmtn-065
+- Live drafts: https://dmtn-065.lsst.io/
+- GitHub: https://github.com/lsst-dm/dmtn-065
 
+Build
+=====
 
-Build this technical note
-=========================
+This repository includes lsst-texmf_ as a Git submodule.
+Clone this repository::
 
-You can clone this repository and build the technote locally with Latex.
-You must have `lsst-texmf`_ installed.
+    git clone --recurse-submodules https://github.com/lsst-dm/dmtn-065
 
-.. code-block:: bash
+Compile the PDF::
 
-   git clone https://github.com/lsst-dm/dmtn-065
-   cd dmtn-065
-   make
+    make
 
+Clean built files::
 
-Editing this technical note
-===========================
+    make clean
 
-You can edit the ``DMTN-065.tex`` file, which is a latex document.
+Updating acronyms
+-----------------
 
-Remember that images and other types of assets should be stored in the ``_static/`` directory of this repository.
-See ``_static/README.rst`` for more information.
+A table of the technote's acronyms and their definitions are maintained in the ``acronyms.tex`` file, which is committed as part of this repository.
+To update the acronyms table in ``acronyms.tex``::
 
-The published technote at https://dmtn-065.lsst.io will be automatically rebuilt whenever you push your changes to the ``master`` branch on `GitHub <https://github.com/lsst-dm/dmtn-065>`_.
+    make acronyms.tex
 
-****
+*Note: this command requires that this repository was cloned as a submodule.*
 
-Copyright 2017 AURA/LSST
+The acronyms discovery code scans the LaTeX source for probable acronyms.
+You can ensure that certain strings aren't treated as acronyms by adding them to the `skipacronyms.txt <./skipacronyms.txt>`_ file.
 
-This work is licensed under the Creative Commons Attribution 4.0 International License. To view a copy of this license, visit http://creativecommons.org/licenses/by/4.0/.
+The lsst-texmf_ repository centrally maintains definitions for LSST acronyms.
+You can also add new acronym definitions, or override the definitions of acronyms, by editing the `myacronyms.txt <./myacronyms.txt>`_ file.
 
-.. _this repo: ./DMTN-065.tex
-.. _lsst-texmf: https://lsst-texmf.lsst.io
+Updating lsst-texmf
+-------------------
+
+`lsst-texmf`_ includes BibTeX files, the ``lsstdoc`` class file, and acronym definitions, among other essential tooling for LSST's LaTeX documentation projects.
+To update to a newer version of `lsst-texmf`_, you can update the submodule in this repository::
+
+   git submodule update --init --recursive
+
+Commit, then push, the updated submodule.
+
