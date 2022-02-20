@@ -199,9 +199,9 @@ The full reduction and calibration of images obtained with non-sidereal tracking
 Instances where the Special Programs data might be included in the Prompt and/or Data Release data products alongside data from the WFD Main Survey -- i.e., the data products described by \citeds{lse-163} -- are preliminarily described.
 
 Generally, Rubin Observatory might incorporate Special Programs data into the data products for the WFD Main Survey whenever this is (1) possible and (2) scientifically beneficial.
-{\bf Decisions about when and whether to do this are left to the discretion of the Rubin Operations Data Production and System Performance teams.}
+{\bf Decisions about when and whether to include Special Programs data in the WFD Main Survey's data products are left to the discretion of the Rubin Operations Data Production and System Performance teams.}
 
-\subsubsection{Prompt Processing}
+\subsubsection{Prompt}
 
 It would be both possible and scientifically beneficial to include all standard and alternative standard visits from Special Programs in Prompt processing and Alert Production, alongside the standard visits from the WFD Main Survey.
 
@@ -225,7 +225,7 @@ As a side note, no User-Generated pipeline may contribute Alerts to the LSST Ale
 
 Since Solar System Processing takes \texttt{DIASources} as input, so any Special Programs images that can be run through the Alert Pipeline can also be incorporated into Solar System Processing.
 
-\subsubsection{Data Release Processing}
+\subsubsection{Data Release}
 
 It would be both possible and scientifically beneficial to include all standard and alternative standard visits from Special Programs in {\it some aspects} of the Data Release processing -- such as the repository of processed visit images and the {\tt Source} and {\tt Forced Source} catalogs -- alongside the standard visits from the WFD Main Survey.
 Images and catalog rows would be tagged with a program identifier indicating their Special Program of origin, so that the associated data products can be discovered and extracted by users.
@@ -236,14 +236,14 @@ Whether and how to include any Special Programs data in the deep image coadds an
 For example, perhaps Special Programs images will only be included when they bring additional area to the same depth as the rest of the WFD Main Survey, or when they suppress edge effects or low-order modes in the all-sky photometric solutions.
 
 
-\subsection{Anticipated Unique and Separate Special Programs Data Products}\label{ssec:proc_spdp}
+\subsection{Anticipated Rubin- and User-Generated Special Programs Data Products}\label{ssec:proc_spdp}
 
 As mentioned in Section~\ref{ssec:proc_reqs}, Rubin Observatory and the LSST system are required to process Special Programs data to produce unique and separate data products whenever the original or reconfigured versions of the LSST Science Pipelines can be used.
 
 Cases where the development of new algorithms, or the allocation of significant additional computational resources, are required in order to produce unique and separate data products will require User-Generated processing.
 
 The anticipated divisions between what will be Rubin- versus User-Generated for the variety of anticipated ``unique and separate" Special Programs data products, which are designed to meet the specific science goals of the Special Programs, are {\it preliminarily} described.
-{\bf Decisions about when and whether to do this are left to the discretion of the Rubin Operations Data Production and System Performance teams.}
+{\bf Decisions about when and whether Rubin Observatory will generate Special Programs data products are left to the discretion of the Rubin Operations Data Production and System Performance teams.}
 
 For Special Programs which will require User-Generated pipelines and data products, note that users will have access to all of the LSST Science Pipelines and its data processing infrastructure, as well as dedicated computational resources next-to-the-data (via the Rubin Science Platform; \citeds{lse-319}).
 Details of the planned ``User Batch" facility for data processing are described in \citeds{dmtn-202}.
@@ -258,7 +258,7 @@ Appendix~\ref{sec:spcs} provides more detailed, step-by-step data processing exa
 
 As the DDFs will likely be observed with standard or alternative standard visits, it is likely that Rubin Observatory will be able to reconfigure existing pipelines to process the DDF data and produce ``unique and separate" DDF data products.
 
-{\bf Rubin-generated data products} might include:\\
+Rubin-generated data products might include:\\
  - nightly-coadded images (24 h)\\
  - nightly-coadded difference images (24 h)\\
  - deeply-coadded images (all images to date; yearly)\\
@@ -266,21 +266,36 @@ As the DDFs will likely be observed with standard or alternative standard visits
  - Source- and Object-like catalogs for the night and deep coadds (yearly)\\
  - DIASource- and DIAObject-like catalogs for the nightly-coadds (24 h)\\
 
-{\bf User-Generated data products} might include, for example, DDF images coadded on other timescales, or using algorithms outside of the LSST Science Pipelines.
+User-Generated data products might include, for example, DDF images coadded on other timescales, or using algorithms outside of the LSST Science Pipelines.
 
 \subsubsection{Short-Exposure Surveys}
 
 Short-exposure images obtained during twilight, which will have a very bright sky background unlike other LSST images, might require User-Generated algorithms to subtract the high sky background. 
-Short-exposure images obtained during the night would have fewer stars for astrometric and photometric calibration, and might require User-Generated processing pipelines. 
+Short-exposure images obtained during the night would have fewer stars for astrometric and photometric calibration, and might require User-Generated processing pipelines.
+
+If the Rubin Operations team decides that the LSST Science Pipelines can be reconfigured and used for short exposures, then the Rubin-generated data products would likely be similar to the Data Release data products (Section 4, \citeds{lse-163}).
+For example, a separate repository of processed visit images and coadded images, and separate (but joinable) {\tt Source}, {\tt Forced Source}, and {\tt Object} catalogs.
 
 \subsubsection{GW Target-of-Opportunity}
 
-\subsubsection{Deeper $g$-band for 10 Local Volume Galaxies}
+As the science goals of any target-of-opportunity program are the immediate processing and discovery of new transient phenomena, it is very likely that all ToO programs would be designed to use standard or alternative standard visits and Prompt processing data products such as Alerts.
+Prompt processing would proceed automatically for all ToO for which an LSST template image exists.
+
+Options for Rubin Observatory to assist with or expedite the processing of ToO programs, especially during the first year of Operations when the template coverage will be low, are discussed in more detail in \citeds{rtn-008}.
+
+Other science-driven data products from ToO programs, such as custom deep stacks and difference images to find $<$5$\sigma$ transients in the fields on intermediate timescales in cases where the optical counterpart was not detected, would require User-Generated processing.
 
 \subsubsection{Micro-Surveys}
 
-For example, the additional sky areas covered with a cadence and depth that is different from the WFD Main Survey, such as the proposed Special Programs for the Roman bulge field; deeper $g$-band imaging of 10 local volume galaxies; the SMC; the Carina nebula; the northern stripe; and the Virgo Cluster.
+Potential micro-surveys include additional sky areas, in some cases covered to a depth that is different from the WFD Main Survey, such as the proposed micro-surveys for the Roman bulge field; deeper $g$-band imaging of 10 local volume galaxies; the SMC; the Carina nebula; the northern stripe; and the Virgo Cluster.
 
+In all of these cases, if the Rubin Operations team decides that the LSST Science Pipelines can be reconfigured and used for the visits associated with these micro-surveys -- which is likely if they're using standard or alternative standard visits --  then the Rubin-generated data products would be similar to the Data Release data products (Section 4, \citeds{lse-163}).
+For example, separate repositories of processed visit images and coadded images, and separate (but joinable) {\tt Source}, {\tt Forced Source}, and {\tt Object} catalogs would be created for all of these micro-surveys.
+
+In cases where data for the micro-survey is obtained throughout the year, then the separate data products would also be produced on a yearly basis.
+In cases where the data might be all obtained within a week (e.g., Carina nebular survey), such data products would likely be generated on a shorter (intermediate) timescales. 
+
+Micro-surveys with time-domain science goals that aren't met by the Prompt pipelines -- for example if they require difference imaging with coadded images on an intermediate timescale (e.g., a weekly stack) --  might require User-Generated processing.
 
 
 \clearpage
