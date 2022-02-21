@@ -23,12 +23,17 @@ The readout time is $2$ seconds, and would be significant overhead on short expo
 
 \subsection{Inter-Image Time}
 Images with exposure times $<15$ seconds {\it might} still have to be separated by $15$ seconds for thermal tolerance; i.e., the minimum readout rate might be one image every $15$ seconds, regardless of exposure time (OSS-REQ-0291; \citeds{LSE-30}).
-The $15$ interval between images is a potential hardware boundary on the potential diversity of data products.
+This potential $15$ interval between images is also a potential hardware boundary on the potential diversity of data products.
+Current (2022) testing of the camera system indicates that imposing waits between short exposures will not be necessary
 
 \subsection{Telescope Slew}
 As described in \citeds{Document-28382}, large slews would have considerable overheads, but there are no hardware boundaries on the size of a single slew or the accrued slew distance.
 
-\subsection{Telescope Tracking}
+\subsection{Pointing and Sidereal Tracking}
+The specifications for the telescope's pointing and tracking in \citeds{LSE-30} indicate that $<$0.2 arcsecond precision in field pointing (OSS-REQ-0302) and $<$1 arcsecond in open-loop tracking (OSS-REQ-0303) would not be possible, but guiding would improve the latter (OSS-REQ-0305).
+Furthermore, obtaining the \emph{exact same} alignment of the pixel grid in RA-Dec {\it ``would put demands on the camera rotator that were not planned"}\footnote{As per C. Claver's comments in ticket DM-12573.}.
+
+\subsection{Non-Sidereal Tracking}
 The requirement that the LSST system be able to perform non-sidereal tracking is set by OSS-REQ-0380 in \citeds{LSE-30}.
 This capability will include angular rates of up to 220 arcseconds per second in both azimuth and elevation. 
 

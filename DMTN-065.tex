@@ -178,7 +178,10 @@ Appendix~\ref{sec:hardbounds} lists all of the hardware boundaries that might co
 The minimum exposure time is 1 second (stretch goal: 0.1 seconds), and there is a {\it potential} hardware boundary that limits the readout rate to 1 every 15 seconds.
 This {\it might} affect the image acquisition rate and increase the overheads of the proposed short-exposure micro-surveys -- but current testing of the camera system indicates that imposing waits between short exposures will not be necessary.
 
+Special Programs which required the \emph{exact same} field pointing and rotation for \emph{every exposure} (to sub-arcsecond levels) might run into hardware boundaries on pointing and tracking, but none of the currently-proposed programs seem likely to be affected by this potential boundary. 
+
 Hardware imposes no other boundaries on how data can be obtained, but Special Programs that request a high number of filter changes and/or long slews could be inefficient due to large overheads.
+
 
 \subsubsection{Processing Boundaries}
 
