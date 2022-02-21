@@ -25,7 +25,7 @@ Note that Version 5 (2018-06-26) was an update for LCR-1309, which added require
 In Section 1.5.1.3, ``Processing Data from Special Programs", LSR-REQ-0122\lsrreq{0122} is a requirement that the LSST system {\it ``shall deliver unique and separate data products for visits from Special Programs"} whenever possible, and that they {\it ``shall be delivered on timescales intermediate"} to the Prompt and Data Release timescales {\it ``when this enables the intended science of the Special Program"}.
 The discussion clarifies that {\it ``the term 'whenever possible' includes cases where the Data Management System can run original or reconfigured versions of existing pipelines, and excludes cases where the development of new algorithms, or the allocation of significant additional computational resources, are required"}.
 
-In Section 2.4.1.1.2, ``Non-Standard Visit", LSR-REQ-0111\req{0111} requires that the LSST system {\it ``be capable of obtaining and processing exposures not taken in a standard visit mode including those with a minimum exposure time of"} 1 second ({\tt minExpTime}\reqparam{minExpTime}).
+In Section 2.4.1.1.2, ``Non-Standard Visit", LSR-REQ-0111\lsrreq{0111} requires that the LSST system {\it ``be capable of obtaining and processing exposures not taken in a standard visit mode including those with a minimum exposure time of"} 1 second ({\tt minExpTime}\reqparam{minExpTime}).
 The discussion notes that {\it ``non-standard visit exposures may possibly be degraded in some aspects of performance (e.g. cosmic ray rejection on visits consisting of a single exposure), and might be incompatible with difference imaging and alert production (e.g., short exposures in which the PSF is
 not fully formed)"}.
 
@@ -90,10 +90,9 @@ In Section 3.6.3.3, ``Rotator tracking Time, OSS-REQ-0301\ossreq{0301} specifies
 The discussion clarifies that this {\it ``is driven by the need to conduct extended 'deep drilling' observations on a single field"}.
 There do not seem to be any constraints on the speed of the rotator or the minimum distance between successive visits.
 
-In Section 3.6.3.5, ``Offset Pointing", OSS-REQ-0302\ossreq{0302} specifies that {\it ``the LSST shall be capable of offset pointing within a single field-of-view with a precision of no more than" 0.2 arcseconds ({\tt offsetPointingErr}\reqparam{offsetPointingErr}).
+In Section 3.6.3.5, ``Offset Pointing", OSS-REQ-0302\ossreq{0302} specifies that {\it ``the LSST shall be capable of offset pointing within a single field-of-view with a precision of no more than"} 0.2 arcseconds ({\tt offsetPointingErr}\reqparam{offsetPointingErr}).
 
-In Section 3.6.3.6, ``Open Loop Tracking", OSS-REQ-0303\ossreq{0303} specifies that {\it ``The LSST shall be capable of open loop tracking without the assistance of real
-time optical feedback to an accuracy of"} 1.0 arcseconds ({\tt openTrackErr}\reqparam{openTrackErr}) {\it ``over any 10 minute duration during normal night time operations"}.
+In Section 3.6.3.6, ``Open Loop Tracking", OSS-REQ-0303\ossreq{0303} specifies that {\it ``The LSST shall be capable of open loop tracking without the assistance of real time optical feedback to an accuracy of"} 1.0 arcseconds ({\tt openTrackErr}\reqparam{openTrackErr}) {\it ``over any 10 minute duration during normal night time operations"}.
 Note that the open loop tracking requirement is \emph{without guiding}.
 
 In Section 3.6.3.8, ``Guiding", OSS-REQ-0305\ossreq{0305} specifies that {\it ``the LSST system shall improve the tracking of the optical system to the sky by means of active guiding over the whole accessible sky"}.
