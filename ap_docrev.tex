@@ -25,7 +25,7 @@ Note that Version 5 (2018-06-26) was an update for LCR-1309, which added require
 In Section 1.5.1.3, ``Processing Data from Special Programs", LSR-REQ-0122\lsrreq{0122} is a requirement that the LSST system {\it ``shall deliver unique and separate data products for visits from Special Programs"} whenever possible, and that they {\it ``shall be delivered on timescales intermediate"} to the Prompt and Data Release timescales {\it ``when this enables the intended science of the Special Program"}.
 The discussion clarifies that {\it ``the term 'whenever possible' includes cases where the Data Management System can run original or reconfigured versions of existing pipelines, and excludes cases where the development of new algorithms, or the allocation of significant additional computational resources, are required"}.
 
-In Section 2.4.1.1.2, ``Non-Standard Visit", LSR-REQ-0111\req{0111} requires that the LSST system {\it ``be capable of obtaining and processing exposures not taken in a standard visit mode including those with a minimum exposure time of"} 1 second (\reqparam{minExpTime}).
+In Section 2.4.1.1.2, ``Non-Standard Visit", LSR-REQ-0111\req{0111} requires that the LSST system {\it ``be capable of obtaining and processing exposures not taken in a standard visit mode including those with a minimum exposure time of"} 1 second ({\tt minExpTime}\reqparam{minExpTime}).
 The discussion notes that {\it ``non-standard visit exposures may possibly be degraded in some aspects of performance (e.g. cosmic ray rejection on visits consisting of a single exposure), and might be incompatible with difference imaging and alert production (e.g., short exposures in which the PSF is
 not fully formed)"}.
 
@@ -45,7 +45,7 @@ release"}.
 The discussion clarifies that {\it ``the term 'whenever possible' includes cases where the Data Management System can run original or reconfigured versions of existing pipelines, and excludes cases where the development of new algorithms, or the allocation of significant additional computational resources, are required.
 The cumulative size of the Special Programs data products is capped at ~10\% of the most recent DR because this matches the expected fractional survey area of Special Programs compared to the main survey"}.
 
-In Section 2.7.1.6, ``Community Computing Services", LSR-REQ-0055\lsrreq{0055} requires that the LSST system {\it ``shall provide and maintain an amount of computing capacity equivalent to at least"} 10\% (\reqparam{userComputingFraction}) {\it ``of the total LSST data processing capacity (computing and storage) for the purpose of scientific analysis of LSST data and the production of"} User-Generated data products. 
+In Section 2.7.1.6, ``Community Computing Services", LSR-REQ-0055\lsrreq{0055} requires that the LSST system {\it ``shall provide and maintain an amount of computing capacity equivalent to at least"} 10\% ({\tt userComputingFraction}\reqparam{userComputingFraction}) {\it ``of the total LSST data processing capacity (computing and storage) for the purpose of scientific analysis of LSST data and the production of"} User-Generated data products. 
 The discussion clarifies that the scope of this service remains to be determined.
 This level of computational resources includes user processing of Special Programs data.
 
@@ -71,7 +71,7 @@ In Section 3.2.5.3, OSS-REQ-0403\ossreq{0403} is a flow-down of LSR-REQ-0124\lsr
 In Section 3.6.1.3, ``Continuous Exposures", OSS-REQ-0319\ossreq{0319} requires that {\it ``The Observatory shall be capable of continuous operation throughout a night with the interval between successive visits equal to the FPA readout time"}.
 The discussion clarifies that {\it ``this mode of observing is needed to support observations when the telescope is not being re-pointed"}, such as deep drilling fields or other Special Programs.
 
-In Section 3.6.1.4, ``Minimum Exposure Time", OSS-REQ-0291\ossreq{0291} specifies that {\it ``the camera shall be able to obtain a single exposure with an effective minimum exposure time of no more than"} 1 second (\reqparam{minExpTime}) {\it ``with a goal of an effective minimum exposure time of"} 0.1 seconds (\reqparam{minExpTimeGoal}). 
+In Section 3.6.1.4, ``Minimum Exposure Time", OSS-REQ-0291\ossreq{0291} specifies that {\it ``the camera shall be able to obtain a single exposure with an effective minimum exposure time of no more than"} 1 second ({\tt minExpTime}\reqparam{minExpTime}) {\it ``with a goal of an effective minimum exposure time of"} 0.1 seconds ({\tt minExpTimeGoal}\reqparam{minExpTimeGoal}). 
 The discussion clarifies that {\it ``if the exposure is shortened from the 15 second nominal, the spacing between successive exposures should be extended to maintain the average readout rate consistent with a 15 second exposure"}, which may increase the overheads of Special Programs using short exposure times.
 The discussion also clarifies that {\it ``if the exposure is lengthened from the 15 second nominal, the thermal stability may be affected, which may affect photometric accuracy"}.
 
@@ -79,15 +79,15 @@ In Section 3.6.1.5, ``Publish Visit Type", OSS-REQ-0384\ossreq{0384} specifies t
 The discussion clarifies that this allows the Prompt processing pipeline to be reconfigured on-the-fly in order to incorporate non-standard visits from, e.g., Special Programs.
 The time required for reconfiguration might introduce some latency or cause some images to not be processed by the Prompt pipeline.
 
-In Section 3.6.2.1.2, ``Maximum time for operational filter change", OSS-REQ-0293\ossreq{0293} specifies that {\it ``the camera system shall provide the capability of changing the operational filter with any other internal filter in a time less than"} 120 seconds (\reqparam{tFilterChange}).
+In Section 3.6.2.1.2, ``Maximum time for operational filter change", OSS-REQ-0293\ossreq{0293} specifies that {\it ``the camera system shall provide the capability of changing the operational filter with any other internal filter in a time less than"} 120 seconds ({\tt tFilterChange}\reqparam{tFilterChange}).
 This would impose a large overhead on, e.g., a Special Program that changes filters often without slewing.
 See also OSS-REQ-0295\ossreq{0295}, Appendix~\ref{sec:hardbounds} of this document, and/or the filter change memorandum (\url{ls.st/spt-494}), for more information about the total lifetime number of filter changes.
 
-In Section 3.6.3.3, ``Rotator tracking Time, OSS-REQ-0301\ossreq{0301} specifies that {\it ``the LSST shall be able to maintain field rotation tracking over a period of at least"} 1 hour (\reqparam{rotTrackTime}).
+In Section 3.6.3.3, ``Rotator tracking Time, OSS-REQ-0301\ossreq{0301} specifies that {\it ``the LSST shall be able to maintain field rotation tracking over a period of at least"} 1 hour ({\tt rotTrackTime}\reqparam{rotTrackTime}).
 The discussion clarifies that this {\it ``is driven by the need to conduct extended 'deep drilling' observations on a single field}.
 There do not seem to be any constraints on the speed of the rotator or the minimum distance between successive visits.
 
-In Section 3.6.3.10, ``Non-Sidereal Tracking", OSS-REQ-0380\ossreq{0380} specifies that {\it ``the LSST system shall be capable of tracking in an arbitrary direction on the sky along a parametric RA(t) and DEC(t) trajectory, at angular rates of up to"} 220 arcseconds per second (\reqparam{nonsiderealAngularRateEl} and \reqparam{nonsiderealAngularRateAZ}) {\it ``with a tracking error not to exceed"} 0.5 arcseconds per minute (\reqparam{nonsiderealTrackingError}).
+In Section 3.6.3.10, ``Non-Sidereal Tracking", OSS-REQ-0380\ossreq{0380} specifies that {\it ``the LSST system shall be capable of tracking in an arbitrary direction on the sky along a parametric RA(t) and DEC(t) trajectory, at angular rates of up to"} 220 arcseconds per second ({\tt nonsiderealAngularRateEl}\reqparam{nonsiderealAngularRateEl} and {\tt nonsiderealAngularRateAZ}\reqparam{nonsiderealAngularRateAZ}) {\it ``with a tracking error not to exceed"} 0.5 arcseconds per minute ({\tt nonsiderealTrackingError}\reqparam{nonsiderealTrackingError}).
 The discussion notes that {\it ``this is standard capability for modern telescopes"}, but might be relevant to some Special Programs.
 
 %%% MLG: this does not appear in OSS V13
@@ -135,7 +135,7 @@ In Section 1.6.3, ``Level 1 Processing of Special Programs Data", DMS-REQ-0321\d
 This is essentially adding a quantifier to DMS-REQ-0397, to specify that {\it ``when it is (a) possible ... to do so"} means when it is possible to complete the processing before the next night's observations.
 This requirement is also derived from OSS-REQ-0392, which is essentially a flow-down of requirements from the LSR (0122, 0075, and 0121).
 
-In Section 1.6.4, ``Constraints on Level 1 Special Program Products Generation", DMS-REQ-0344\dmreq{0344} specifies that {\it ``the publishing of [Prompt] data products from Special Programs shall be subject to the same performance requirements of"} 24 hours (\reqparam{L1PublicT}) for the release of Prompt data products and 1 minute (\reqparam{OTT1}) for the transmission of Alert packets.
+In Section 1.6.4, ``Constraints on Level 1 Special Program Products Generation", DMS-REQ-0344\dmreq{0344} specifies that {\it ``the publishing of [Prompt] data products from Special Programs shall be subject to the same performance requirements of"} 24 hours ({\tt L1PublicT}\reqparam{L1PublicT}) for the release of Prompt data products and 1 minute ({\tt OTT1}\reqparam{OTT1}) for the transmission of Alert packets.
 This is essentially a more detailed version of DMS-REQ-0321 which includes the Alert production timescale.
 This requirement is also derived from OSS-REQ-0392, which is essentially a flow-down of requirents from the LSR (0122, 0075, and 0121).
 

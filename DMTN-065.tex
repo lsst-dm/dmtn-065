@@ -219,7 +219,7 @@ There are two potential issues which might complicate Prompt processing for Spec
 The processing for the second image begins when the processing for the first image is only halfway done -- when the {\tt DIAObject} catalog has not yet updated with the new {\tt DIASources} detected in the first image.
 Thus, the {\tt DIASource} from images one and two for a new transient would not be associated with a single {\tt DIAObject}, but instead would each instantiate a new {\tt DIAObject}.
 
-As a side note, no User-Generated pipeline may contribute Alerts to the LSST Alert Stream, and since the latency on image availability is ``within 24 hours" (\reqparam{L1PublicT}) no User-Generated pipeline would be able to obtain and process Special Programs data on a timescale similar to the Alert Stream (60 seconds, \reqparam{OTT1}).
+As a side note, no User-Generated pipeline may contribute Alerts to the LSST Alert Stream, and since the latency on image availability is ``within 24 hours" ({\tt L1PublicT}\reqparam{L1PublicT}) no User-Generated pipeline would be able to obtain and process Special Programs data on a timescale similar to the Alert Stream (60 seconds, {\tt OTT1}\reqparam{OTT1}).
 
 \subsubsection{Solar System Processing}
 
