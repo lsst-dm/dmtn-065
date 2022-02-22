@@ -23,8 +23,12 @@ The readout time is $2$ seconds, and would be significant overhead on short expo
 
 \subsection{Inter-Image Time}
 Images with exposure times $<15$ seconds {\it might} still have to be separated by $15$ seconds for thermal tolerance; i.e., the minimum readout rate might be one image every $15$ seconds, regardless of exposure time (OSS-REQ-0291; \citeds{LSE-30}).
+
+As discussed in Jira ticket DM-12573, the main issue is thermal and is related to the shutter, both the motors and the brakes; an elevated Camera skin temperature would affect image quality.
+As of 2022, early tests suggest that a sustained (30 minutes) sequence that increases the heat load by large factors would not work, but further functional testing of the system once the Camera was fully assembled are needed for full characterization of the issue.
+
 This potential $15$ interval between images is also a potential hardware boundary on the potential diversity of data products.
-Current (2022) testing of the camera system indicates that imposing waits between short exposures will not be necessary
+
 
 \subsection{Telescope Slew}
 As described in \citeds{Document-28382}, large slews would have considerable overheads, but there are no hardware boundaries on the size of a single slew or the accrued slew distance.
