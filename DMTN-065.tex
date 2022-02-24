@@ -122,7 +122,7 @@ The full potential for diversity in Special Programs data is reviewed in Section
 A detailed list of the requirements related to Special Programs is provided in Appendix~\ref{sec:docrev}.
 The most important requirements are summarized below.
 
-\subsubsection{Data Products}
+\subsubsection{Data Products}\label{sssec:proc_reqs_dp}
 
 Rubin Observatory and the LSST system (the observatory and the data management systems) are required to process Special Programs data to produce unique and separate data products ``whenever possible" (LSR-REQ-0121).
 
@@ -136,15 +136,15 @@ It is a requirement that these Special Programs data products be distinct, and j
 
 The derivation of value-added data products, such as HiPS or MOC maps, for Special Programs remains an open question (DMS-REQ-0379, 0383).
 
-\subsubsection{Metadata}
+\subsubsection{Metadata}\label{sssec:proc_reqs_meta}
 
 In order to support Special Programs processing, the LSST system is required to store metadata that includes program information for every raw image, such as identifiers for images obtained as part of the Main Survey or a Special Program (DMS-REQ-0068).
 
 It is required that this metadata be sufficient for Special Programs to trigger their own real-time data processing recipes ``whenever possible" (DMS-REQ-0320), and be included in alert packets (DMS-REQ-0274).
 
-\subsubsection{Processing}
+\subsubsection{Processing}\label{sssec:proc_reqs_proc}
 
-It is a requirement that Special Programs processing with the Prompt pipeline (or a reconfigured version of it) is subject to the same timescales and latency constraints of 24 hours for the release of Prompt data products and 1 minute for the transmission of Alert packets (DMS-REQ-0344).
+It is a requirement that any Special Programs processing done with the Prompt pipeline (or a reconfigured version of it) is subject to the same timescales and latency constraints of 24 hours for the release of Prompt data products and 1 minute for the transmission of Alert packets (DMS-REQ-0344).
 
 It is also a requirement that Special Programs processing be done on timescales intermediate to the Prompt and Data Release processing, ``whenever possible" and whenever necessary to enable the intended science goals of the Special Program (LSR-REQ-0032).
 
@@ -152,7 +152,7 @@ It is a requirement that the LSST system be able to process non-standard visits 
 
 Processing for Special Programs by Rubin Observatory is expected to use no more than $\sim$10\% of computational and storage capacity of the Rubin data processing cluster (i.e., proportional to the fraction of survey time spent and the size of the Rubin-processed Special Programs data products; Section 6 of the DPDD).
 
-\subsubsection{User Processing}
+\subsubsection{User Processing}\label{sssec:proc_reqs_ug}
 
 In cases where the science goals of a Special Program require that new algorithms or software be developed, User-Generated pipelines and data products will be needed.
 
@@ -205,7 +205,7 @@ Generally, Rubin Observatory might incorporate Special Programs data into the da
 
 \subsubsection{Prompt}
 
-It would be both possible and scientifically beneficial to include all standard and alternative standard visits from Special Programs in Prompt processing and Alert Production, alongside the standard visits from the WFD Main Survey.
+It is expected that all Special Programs data that {\it can} be processed by the Prompt processing and Alert Production pipelines {\it would} be, alongside the standard visits from the WFD Main Survey, as this would be scientifically beneficial to the science pillars of the LSST.
 
 Non-standard visits that can be processed with the Prompt pipeline in accordance with the relevant requirements might also be included.
 
@@ -304,13 +304,33 @@ Micro-surveys with time-domain science goals that aren't met by the Prompt pipel
 % % % % % % % % % % % % % % % % % % 
 \section{Enabling the Discovery and Analysis of Special Programs Data Products}\label{sec:analysis}
 
-\subsection{Anticipated Rubin Science Platform Capabilities for Special Programs }
+\subsection{``Discoverability Considerations" (Visit Labels)}
+
+\begin{itemize}
+\item needs for labelling
+\item survey characterizability, selection biases
+\item provenance and origin
+\item not just for separate data products but all regions
+\item what if someone puts a micro survey in NES? labeling useful
+\end{itemize}
+
+
+\subsection{Anticipated Rubin Science Platform Capabilities for Special Programs}
 
 \begin{itemize}
 \item discoverability of SP data when browsing an all-sky map
 \item to query data by tag of WFD, WFD mini-survey, or Special Program (e.g., DDF field, micro-survey identifier)
 \end{itemize}
 
+
+\subsection{Computational Resources for User (Re-)Processing}
+
+As mentioned in Section~\ref{sssec:proc_reqs_ug}, Rubin Observatory will reserve 10\% of its total data processing capacity for users.
+This component would include {\it all} user processing and re-processing of any and all LSST data, including Special Programs. 
+
+As described in Section~\ref{ssec:proc_spdp} this processing capacity will be accessed via Rubin Science Platform, with a supported software environment and infrastructure for batch processing \citedsp{dmtn-202}.
+
+Very computationally intense processing (e.g., shift-and-stack for faint moving objects) will likely require external resources\footnote{For more details about the boundary between what Rubin Observatory will provide (in terms of data products and processing resources) and what will be left to the expertise of the science community, see \url{https://www.lsst.org/about/dm/data-products}}.
 
 
 
