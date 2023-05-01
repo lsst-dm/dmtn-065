@@ -1,8 +1,10 @@
 \section{Documentation Review for Requirements Related to Special Programs}\label{sec:docrev}
 
-Below are described mentions of Special Programs in Rubin documentations, with a focus on requirements and specifications.
+This review is limited to requirements related to Special Programs processing or data products,
+or requirements that constrain the diversity of images (e.g., exposure time limits).
 
-Updates to Rubin documents related to Special Programs -- motivated by past versions of this DMTN -- were made via LCR-1309 and LCR-2265. 
+Updates to Rubin documents related to Special Programs that were motivated by past versions of this DMTN
+were made via LCR-1309 and LCR-2265. 
 
 % LCR 1309: https://project.lsst.org/groups/ccb/node/2383
 % LCR 2265: https://project.lsst.org/groups/ccb/node/4036
@@ -12,7 +14,9 @@ Updates to Rubin documents related to Special Programs -- motivated by past vers
 
 Version 5.2.4 (revision 2018-01-30), \citedsp{LPM-17}.
 
-Section 3.4 ``The Full Survey Specifications" states the SRD's assumption that 90\% of the total available survey time would be spent on the main survey, and that the remaining 10\% would be spent {\it ``to obtain improved coverage of parameter space ... [or to] observe special regions"}.
+Section 3.4 ``The Full Survey Specifications" states the SRD's assumption that 90\% of the total 
+available survey time would be spent on the main survey, and that the remaining 10\% would be spent 
+{\it ``to obtain improved coverage of parameter space ... [or to] observe special regions"}.
 
 
 
@@ -20,142 +24,209 @@ Section 3.4 ``The Full Survey Specifications" states the SRD's assumption that 9
 
 Version 7.1 (revision 2020-03-05), \citeds{LSE-29}.
 
-Note that Version 5 (2018-06-26) was an update for LCR-1309, which added requirements, specifications, and discussions regarding the processing of Special Programs data based on earlier versions of this DMTN.
+Note that Version 5 (2018-06-26) was an update for LCR-1309, which added requirements, specifications, 
+and discussions regarding the processing of Special Programs data based on earlier versions of this DMTN.
 
-In Section 1.5.1.3, ``Processing Data from Special Programs", LSR-REQ-0122\lsrreq{0122} is a requirement that the LSST system {\it ``shall deliver unique and separate data products for visits from Special Programs"} whenever possible, and that they {\it ``shall be delivered on timescales intermediate"} to the Prompt and Data Release timescales {\it ``when this enables the intended science of the Special Program"}.
-The discussion clarifies that {\it ``the term 'whenever possible' includes cases where the Data Management System can run original or reconfigured versions of existing pipelines, and excludes cases where the development of new algorithms, or the allocation of significant additional computational resources, are required"}.
+In Section 1.5.1.3, ``Processing Data from Special Programs", LSR-REQ-0122\lsrreq{0122} is a requirement 
+that the LSST system {\it ``shall deliver unique and separate data products for visits from Special Programs"} 
+whenever possible, and that they {\it ``shall be delivered on timescales intermediate"} to the Prompt and 
+Data Release timescales {\it ``when this enables the intended science of the Special Program"}.
+The discussion clarifies that {\it ``the term 'whenever possible' includes cases where the Data Management System 
+can run original or reconfigured versions of existing pipelines, and excludes cases where the development of new 
+algorithms, or the allocation of significant additional computational resources, are required"}.
 
-In Section 2.4.1.1.2, ``Non-Standard Visit", LSR-REQ-0111\lsrreq{0111} requires that the LSST system {\it ``be capable of obtaining and processing exposures not taken in a standard visit mode including those with a minimum exposure time of"} 1 second ({\tt minExpTime}\reqparam{minExpTime}).
-The discussion notes that {\it ``non-standard visit exposures may possibly be degraded in some aspects of performance (e.g. cosmic ray rejection on visits consisting of a single exposure), and might be incompatible with difference imaging and alert production (e.g., short exposures in which the PSF is
-not fully formed)"}.
+In Section 2.4.1.1.2, ``Non-Standard Visit", LSR-REQ-0111\lsrreq{0111} requires that the LSST system 
+{\it ``be capable of obtaining and processing exposures not taken in a standard visit mode including those with a 
+minimum exposure time of"} 1 second ({\tt minExpTime}\reqparam{minExpTime}).
+The discussion notes that {\it ``non-standard visit exposures may possibly be degraded in some aspects of performance 
+(e.g. cosmic ray rejection on visits consisting of a single exposure), and might be incompatible with difference 
+imaging and alert production (e.g., short exposures in which the PSF is not fully formed)"}.
 
-The above requirement indicates that the LSST system shall be able to process non-standard visits from Special Programs, but that the image quality might be degraded.
-Improvements that require algorithms or processing outside of what the LSST Science Pipelines can provide would be left to the science community and require User-Generated pipelines and data products.
+The requirement in Section 1.5.1.3 is echoed in Section 2.6.1.1, ``Organization of Data Products", in which 
+LSR-REQ-0032\lsrreq{0032} is a requirement that the data processing system provide the means for three 'classes' of 
+data products on different timescales (Prompt, Data Release, and User-Generated), and also to provide a means for 
+processing Special Programs data because the {\it ``science goals of Special Programs may require that their processed 
+data products be made available in an additional fourth class, and possibly with intermediate timescales"}.
 
-The requirement in Section 1.5.1.3 is echoed in Section 2.6.1.1, ``Organization of Data Products", in which LSR-REQ-0032\lsrreq{0032} is a requirement that the data processing system provide the means for three 'classes' of data products on different timescales (Prompt, Data Release, and User-Generated), and also to provide a means for processing Special Programs data because the {\it ``science goals of Special Programs may require that their processed data products be made available in an additional fourth class, and possibly with intermediate timescales"}.
-
-In Section 2.6.1.1.3, ``Level 3 Data Products", LSR-REQ-0041\lsrreq{0041} specifies that the LSST system {\it ``shall support"} User-Generated data products.
-The discussion clarifies that ``{\it there will be technical limits on DM's ability to meet this requirement, such as cases where an intensive amount of additional computational resources is required, because only ~10\% of the total computational system is allocated for user processing"}.
+In Section 2.6.1.1.3, ``Level 3 Data Products", LSR-REQ-0041\lsrreq{0041} specifies that the LSST system 
+{\it ``shall support"} User-Generated data products.
+The discussion clarifies that ``{\it there will be technical limits on DM's ability to meet this requirement, such as 
+cases where an intensive amount of additional computational resources is required, because only ~10\% of the total 
+computational system is allocated for user processing"}.
 This level of support applies also to user processing of Special Programs data.
 See also the reference to LSR-REQ-0055 below.
 
-Section 2.6.1.1.4, ``Data Products for Special Programs", LSR-REQ-0121\lsrreq{0121} specifies that the LSST system {\it ``shall produce unique and separate Data Products as the result of processing data from Special Programs whenever possible, on a timescale that enables the intended science goals of the Special Program.
-The cumulative size of the online Special Programs data products shall be no more than ~10\% of the size of the DRP data products from the most recent data
-release"}.
-The discussion clarifies that {\it ``the term 'whenever possible' includes cases where the Data Management System can run original or reconfigured versions of existing pipelines, and excludes cases where the development of new algorithms, or the allocation of significant additional computational resources, are required.
-The cumulative size of the Special Programs data products is capped at ~10\% of the most recent DR because this matches the expected fractional survey area of Special Programs compared to the main survey"}.
+Section 2.6.1.1.4, ``Data Products for Special Programs", LSR-REQ-0121\lsrreq{0121} specifies that the LSST system 
+{\it ``shall produce unique and separate Data Products as the result of processing data from Special Programs whenever 
+possible, on a timescale that enables the intended science goals of the Special Program.
+The cumulative size of the online Special Programs data products shall be no more than ~10\% of the size of the DRP 
+data products from the most recent data release"}.
+The discussion clarifies that {\it ``the term 'whenever possible' includes cases where the Data Management System can 
+run original or reconfigured versions of existing pipelines, and excludes cases where the development of new 
+algorithms, or the allocation of significant additional computational resources, are required.
+The cumulative size of the Special Programs data products is capped at ~10\% of the most recent DR because this 
+matches the expected fractional survey area of Special Programs compared to the main survey"}.
 
-In Section 2.7.1.6, ``Community Computing Services", LSR-REQ-0055\lsrreq{0055} requires that the LSST system {\it ``shall provide and maintain an amount of computing capacity equivalent to at least"} 10\% ({\tt userComputingFraction}\reqparam{userComputingFraction}) {\it ``of the total LSST data processing capacity (computing and storage) for the purpose of scientific analysis of LSST data and the production of"} User-Generated data products. 
+In Section 2.7.1.6, ``Community Computing Services", LSR-REQ-0055\lsrreq{0055} requires that the LSST system 
+{\it ``shall provide and maintain an amount of computing capacity equivalent to at least"} 10\% 
+({\tt userComputingFraction}\reqparam{userComputingFraction}) {\it ``of the total LSST data processing capacity 
+(computing and storage) for the purpose of scientific analysis of LSST data and the production of"} User-Generated 
+data products. 
 The discussion clarifies that the scope of this service remains to be determined.
 This level of computational resources includes user processing of Special Programs data.
 
-In Section 3.1.3.1, ``Survey Time Allocation", LSR-REQ-0075\lsrreq{0075} requires that the {\it ``survey performance requirements shall be met utilizing approximately 90\% of the historically available observing time, leaving the remaining time available for yet to be defined special programs"}.
-
-In Section 1.3.1.3, LSR-REQ-0124\lsrreq{0124}, the discussion specifies that an image quality parameter related to ellipticity applies only to main survey data.
-
+In Section 3.1.3.1, ``Survey Time Allocation", LSR-REQ-0075\lsrreq{0075} requires that the {\it ``survey performance 
+requirements shall be met utilizing approximately 90\% of the historically available observing time, leaving the 
+remaining time available for yet to be defined special programs"}.
 
 
 \subsection{Observatory System Specifications (OSS)}
 
-Version 19.1 (revision 2021-07-30), \citeds{LSE-30}.
+Version 19.3 (revision 2022-12-12), \citeds{LSE-30}.
 
 Note that Version 13 (2018-06-26) was an update for LCR-1309, which added requirements, specifications, and discussions regarding the processing of Special Programs data based on earlier versions of this DMTN.
 
-In Section 2.2.3.1, ``Standard Operating States", OSS-REQ-0044\ossreq{0044} specifies that {\it ``the LSST observatory system shall be designed and constructed to support ... manual observing - used for specific non-scheduler driven observing to support system verification and testing or specialized science programs"}.
-Although most Special Programs will be executed via the survey scheduler as part of {\it ``fully automated observing"}, manual observing might be necessary for, e.g., target-of-opportunity Special Programs.
+In Section 2.2.3.1, ``Standard Operating States", OSS-REQ-0044\ossreq{0044} specifies that {\it ``the LSST 
+observatory system shall be designed and constructed to support ... manual observing - used for specific 
+non-scheduler driven observing to support system verification and testing or specialized science programs"}. 
+Although most Special Programs will be executed via the survey scheduler as part of {\it ``fully automated 
+observing"}, manual observing might be necessary for, e.g., target-of-opportunity Special Programs.
 
-Section 3.1.5.1.2, ``Data Products Handling for Special Programs", OSS-REQ-0392\ossreq{0392} is essentially a flow-down of requirements from the LSR (0122, 0075, and 0121), and specifies that {\it ``the handling of data products from Special Programs shall be compliant with the approach defined in LSE-163"}.
+Section 3.1.5.1.2, ``Data Products Handling for Special Programs", OSS-REQ-0392\ossreq{0392} is a flow-down of 
+requirements from the LSR (0122, 0075, and 0121; LSE-29), and specifies that {\it ``the handling of data products 
+from Special Programs shall be compliant with the approach defined in LSE-163"}.
 
-In Section 3.2.5.3, OSS-REQ-0403\ossreq{0403} is a flow-down of LSR-REQ-0124\lsrreq{0124} related to the ellipticity correlation function distribution.
+In Section 3.6.1.3, ``Continuous Exposures", OSS-REQ-0319\ossreq{0319} requires that {\it ``The Observatory shall be 
+capable of continuous operation throughout a night with the interval between successive visits equal to the FPA 
+readout time"}.
+The discussion clarifies that {\it ``this mode of observing is needed to support observations when the telescope is 
+not being re-pointed. For example observing ``deep drilling" fields..."}.
 
-In Section 3.6.1.3, ``Continuous Exposures", OSS-REQ-0319\ossreq{0319} requires that {\it ``The Observatory shall be capable of continuous operation throughout a night with the interval between successive visits equal to the FPA readout time"}.
-The discussion clarifies that {\it ``this mode of observing is needed to support observations when the telescope is not being re-pointed"}, such as deep drilling fields or other Special Programs.
+In Section 3.6.1.4, ``Minimum Exposure Time", OSS-REQ-0291\ossreq{0291} specifies that {\it ``the camera shall be 
+able to obtain a single exposure with an effective minimum exposure time of no more than"} 1 second 
+({\tt minExpTime}\reqparam{minExpTime}) {\it ``with a goal of an effective minimum exposure time of"} 0.1 seconds 
+({\tt minExpTimeGoal}\reqparam{minExpTimeGoal}). 
+The discussion clarifies that {\it ``if the exposure is shortened from the 15 second nominal, the spacing between 
+successive exposures should be extended to maintain the average readout rate consistent with a 15 second exposure"}, 
+which may increase the overheads of Special Programs using short exposure times.
+The discussion also clarifies that {\it ``if the exposure is lengthened from the 15 second nominal, the thermal 
+stability may be affected, which may affect photometric accuracy"}.
 
-In Section 3.6.1.4, ``Minimum Exposure Time", OSS-REQ-0291\ossreq{0291} specifies that {\it ``the camera shall be able to obtain a single exposure with an effective minimum exposure time of no more than"} 1 second ({\tt minExpTime}\reqparam{minExpTime}) {\it ``with a goal of an effective minimum exposure time of"} 0.1 seconds ({\tt minExpTimeGoal}\reqparam{minExpTimeGoal}). 
-The discussion clarifies that {\it ``if the exposure is shortened from the 15 second nominal, the spacing between successive exposures should be extended to maintain the average readout rate consistent with a 15 second exposure"}, which may increase the overheads of Special Programs using short exposure times.
-The discussion also clarifies that {\it ``if the exposure is lengthened from the 15 second nominal, the thermal stability may be affected, which may affect photometric accuracy"}.
+In Section 3.6.1.5, ``Publish Visit Type", OSS-REQ-0384\ossreq{0384} specifies that {\it ``the OCS [Observatory 
+Control System] shall configure the [Data Management System] DMS (in particular Prompt Processing) with the type 
+of visits to be processed: Standard, Alternate, or a specific type of Non-Standard"}.
+The discussion clarifies that this allows the Prompt processing pipeline to be reconfigured on-the-fly in order to 
+incorporate non-standard visits from, e.g., Special Programs.
+The time required for reconfiguration might introduce some latency or cause some images to not be processed by the 
+Prompt pipeline.
 
-In Section 3.6.1.5, ``Publish Visit Type", OSS-REQ-0384\ossreq{0384} specifies that {\it ``the OCS [Observatory Control System] shall configure the [Data Management System] DMS (in particular Prompt Processing) with the type of visits to be processed: Standard, Alternate, or a specific type of Non-Standard"}.
-The discussion clarifies that this allows the Prompt processing pipeline to be reconfigured on-the-fly in order to incorporate non-standard visits from, e.g., Special Programs.
-The time required for reconfiguration might introduce some latency or cause some images to not be processed by the Prompt pipeline.
-
-In Section 3.6.2.1.2, ``Maximum time for operational filter change", OSS-REQ-0293\ossreq{0293} specifies that {\it ``the camera system shall provide the capability of changing the operational filter with any other internal filter in a time less than"} 120 seconds ({\tt tFilterChange}\reqparam{tFilterChange}).
+In Section 3.6.2.1.2, ``Maximum time for operational filter change", OSS-REQ-0293\ossreq{0293} specifies that 
+{\it ``the camera system shall provide the capability of changing the operational filter with any other internal 
+filter in a time less than"} 120 seconds ({\tt tFilterChange}\reqparam{tFilterChange}).
 This would impose a large overhead on, e.g., a Special Program that changes filters often without slewing.
-See also OSS-REQ-0295\ossreq{0295}, Appendix~\ref{sec:hardbounds} of this document, and/or the filter change memorandum (\url{ls.st/spt-494}), for more information about the total lifetime number of filter changes.
+See also OSS-REQ-0295\ossreq{0295}, Appendix~\ref{sec:hardbounds} of this document, and/or the filter change 
+memorandum (\url{ls.st/spt-494}), for more information about the total lifetime number of filter changes.
 
-In Section 3.6.3.1, ``Absolute Pointing", OSS-REQ-0298\ossreq{0298} specifies that {\it ``the LSST shall point to a defined set of sky coordinates with an RMS accuracy
-of"} 2 arcseconds ({\tt absPointErr}\reqparam{absPointErr}).
+In Section 3.6.3.1, ``Absolute Pointing", OSS-REQ-0298\ossreq{0298} specifies that {\it ``the LSST shall point to 
+a defined set of sky coordinates with an RMS accuracy of"} 2 arcseconds ({\tt absPointErr}\reqparam{absPointErr}).
 
-In Section 3.6.3.3, ``Rotator tracking Time, OSS-REQ-0301\ossreq{0301} specifies that {\it ``the LSST shall be able to maintain field rotation tracking over a period of at least"} 1 hour ({\tt rotTrackTime}\reqparam{rotTrackTime}).
-The discussion clarifies that this {\it ``is driven by the need to conduct extended 'deep drilling' observations on a single field"}.
-There do not seem to be any constraints on the speed of the rotator or the minimum distance between successive visits.
+In Section 3.6.3.3, ``Rotator tracking Time, OSS-REQ-0301\ossreq{0301} specifies that {\it ``the LSST shall be able 
+to maintain field rotation tracking over a period of at least"} 1 hour ({\tt rotTrackTime}\reqparam{rotTrackTime}).
+The discussion clarifies that this {\it ``is driven by the need to conduct extended 'deep drilling' observations on 
+a single field"}.
 
-In Section 3.6.3.5, ``Offset Pointing", OSS-REQ-0302\ossreq{0302} specifies that {\it ``the LSST shall be capable of offset pointing within a single field-of-view with a precision of no more than"} 0.2 arcseconds ({\tt offsetPointingErr}\reqparam{offsetPointingErr}).
+In Section 3.6.3.5, ``Offset Pointing", OSS-REQ-0302\ossreq{0302} specifies that {\it ``the LSST shall be capable of 
+offset pointing within a single field-of-view with a precision of no more than"} 0.2 arcseconds 
+({\tt offsetPointingErr}\reqparam{offsetPointingErr}).
 
-In Section 3.6.3.6, ``Open Loop Tracking", OSS-REQ-0303\ossreq{0303} specifies that {\it ``The LSST shall be capable of open loop tracking without the assistance of real time optical feedback to an accuracy of"} 1.0 arcseconds ({\tt openTrackErr}\reqparam{openTrackErr}) {\it ``over any 10 minute duration during normal night time operations"}.
+In Section 3.6.3.6, ``Open Loop Tracking", OSS-REQ-0303\ossreq{0303} specifies that {\it ``The LSST shall be 
+capable of open loop tracking without the assistance of real time optical feedback to an accuracy of"} 1.0 arcseconds 
+({\tt openTrackErr}\reqparam{openTrackErr}) {\it ``over any 10 minute duration during normal night time operations"}.
 Note that the open loop tracking requirement is \emph{without guiding}.
 
-In Section 3.6.3.8, ``Guiding", OSS-REQ-0305\ossreq{0305} specifies that {\it ``the LSST system shall improve the tracking of the optical system to the sky by means of active guiding over the whole accessible sky"}.
-
-In Section 3.6.3.10, ``Non-Sidereal Tracking", OSS-REQ-0380\ossreq{0380} specifies that {\it ``the LSST system shall be capable of tracking in an arbitrary direction on the sky along a parametric RA(t) and DEC(t) trajectory, at angular rates of up to"} 220 arcseconds per second ({\tt nonsiderealAngularRateEl}\reqparam{nonsiderealAngularRateEl} and {\tt nonsiderealAngularRateAZ}\reqparam{nonsiderealAngularRateAZ}) {\it ``with a tracking error not to exceed"} 0.5 arcseconds per minute ({\tt nonsiderealTrackingError}\reqparam{nonsiderealTrackingError}).
-The discussion notes that {\it ``this is standard capability for modern telescopes"}, but might be relevant to some Special Programs.
-
-%%% MLG: this does not appear in OSS V13
-% $\bullet$ OSS-REQ-0027 requires that the scheduling system be able to optimize over at least \texttt{nSciProp} = 6 "science proposals", where these "proposals" are observing targets/constraints such as the distribution of filters, the astronomical conditions, and relative priority (OSS 2.1.1.2, Multiple Science Programs). {\bf JIRA ticket DM-12579 confirmed that there is no maximum number, and so many Special Programs will be able to be included in the scheduler}.
-
-%%% MLG: this does not appear in OSS V13
-% $\bullet$ OSS-REQ-0381 requires that the schedule be able to handle targets of opportunity, which would be relevant for e.g., Special Programs for gravitational wave follow-up (OSS 2.1.1.7, Visit Optimization).
-
-%%% MLG: these appear in OSS V13, but aren't as relevant to DMTN-065 anymore
-% $\bullet$ OSS-REQ-0189 and OSS-REQ-0190 set the minimum number of raw exposures to be supported as \texttt{nRawExpNightWinterAvg} = 1960 per night on average (but up to \texttt{nRawExpNightMax} = 2800 per night if e.g., two hours of a short-exposure twilight mini-survey are included) and \texttt{nRawExpYear} = 5.5$\times10^5$ per year, respectively. These numbers are set by predicting the maximum number of exposures that would be acquired on the longest night of the year in WFD cadence with 2 second slews, assuming $\sim80\%$ completion, but adding a 10\% margin. These estimates appear adequate for Special Programs in general.
-
-%%% MLG: these appear in OSS V13, but aren't as relevant to DMTN-065 anymore
-% $\bullet$ OSS-REQ-0194 and OSS-REQ-0323 set the minimum number of calibration exposures to be supported as \texttt{nCalibExpDay} = 450 on average and \texttt{nCalExpYear} = 1.5$\times10^5$ per year, respectively. These are \textit{minimums}, and so if a Special Program requires additional exposures, this should be possible to accommodate.
-
+In Section 3.6.3.10, ``Non-Sidereal Tracking", OSS-REQ-0380\ossreq{0380} specifies that {\it ``the LSST system shall 
+be capable of tracking in an arbitrary direction on the sky along a parametric RA(t) and DEC(t) trajectory, at 
+angular rates of up to"} 220 arcseconds per second ({\tt nonsiderealAngularRateEl}\reqparam{nonsiderealAngularRateEl} 
+and {\tt nonsiderealAngularRateAZ}\reqparam{nonsiderealAngularRateAZ}) {\it ``with a tracking error not to exceed"} 
+0.5 arcseconds per minute ({\tt nonsiderealTrackingError}\reqparam{nonsiderealTrackingError}).
+The discussion notes that {\it ``this is standard capability for modern telescopes"}, but might be relevant to some 
+Special Programs.
 
 
 \subsection{Data Management Subsystems Requirements (DMSR)}
 
 Version 9 (revision 2021-02-12), \citeds{LSE-61}. 
 
-Note that Version 8.3 (2020-05-04) was an update for LCR-2265, which updated requirements, specifications, and discussions regarding the processing of Special Programs data based on earlier versions of this DMTN.
+Note that Version 8.3 (2020-05-04) was an update for LCR-2265, which updated requirements, specifications, and 
+discussions regarding the processing of Special Programs data based on earlier versions of this DMTN.
 
-In Section 1.2.3, ``Raw Science Image Metadata", DMS-REQ-0068\dmreq{0068} specifies that {\it ``for each raw science image, the DMS shall store image metadata"} including {\it ``Program metadata (identifier for main survey, deep drilling, etc.)"}.
-The discussion clarifies that {\it ``the program metadata should be sufficient to associate an image with a specific Special Program so that DMS-REQ-0320 and DMS-REQ-0397 can be satisfied"}.
+In Section 1.2.3, ``Raw Science Image Metadata", DMS-REQ-0068\dmreq{0068} specifies that {\it ``for each raw 
+science image, the DMS shall store image metadata"} including {\it ``Program metadata (identifier for main survey, 
+deep drilling, etc.)"}.
+The discussion clarifies that {\it ``the program metadata should be sufficient to associate an image with a specific 
+Special Program so that DMS-REQ-0320 and DMS-REQ-0397 can be satisfied"}.
 
-In Section 1.3.13, ``Alert Content", the discussion for DMS-REQ-0274\dmreq{0274} explains that the {\it ``program and/or scheduler metadata"} included in an alert packet {\it ``should be sufficient to identify whether the image is associated with a Special Program (such as an in-progress Deep Drilling Field)"}.
+In Section 1.3.13, ``Alert Content", the discussion for DMS-REQ-0274\dmreq{0274} explains that the {\it ``program 
+and/or scheduler metadata"} included in an alert packet {\it ``should be sufficient to identify whether the image is 
+associated with a Special Program (such as an in-progress Deep Drilling Field)"}.
 
-In Section 1.4.18.1, ``Produce All-Sky HiPS Map", the discussion for DMS-REQ-0379\dmreq{0379} raises the point that generating separate HiPS maps for Special Programs (e.g., DDFs) remains an open question.
+In Section 1.4.18.1, ``Produce All-Sky HiPS Map", the discussion for DMS-REQ-0379\dmreq{0379} raises the point that 
+generating separate HiPS maps for Special Programs (e.g., DDFs) remains an open question.
 
-In Section 1.4.18.5, ``Produce MOC Maps", DMS-REQ-0383\dmreq{0383} specifies that Data Release processing {\it ``shall include the production of Multi-Order Coverage maps for the survey data"}, and that {\it ``additional MOCs SHOULD be produced to represent special-programs datasets"}.
+In Section 1.4.18.5, ``Produce MOC Maps", DMS-REQ-0383\dmreq{0383} specifies that Data Release processing 
+{\it ``shall include the production of Multi-Order Coverage maps for the survey data"}, and that {\it ``additional 
+MOCs SHOULD be produced to represent special-programs datasets"}.
 It is noted that a separate technical note would be created to define these MOCs.
 
 The bulk of the DMS's requirements related to Special Programs are in Section 1.6 of the DMSR.
 
-In Section 1.6.1, ``Processing of Data From Special Programs", DMS-REQ-0320\dmreq{0320} specifies that {\it ``it shall be possible for special programs to trigger their own data processing recipes, during the night instead of the nightly Alert Processing (but the recipes may still issue Alerts), or on alternative timescales"}.
-The discussion clarifies that the {\it ``LSST will provide these recipes ... when
-possible, which includes cases where DM can run original or reconfigured versions of existing pipelines, and excludes cases where the development of new algorithms, or the allocation of significant additional computational resources, are required. An example of an alternative timescale is a nightly trigger to coadd all the deep-drilling field images. Decisions about which recipes are applied to which Special Programs will be made by the Operations team, after consideration of the scientific goals, computational resources, and data rights policy"}.
-This requirement is derived from OSS-REQ-0392, which is essentially a flow-down of requirements from the LSR (0122, 0075, and 0121).
+In Section 1.6.1, ``Processing of Data From Special Programs", DMS-REQ-0320\dmreq{0320} specifies that {\it ``it 
+shall be possible for special programs to trigger their own data processing recipes, during the night instead of 
+the nightly Alert Processing (but the recipes may still issue Alerts), or on alternative timescales"}.
+The discussion clarifies that the {\it ``LSST will provide these recipes ... when possible, which includes cases 
+where DM can run original or reconfigured versions of existing pipelines, and excludes cases where the development 
+of new algorithms, or the allocation of significant additional computational resources, are required. An example of 
+an alternative timescale is a nightly trigger to coadd all the deep-drilling field images. Decisions about which 
+recipes are applied to which Special Programs will be made by the Operations team, after consideration of the 
+scientific goals, computational resources, and data rights policy"}.
+This requirement is derived from OSS-REQ-0392, which is essentially a flow-down of requirements from the LSR (0122, 
+0075, and 0121).
 
-In Section 1.6.2, ``Prompt/DR Processing of Data from Special Programs", DMS-REQ-0397\dmreq{0397} specifies that {\it ``it shall be possible for special programs data to be processed with the prompt and/or annual-release pipelines alongside data from the main survey"}.
-The discussion further clarifies that {\it ``the data from Special Programs should only be included ... when it is (a) possible ... to do so without additional effort and (b) beneficial to the LSST's main science objectives. Decisions about which data are included ... will be made by the Operations team"}.
-This requirement is also derived from OSS-REQ-0392, which is essentially a flow-down of requirements from the LSR (0122, 0075, and 0121).
+In Section 1.6.2, ``Prompt/DR Processing of Data from Special Programs", DMS-REQ-0397\dmreq{0397} specifies that 
+{\it ``it shall be possible for special programs data to be processed with the prompt and/or annual-release pipelines 
+alongside data from the main survey"}.
+The discussion further clarifies that {\it ``the data from Special Programs should only be included ... when it is 
+(a) possible ... to do so without additional effort and (b) beneficial to the LSST's main science objectives. 
+Decisions about which data are included ... will be made by the Operations team"}.
+This requirement is also derived from OSS-REQ-0392, which is essentially a flow-down of requirements from the LSR 
+(0122, 0075, and 0121).
 
-In Section 1.6.3, ``Level 1 Processing of Special Programs Data", DMS-REQ-0321\dmreq{0321} specifies that {\it ``all [Prompt] processing from special programs shall be completed before data arrives from the following night's observations"}.
-This is essentially adding a quantifier to DMS-REQ-0397, to specify that {\it ``when it is (a) possible ... to do so"} means when it is possible to complete the processing before the next night's observations.
-This requirement is also derived from OSS-REQ-0392, which is essentially a flow-down of requirements from the LSR (0122, 0075, and 0121).
+In Section 1.6.3, ``Level 1 Processing of Special Programs Data", DMS-REQ-0321\dmreq{0321} specifies that {\it ``all 
+[Prompt] processing from special programs shall be completed before data arrives from the following night's 
+observations"}.
+This is essentially adding a quantifier to DMS-REQ-0397, to specify that {\it ``when it is (a) possible ... to do so"} 
+means when it is possible to complete the processing before the next night's observations.
+This requirement is also derived from OSS-REQ-0392, which is essentially a flow-down of requirements from the LSR 
+(0122, 0075, and 0121).
 
-In Section 1.6.4, ``Constraints on Level 1 Special Program Products Generation", DMS-REQ-0344\dmreq{0344} specifies that {\it ``the publishing of [Prompt] data products from Special Programs shall be subject to the same performance requirements of"} 24 hours ({\tt L1PublicT}\reqparam{L1PublicT}) for the release of Prompt data products and 1 minute ({\tt OTT1}\reqparam{OTT1}) for the transmission of Alert packets.
+In Section 1.6.4, ``Constraints on Level 1 Special Program Products Generation", DMS-REQ-0344\dmreq{0344} specifies 
+that {\it ``the publishing of [Prompt] data products from Special Programs shall be subject to the same performance 
+requirements of"} 24 hours ({\tt L1PublicT}\reqparam{L1PublicT}) for the release of Prompt data products and 1 minute 
+({\tt OTT1}\reqparam{OTT1}) for the transmission of Alert packets.
 This is essentially a more detailed version of DMS-REQ-0321 which includes the Alert production timescale.
-This requirement is also derived from OSS-REQ-0392, which is essentially a flow-down of requirents from the LSR (0122, 0075, and 0121).
+This requirement is also derived from OSS-REQ-0392, which is essentially a flow-down of requirents from the LSR 
+(0122, 0075, and 0121).
 
-In Section 1.6.5, ``Special Programs Database", DMS-REQ-0322\dmreq{0322} specifies that {\it ``data products for special programs shall be stored in databases that are distinct from those used to store standard [Prompt] and [Data Release] data products"} and that {\it ``it shall be possible for these databases to be federated ... to allow cross-queries and joins"}.
-This requirement is also derived from OSS-REQ-0392, which is essentially a flow-down of requirements from the LSR (0122, 0075, and 0121).
+In Section 1.6.5, ``Special Programs Database", DMS-REQ-0322\dmreq{0322} specifies that {\it ``data products for 
+special programs shall be stored in databases that are distinct from those used to store standard [Prompt] and 
+[Data Release] data products"} and that {\it ``it shall be possible for these databases to be federated ... to allow 
+cross-queries and joins"}.
+This requirement is also derived from OSS-REQ-0392, which is essentially a flow-down of requirements from the LSR 
+(0122, 0075, and 0121).
 
-In Section 4.1.16, ``Level 2 and Reprocessed Level 1 Catalog Access", DMS-REQ-0313\dmreq{0313} specifies that {\it ``the DMS shall maintain ... versions
-of the most recent catalogs generated from Special Programs data"}.
+In Section 4.1.16, ``Level 2 and Reprocessed Level 1 Catalog Access", DMS-REQ-0313\dmreq{0313} specifies that 
+{\it ``the DMS shall maintain ... versions of the most recent catalogs generated from Special Programs data"}. 
 As with all LSST data, {\it ``there is no requirement for older data releases to be queryable"}.
-
 
 
 \subsection{Data Management Applications Design (DMAD)}
@@ -163,25 +234,20 @@ As with all LSST data, {\it ``there is no requirement for older data releases to
 Version 4.3 (revision 2020-11-10), \citeds{LDM-151}.
 
 The DMAD is not a requirements document.
-Instead, it describes the scientific design of the LSST Science Pipelines: the algorithms and software that will be implemented to meet the requirements for processing the LSST data. 
+Instead, it describes the scientific design of the LSST Science Pipelines: the algorithms and software that will 
+be implemented to meet the requirements for processing the LSST data. 
 
-Special Programs are only mentioned a few times, either as a potential source of single-snap visits or as a potential source of reference images or catalogs (e.g., training sets).
+Special Programs are only mentioned a few times, either as a potential source of single-snap visits or as a 
+potential source of reference images or catalogs (e.g., training sets).
 
-As described above (e.g., LSR-REQ-0122), the LSST system shall deliver unique and separate data products for visits from Special Programs whenever this (1) enables the intended science of the Special Program and (2) can be accomplished using the original or reconfigured versions of the LSST Science Pipelines.
-For cases in which the development of new algorithms or the allocation of significant additional computational resources are required to produce Special Programs data products, User-Generated pipelines and processing will be necessary.
+As described above (e.g., LSR-REQ-0122), the LSST system shall deliver unique and separate data products for visits 
+from Special Programs whenever this (1) enables the intended science of the Special Program and (2) can be 
+accomplished using the original or reconfigured versions of the LSST Science Pipelines.
+For cases in which the development of new algorithms or the allocation of significant additional computational 
+resources are required to produce Special Programs data products, User-Generated pipelines and processing will be 
+necessary.
 
 The DMAD can be used as the reference document to decide whether a given Special Program will require User-Generated pipelines and processing.
-
-%%% MLG: the following are all from <2018 and were not updated in 2022
-
-% \subsubsection{Extreme-Depth CoAdds} The system has been sized to hold $\sim200$ exposures in memory at once, which defined by the current maximum number of visits per field in the WFD main survey in $10$ years (from a conversation with K.-T.~Lim). Note that the panchromatic CoAdds would be built from the individual filter CoAdds, so the algorithm does not need to handle $\sim800$ images. From a computational standpoint, $200$ is the maximum number of images that can be stacked with an algorithm that requires all images to be accessible in memory at once (i.e., loading all images and calculating the median for each pixel). Deeper stacks might be possible with algorithms that deal with images consequentially. It is conceivable that a Special Program which needs to stack $>200$ images is not possible to accomplish with reconfigured pipelines, and would have to be processed with external, user-contributed resources. However, the exact DM capabilities in this area are not yet well known because NCSA has not yet defined the machine capabilities. Furthermore, the planned commissioning data will go to a $\sim20$ year depth, and so it can reasonably be expected that DM will have to be able to accommodate at least a stack that deep.
-
-% \subsubsection{Deblending} The deep deblender algorithm described in Section 5.3.3 will, out of necessity, be optimized for use in the bulk of the WFD main survey. It may or may not end up being appropriate for use in the Galactic Plane mini-survey area, depending on the science goal. Level 3 deblenders for specific Special Programs fields may require development by the user community.
-
-% \subsubsection{Variability Characterization} The periodic and aperiodic variability characterizations described in Section 6.21 of the DMAD are placeholders, but are representative of what is likely to be implemented: algorithms that are applicable to a broad range of variability types. From DM's perspective, all that is needed is sufficient information to enable relatively useful filters, from which the downstream broker/user can do additional filtering, and these parameterizations might not be sufficient for all science goals. It is conceivable that the goals of a particular Special Program might require different algorithms; these could be provided by DM, or written as Level 3 and either made joinable to the DM reconfigured data products or perhaps incorporated directly.
-
-% \subsubsection{Photometric Redshifts} As described in Section 5.6.5 the Level 2 DRP \texttt{Object} catalog will include a photometric redshift, but this algorithm will be produced by the science community and then adopted and run at scale by DM. It is conceivable that the photo-$z$ algorithm for a Special Programs data set, such as a deep drilling field, might be different from that used for the WFD main survey.
-
 
 
 \subsection{Data Products Definitions Document (DPDD)}
@@ -189,30 +255,5 @@ The DMAD can be used as the reference document to decide whether a given Special
 Version 3.6 (revision 2021-12-17), \citeds{lse-163}.
 
 Section 6 describes the data products for Special Programs.
-The DPDD is not a requirements document; Section 6 summarizes the requirements presented above and does not introduce any new constraints or new information about Special Programs. 
-
-%%% MLG commented out the paragraphs below in 2022, they were out of date.
-
-% $\bullet$ The database schema for \texttt{DIASource} does not appear to have an element that identifies which template image that was used. This will be needed for both Levels 1 and 3 differencing pipelines and products, for both Special Programs and WFD main survey data. DMS-REQ-0074 already does require that the identity of input exposures is stored for each difference image (LSE-61). In conversation with K.-T., we find that this isn't a problem, as it will be handled by provenance: the code configuration used and the time of processing are sufficient to identify and regenerate the template image. However, K.-T. has pointed out that the capability to regenerate the \textit{exact same} template -- the pixels that were subtracted -- is not a current deliverable. However, the stamp of the difference image will live on in the Alerts database, so we also do not foresee this as a problem.
-
-% $\bullet$ The DMAD specifies that externally defined targets can be incorporated into the \texttt{Objects} catalog (Section 3.2.5), and this may be a particular interest to Special Programs. It is unclear how such targets will be identified or flagged as such in the database schema, and whether we need to add an element for this. Currently, the \texttt{Object} database contains an element \texttt{prv\_inputId} which is an \texttt{integer}, and is described as the \textit{"Pointer to prv\_InputType. Indicates which input was used to produce a given object."} Is that all we need? {\bf JIRA ticket DM-12580 clarified that  \texttt{Object.prv\_inputID} in the database schema is one possible way to identify whether an \texttt{Object} is an externally provided coordinate}.
-
-% $\bullet$ The \texttt{Object} and \texttt{DIAObject} elements that have been reserved for variability characterization, as described in the DMAD and the DPDD, are as follows: \\
-% \texttt{Object} and \texttt{DIAObject.lcPeriodic} = \texttt{float[6 x 32]} = Periodic features extracted from light-curves using generalized Lomb-Scargle periodogram \\
-% \texttt{Object} and \texttt{DIAObject.lcNonPeriodic} = \texttt{float[6 x 32]} = Non-periodic features extracted from light-curves using generalized Lomb-Scargle periodogram \\
-% Section 6.21 of the DMAD describes the nominal algorithms to define these parameters, but as we mentioned in Section \ref{ssec:docrev_dmad}, different kinds of variability might be measurable Special Programs cadences that are quite different from the WFD main survey. Are 32 floats in each of the 6 filters always going to be a large enough volume? The Transients and Variable Stars Science Collaboration currently has a Task Force assigned to address this, and {\bf it is the topic of JIRA ticket DM-12581}.
-
-
-
-%%% MLG commented out this whole section in 2022, since LSE-180 is from 2013
-%%%  LSE-180 is deprecated?
-
-% \subsection{Photometric Calibration for the LSST Survey, \citeds{LSE-180}}
-
-% LSE-180 is built on \texttt{OpSim} runs that do include some nominal DDF, but the photometric calibration investigated in this work does not much deal with potential issues induced by non-standard visit patterns or exposure times of Special Programs, as its scope is the WFD main survey. Potential issues with DM processing -- including calibrations -- of non-standard visit exposure times is raised in Section \ref{ssec:dmplans_NSV}. Regarding the reduction and calibration of non-standard visit images, LSE-180 makes two relevant points: \\
-% $\bullet$ In LSE-180, it is assumed that all factors affecting the system transmission are stable on 15 second timescales (page 10), but not what the upper limit of that might be. \\
-% $\bullet$ LSE-180 comments on the dither pattern for the WFD survey in that "dither patterns where the overlap is one quarter of the field of view or more produce results meeting the SRD requirements", but this is specific to photometric calibration of the WFD. The LSE-180 also mentions that an inappropriate dither pattern can make it hard to correct for the variation of system bandpass as a function of the focal plane position -- but so long as this is solved in the WFD, the corrections can be applied to the much smaller amount of data from the Special Programs.
-
-% However, Lupton's recent work on calibrations has made much of LSE-180 obsolete, and it is not clear whether it is still needed as a separate document. At the time of writing, Lupton's most recent take on calibrations can be found in \url{https://github.com/lsst-dm/calibration/blob/master/calibration.pdf}. K.-T. referenced the Appendix B for the overview of calibration types, but it seems that there is not yet a final plan that can be assessed for its suitability for Special Programs. It is plausible that Special Programs could have their own calibration database, and obtaining additional calibration frames is not expected to cause a bottleneck (at the moment there is $\sim1.7$ hours per day for this, and exceeding this could eat into the engineering time). The most likely cause for trouble involving calibrations and Special Programs is the computational time needed to create the additional and/or different calibration files to be applied to non-standard Special Programs data, and/or the additional overhead required to load them in the Level 1 pipeline if the schedule interleaves SP-WFD-WFD-SP.
-
-% {\bf JIRA ticket DM-12582 is currently open, and aims to define the potential additional calibration needs of Special Programs data.}
+The DPDD is not a requirements document; Section 6 summarizes the requirements presented above and does not introduce 
+any new constraints or new information about Special Programs. 
