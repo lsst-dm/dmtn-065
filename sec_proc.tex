@@ -102,6 +102,9 @@ Decisions about when and whether to include Special Programs data in
 the WFD's processing and data products are left to the discretion of the 
 Rubin Operations Data Production and System Performance teams.
 
+Appendix~\ref{sec:spcs} provides more detailed, step-by-step data processing 
+examples for some potential Special Programs as further illustration. 
+
 
 \subsubsection{WFD Prompt Processing and Alert Production}
 
@@ -208,6 +211,8 @@ of a Special Program might be met by including the data in the WFD data
 products; especially the Prompt or DIA data products for standard visits.
 Thus, most of the RDM-generated data products considered below are for 
 static-sky Data Release data products, or data products for non-standard visits.
+Decisions about when to produce separate Special Programs data products are 
+left to the discretion of RDM.
 
 \textbf{A note about intermediate-depth ``custom" coadds -- }
 As with the annual WFD deeply coadded images and associated catalogs, RDM would 
@@ -215,8 +220,6 @@ only generate one coadd (including all images to date) for a given special regio
 Custom coadds (e.g., weekly, monthly) for very specific science goals are considered 
 user-generated data products, for both WFD and Special Programs.
 
-Decisions about when to produce separate Special Programs data products are 
-left to the discretion of RDM.
 Appendix~\ref{sec:spcs} provides more detailed, step-by-step data processing 
 examples for some potential Special Programs as further illustration. 
 
@@ -277,21 +280,19 @@ data products might be generated and released on an intermediate time scale,
 if resources allow.
 
 
-\subsubsection{Target-of-Opportunity (TOO)}
+\subsubsection{Target-of-Opportunity (TOO) Observations}
 
-Options for RDM to process TOO, especially during the first year of Operations 
+Options for RDM to process TOO observations, especially during the first year of Operations 
 when the template coverage will be low, are discussed in more detail in 
 \citeds{rtn-008}.
 
 
 \subsection{User-Generated ``Unique and Separate" Data Products}\label{ssec:proc_user}
 
-For science goals that require data products which are not possible to create with 
-the original or reconfigured versions of the 
-LSST Science Pipelines, and/or for which new algorithmic development or significant 
-computational resources are needed, 
-user-designed and user-run processing will be needed.
-
+Science goals that require data products which are not possible to create with 
+the original or reconfigured versions of the LSST Science Pipelines, 
+and/or for which new algorithmic development or significant computational resources 
+are needed, will require user processing and user-generated data products.
 As described above, custom coadds (e.g., weekly, monthly) are also left to users 
 to generate, as required by their specific science goals.
 
@@ -315,6 +316,8 @@ data on a timescale similar to prompt processing and alert production
 No user-generated pipeline may contribute alerts to the LSST alert stream on 
 any timescale.
 
+Appendix~\ref{sec:spcs} provides more detailed, step-by-step data processing examples 
+for some potential Special Programs as further illustration.
 
 \subsubsection{Deep Drilling Fields}
 
@@ -326,7 +329,7 @@ Science Pipelines.
 \subsubsection{Short-Exposure Mini-Surveys}
 
 Short-exposure images obtained during twilight, which will have a very bright sky 
-background unlike other LSST images, might require User-Generated algorithms to 
+background unlike other LSST images, might require user-generated algorithms to 
 subtract the high sky background. 
 
 Short-exposure images obtained during the night would have fewer stars for 
@@ -338,9 +341,4 @@ processing pipelines.
 
 Mini-surveys with time-domain science goals that aren't met by the Prompt pipelines, 
 e.g., those that require difference imaging with coadded images on an intermediate 
-timescale (e.g., a weekly stack), might require user-generated processing.
-
-Appendix~\ref{sec:spcs} provides more detailed, step-by-step data processing examples 
-for some potential Special Programs as further illustration. 
-
-
+timescale (e.g., a weekly stack), would require user-generated processing.
