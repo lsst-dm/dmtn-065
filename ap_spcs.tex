@@ -1,129 +1,131 @@
 \section{Special Programs Processing Examples}\label{sec:spcs}
 
-{\bf This section has not been updated since 2018.}
-
-For further insight to the DM-related needs of potential Special Programs, we can write out all of the data acquisition and processing steps, in order, that some of the proposed Special Programs might use.
-Note that we are not including any analysis in these descriptions, only processing and products. These are not necessarily complete and may even be incorrect in some places, as we are not experts in the science needs of these potential Special Programs; they could use some more thought and input.
+Step-by-step examples of the processing, either by RDM or users, 
+for data from several Special Programs. 
 
 Basic steps that we use to describe a processing case study: \\
-Step 1. Data Acquisition. \\
-Step 2. Inclusion in the Prompt Pipeline and Alert Generation. \\
-Step 3. Delivery of LSST Processed Images. \\
-Step 4. Reconfigured Processing Pipelines and Separate Data Products. \\
-Step 5. Inclusion in the DRP Data Products for the WFD Main Survey. \\
-Step 6. User-Generated Pipelines and Products. \\
+Step 1. Data acquisition. \\
+Step 2. RDM prompt processing and alert production. \\
+Step 3. RDM special processing with reconfigured pipelines. \\
+Step 4. RDM inclusion in the WFD Data Release data products. \\
+Step 5. User processing and user-generated data products. \\
 
 \subsection{Searching for TNOs with Shift-and-Stack}\label{ssec:SPCS_TNO}
 
-This Special Programs processing summary is based on Becker et al. (2011) white paper to find TNOs with shift-and stack (SAS) \citedsp{Document-11013}.
+This Special Programs processing summary is based on Becker et al. (2011) 
+white paper to find TNOs with shift-and stack (SAS) \citedsp{Document-11013}.
 
-Step 1. Data Acquisition. \\
-The observational sequence is triggered. In a single night, the 9 adjacent fields in a 3x3 grid are observed with $336$ $\times$ $15$ second $r$-band exposures. This sequence is always repeated 2-3 nights later. This re-visit sequence is repeated 3 more times: 1.5 months, 3 months, and 13.5 months later. Data obtained in the $g$-band filter is also acceptable. \citedsp{Document-11013}
+Step 1. Data acquisition. \\
+The observational sequence is triggered. 
+In a single night, the 9 adjacent fields in a 3x3 grid are observed with 
+$336$ $\times$ $15$ second $r$-band exposures. 
+This sequence is always repeated 2-3 nights later. 
+This re-visit sequence is repeated 3 more times: 1.5 months, 3 months, and 13.5 months later. 
+Data obtained in the $g$-band filter is also acceptable.
 
-Step 2. Inclusion in the Prompt Pipeline and Alert Generation. \\
-Each $2\times15$ second visit is processed in the Prompt pipeline and Alerts are released within 60 seconds.
+Step 2. RDM prompt processing and alert production. \\
+Each $2\times15$ second standard visit is processed by the Prompt pipeline 
+and alerts are released within 60 seconds.
+Within 24 hours, the {\tt DiaSource} and {\tt DiaObject} catalogs are updated
+to include the results of Prompt processing of these visits.
+After 80 hours, the processed visit images and difference images become available.
+All images and sources originating from this Special Program have 
+region and program labels, e.g., ``TNO Survey".
 
-Step 3. Delivery of LSST Processed Images. \\
-The raw, reduced, and calibrated exposures and difference images from the Prompt pipeline are made available within \texttt{L1PublicT} (currently 24 hours; LSR-REQ-0104), but this is not very relevant for this program, which requires a year of dispersed observations before the processing pipelines for SAS can be run.
+Note that the results of prompt processing is not very relevant for this Special Program,
+which requires a year of dispersed observations before the processing pipelines 
+for shift-and-stack can be run, but including them in prompt processing means
+they can contribute to LSST's other time-domain and Solar System science goals.
 
-Step 4. Reconfigured Processing Pipelines and Separate Data Products. \\
+Step 3. RDM special processing with reconfigured pipelines. \\
+None possible. 
 Shift-and-stack processing is beyond the scope of DM's algorithms.
 
-Step 5. Inclusion in the DRP Data Products for the WFD Main Survey. \\
-As with all Special Programs data, they might be included in the products of the WFD main survey if DM decides it is beneficial. However, since these images are much deeper than stacks made from the WFD survey, and the strict timing of the observations might lead to their acquisition in sub-optimal conditions, it is unlikely that they would \textit{all} be incorporated.
+Step 4. RDM inclusion in the WFD Data Release data products. \\
+All standard visits are reprocessed and included in the annual Data Release.
+Data products would include processed visit images and {\tt Source} and {\tt ForcedSource}
+catalog rows, along with difference images and {\tt DiaSource} catalog rows.
+All images and sources originating from this Special Program have 
+region and program labels, e.g., ``TNO Survey".
+As with all Special Programs data, these visits might also be included in the 
+WFD deeply coadded images if RDM decides it is both possible and beneficial. 
 
-Step 6. User-Generated Pipelines and Products. \\
-The User-Generated pipeline running the shift-and-stack processing will be set up and submitted for batch processing by the user through the Science Platform or on an external processor. Pipeline inputs will be the 336 processed exposures per field per re-visit sequence. The DRP difference imaging routine will be used with the same template tract/patch for all. Custom, User-Generated algorithms will shift the exposures and create difference images, then DRP routines can stack and do source detection and characterization and generate an object database. Custom code will derive orbital parameters for the detections and add them to a {\tt SSObjects}-like database.
+Step 5. User processing and user-generated data products. \\
+The user-generated pipeline running the shift-and-stack processing would be set up and submitted 
+for batch processing by the user through the Science Platform or on an external processor. 
+Pipeline inputs would be the 336 processed exposures per field per re-visit sequence. 
+The LSST Science Pipelines difference imaging routine could be used with the same template tract/patch for all. 
+User-generated algorithms will shift the exposures and create difference images, and then the LSST
+Science Pipelines could be used to stack and do source detection and characterization, 
+and generate an object database. 
+Custom code will derive orbital parameters for the detections (or perhaps interface with the MPC),
+and store them in a separate {\tt SSObjects}-like database.
 
-
-%\input{spcs_sas}
 
 \subsection{Searching for Supernovae in Deep Drilling Fields}\label{ssec:SPCS_SNDDF}
 
-Step 1. Data Acquisition. \\
-On a single deep drilling field, the scheduler obtains e.g., 5, 10, 10, 9, and 10 visits with $2\times15$ second exposures in $grizy$ (or similar for the night's filter set) and a small dither pattern between visits.
+Step 1. Data acquisition. \\
+On a single deep drilling field, the scheduler obtains e.g., 5, 10, 10, 9, and 10 standard visits 
+with $2\times15$ second exposures in $grizy$ (or similar for the night's filter set) 
+and a small dither pattern between visits.
 
-Step 2. Inclusion in the Prompt Pipeline and Alert Generation. \\
-Each $2\times15$ second visit is processed by the Prompt pipeline's DIA, and Alerts are released within 60 seconds. They are flagged to denote the image source is a DDF and that source association might be compromised.
+Step 2. RDM prompt processing and alert production. \\
+As in the example above, but all images and sources originating from this Special Program would have 
+region and program labels of, e.g., ``DDF Name".
 
-Step 3. Delivery of LSST Processed Images. \\
-The raw, reduced, and calibrated exposures and difference images from the Prompt pipeline are made available within \texttt{L1PublicT} (currently 24 hours; LSR-REQ-0104).
+Step 3. RDM special processing with reconfigured pipelines. \\
+The required data products for this science goal can be met by reconfiguring the DM pipelines. 
+First, a template image of appropriate depth for ``nightly" difference imaging 
+would be made using RDM stacking algorithms. 
+On nights when this DDF is observed, at the end of the sequence of observations, 
+reconfigured RDM algorithms would be automatically triggered to create a nightly deep stack, 
+PSF-match it with the appropriately-made template, 
+create a nightly deep difference image, run source detection on it, and update separate 
+{\tt DiaObject}- and {\tt DiaSource}-like catalogs.
+All of this could happen in, e.g., 24 hours, but note there is no requirement on this timescale.
+On an annual basis, deeply coadded images that include all of the DDF's visits to dates would
+be generated, along with a separate {\tt Object}-like catalog for the DDF.
 
-Step 4. Reconfigured Processing Pipelines and Separate Data Products. \\
-The required data products for this science goal can be met by reconfiguring the DM pipelines. First, a template image for the field will be made using DM stacking algorithms. On nights when this DDF is observed, at the end of the sequence of observations, DM algorithms are used to create a nightly deep stack, PSF-match it with the template, create a deep difference image, run source detection on the differences, and create separate databases of \texttt{DIAObject}, \texttt{DIASource}, and \texttt{Object} that are unique to this DDF. The LSST codes for alert packet and transport could be used to distribute the detected objects e.g., to the same brokers that receive the Alert Stream, or alternative destinations. However, these packets would not be distributed via the LSST {\tt Alert Stream}, and would need to be identified as, e.g., DDF Alerts.
+Step 4. RDM inclusion in the WFD Data Release data products. \\
+As in the example above, but all images and sources originating from this Special Program would have 
+region and program labels of, e.g., ``DDF Name".
 
-Step 5. Inclusion in the DRP Data Products for the WFD Main Survey. \\
-As with all Special Programs data, they might be included in the products of the WFD main survey if DM decides it is beneficial.
-
-Step 6. User-Generated Pipelines and Products. \\
-For the science goal of searching for supernovae in nightly stacked DDF images, no separate User-Generated software appears necessary.
+Step 5. User processing and user-generated data products. \\
+For the science goal of searching for supernovae in nightly stacked DDF images, 
+no separate user-generated processing or data products appear to be necessary.
 
 
 \subsection{A Twilight Survey with Short Exposures}\label{ssec:SPCS_Twilight}
 
-Several kinds of twilight surveys with short exposures have been or might be proposed: to put brighter stars (or transients such as supernovae) that saturate in a $15$ second image onto the LSST photometric system and/or to observe the Sweetspot, 60 degrees from the sun, for near-Earth objects. The processing case study for these is currently limited by unknowns about the first step: the reduction of processed single visit images.
+Several kinds of twilight surveys with short exposures have been or might be proposed, 
+to put brighter stars (or transients such as supernovae) that saturate in a $15$ second image onto the 
+LSST photometric system and/or to take observations that are particularly well suited 
+(e.g., are 60 degrees from the sun) for finding Near-Earth Objects (NEOs).
+The processing case study for these is currently limited by unknowns.
 
-Step 1. Data Acquisition. \\
-At a specified time (or e.g., 6 degree twilight), the scheduler begins dither pattern of short exposures. Location and exposure times are set by the sky brightness and desired saturation limits.
+Step 1. Data acquisition. \\
+At a specified time (or e.g., 6 degree twilight), the scheduler begins dither pattern of short exposures. 
+Location and exposure times are set by the sky brightness and desired saturation limits.
 
-Step 2. Inclusion in the Prompt Pipeline and Alert Generation. \\
-Pending studies of short-exposure suitability for DIA (see Section \ref{sec:procbounds}) and scalable processing capabilities to incorporate a faster image-input rate than $1$ every $30$ seconds, these data could {\it potentially} be incorporated and spawn Alerts.
+Step 2. RDM prompt processing and alert production. \\
+Pending studies of short-exposure suitability for DIA (see Section \ref{sec:procbounds}) 
+these data could {\it potentially} be processed by the Prompt pipeline and lead to alerts.
 
-Step 3. Delivery of LSST Processed Images. \\
-Pending the issues mentioned above, the raw, reduced, and calibrated exposures and difference images from the Prompt pipeline are made available within  \texttt{L1PublicT} (currently 24 hours; LSR-REQ-0104).
+Step 3. RDM special processing with reconfigured pipelines. \\
+So long as the short-exposure images can be processed and have enough stars for photometric 
+and astrometric calibration, reconfigured DM pipelines will probably be sufficient for 
+creating image and catalog products from this kind of data.
 
-Step 4. Reconfigured Processing Pipelines and Separate Data Products. \\
-This is officially not determined, but so long as the short-exposure images can be processed and have enough stars for photometric and astrometric calibration, reconfigured DM pipelines will probably be sufficient for creating image and catalog products from this kind of data.
-
-Step 5. Inclusion in the DRP Data Products for the WFD Main Survey. \\
+Step 4. RDM inclusion in the WFD Data Release data products. \\
 These short-exposure, high sky background images would not contribute to the DRP data products created for the WFD survey.
 
-Step 6. User-Generated Pipelines and Products. \\
-If short-exposure images cannot be processed with the existing DM algorithms, a User-Generated processing pipeline might be needed to reduce the raw data. 
+Step 5. User processing and user-generated data products. \\
+If short-exposure images cannot be processed with the existing DM algorithms, 
+user-generated processing would be needed to reduce the raw data. 
 
-Side note: A short-exposure survey of the bright stars of M67, described in Chapter 10.4 of the Observing Strategy White Paper \citep{2017arXiv170804058L}, suggests using the stretch goal of 0.1 second exposures or, if that is not possible, \textit{"custom pixel masks to accurately perform photometry on stars as much as 6 magnitudes brighter than the saturation level"}. This would be considered a User-Generated algorithm.
+\textbf{Side note:} A short-exposure survey of the bright stars of M67, described in Chapter 10.4 of the 
+Observing Strategy White Paper \citep{2017arXiv170804058L}, suggests using the stretch goal of 
+0.1 second exposures or, if that is not possible, \textit{"custom pixel masks to accurately perform 
+photometry on stars as much as 6 magnitudes brighter than the saturation level"}. 
+This would need user-generated processing.
 
-\subsection{The Galactic Plane Survey for Variable Stars and/or Exoplanets}\label{ssec:SPCS_GPVSEx}
-
-Step 1. Data Acquisition. \\
-The schedule incorporates fields in the Galactic Plane, and executes $2\times15$ second visits in these fields (or shorter, for a shallower depth than the WFD main survey).
-
-Step 2. Inclusion in the Prompt Pipeline and Alert Generation. \\
-Each $2\times15$ second visit is processed in the Prompt pipeline and Alerts are released within 60 seconds. Extremely crowded fields might have to be skipped if they take longer to process and violate the $60$ second latency for Alerts. 
-
-Step 3. Delivery of LSST Processed Images. \\
-The raw, reduced, and calibrated exposures and difference images from the Prompt pipeline are made available within  \texttt{L1PublicT} (currently 24 hours; LSR-REQ-0104).
-
-Step 4. Reconfigured Processing Pipelines and Separate Data Products. \\
-The image and catalog products needed for science with the Galactic Plane are very similar to the products of the Prompt and DRP pipelines, so it seems that not much reconfiguration would be needed. The biggest difference might be the incorporation of a user-supplied deblender algorithm optimized for very crowded fields.
-
-Step 5. Inclusion in the DRP Data Products for the WFD Main Survey. \\
-It is quite likely that images from the Galactic Plane will be included into the products of the WFD main survey, as they could e.g., reduce edge effects and help with global photometric classification, but this will depend on deblender performance, and left to the discretion of DM. 
-
-Step 6. User-Generated Pipelines and Products. \\
-It seems likely that science users will want to deploy their alternative deblending algorithms on this data set and create their own catalogs.
-
-\subsection{Gravitational Wave Event Follow-Up}\label{ssec:SPCS_GW}
-
-For a description of how target of opportunity data to search for the optical counterparts of gravitational wave events would be processed, see \citeds{rtn-008}.
-
-
-% \subsection{A More General Level 3 Shift-and-Stack Case Study, by Mario}\label{ssec:SPCS_SAS}
-
-% A Level 3 processing case study for shift-and-stack on a large number images. By Mario.
-
-% \#1. The scheduler is configured to repeatedly (e.g., 10 times) observe a field during the same night with longer exposure than usual (e.g., 120 sec). [ and we should take the actual numbers from the TNO-DDF whitepaper; don't have the internet right now or I would].
-
-% \#2. The images are processed as regular "Level 1" products within 60 seconds, and transmitted as alerts, with results stored into the regular L1 database. This will happen automatically for all images (perhaps within some range of exposure times?).
-
-% \#3. The raw images (and all necessary calibrations), calexps, and standard L1 diffims are made available within 10 minutes to the batch system for processing with special programs-specific codes. This is the same batch system we make available to the users for running Level 3 codes [Q for us: is it? or is is the same one that's used to process calibrations? have these systems been sized?].
-
-% \#3 a). The code running the shift-and-stack processing will be externally developed and delivered, but will be installed and operated (and change controlled!) by the LSST Operations team. That is, we don't expect someone external to the ops team to babysit the code on a nightly basis. In fact, it's the opposite: once the codes are delivered, any changes will go through LSST's software change control process.
-
-% \#4. There will be a facility to trigger program-specific processing on the batch system upon the arrival of a new image (above); this processing will then be queued up for execution. We assume that the policy for processing of special programs data may give it preferential treatment relative to general-purpose L3.
-
-% \#5. Once the processing finishes, the results of will be stored to a program-specific database. No alerts (in VOEvent sense) will be issued. We will provide a generic notification facility (perhaps something as simple as an RSS feed) that new data has been made available in a certain database/data store. [This is an example where I'd want to make sure somebody within DM is planning to provide such a facility.].
-
-% \#6. The outputs stored can be special-program specific (i.e., tables with nearly arbitrary schemas -- some columns -- like ra/dec for spatial joins -- should be present in main tables). The outputs can also contain images (stored in also special-program specific repository), or custom products (treated like opaque files). The visualizations available for these (catalogs, images, arbitrary files) through the Portal will be limited (e.g., generic table visualizations or x-y plots).
-
-% \#7. When the images are made available to the batch system (step \#3), they also become available to *everyone*. I.e., someone else could also run a custom L3 pipeline on these data, feeding their custom L3 database. (This isn't in the requirements right now -- we say that images will become available in 24hrs -- and is addressed in Section \ref{ssec:dmplans_user}).
