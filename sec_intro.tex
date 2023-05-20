@@ -1,0 +1,99 @@
+\section{Introduction} \label{sec:intro}
+
+Special Programs is a Rubin Data Management (RDM) term used to refer to survey 
+components with specific sky regions within or beyond the 
+Wide-Fast-Deep (WFD) main survey, and/or distinct cadences or 
+strategies from the WFD main survey.
+
+There are several requirements on the Rubin Data Management System (DMS) 
+related to Special Programs, summarized in Section~\ref{sec:req}.
+This document recommends implementation aspects for these requirements in order to 
+maximize science from Special Programs (Section~\ref{sec:sci}).
+
+Special Programs are driven by specific science goals that build on or 
+add to the core science pillars of the LSST.
+About 10--15\% of the total 10-year LSST time-span will be spent obtaining 
+observations associated with Special Programs (and 85--90\% for WFD).
+
+Special Programs includes non-WFD LSST components such as the Deep Drilling 
+Fields (DDFs) and the mini-, micro-, and nano-surveys; some of these components
+might use non-standard visits with different exposure times
+(see Section~\ref{ssec:intro_terms}, below, for details).
+
+
+\subsection{Additional Terms and Definitions}\label{ssec:intro_terms}
+
+\textbf{Wide-Fast-Deep (WFD) Main Survey -- }
+The core science program of the LSST, designed to achieve the science 
+goals defined by the Science Requirements Document (SRD; \citeds{LPM-17}).
+
+It is a contiguous area that covers at least $\sim$18000 deg$^2$ with 
+$\gtrsim$800 visits per field, expected to be accomplished with 85--90\% 
+of the observing time.
+As of the Phase 2 SCOC recommendations in \citeds{PSTN-055}, the WFD area 
+is considered to include the low dust extinction extragalactic regions; 
+the higher extinction, high stellar density Galactic Plane and Bulge; the 
+Virgo Cluster; the South Celestial Pole (SCP); and the North Ecliptic Spur 
+(NES). 
+
+In the past, the Galactic, SCP, and NES regions have been referred to as 
+"mini-surveys", and the scheduler software might treat them as such, but 
+this does not make them "Special Programs". 
+From a survey-scheduling perspective, they are now considered part of the 
+WFD survey.
+From a science and data-processing perspective, these components of the 
+WFD do not require special processing or separate data products.
+
+
+\textbf{Deep Drilling Field (DDF) -- }
+A single pointing for which many (e.g., a hundred) visits are obtained 
+(usually sequentially) during a single night, and repeated every few 
+nights.
+
+As of the Phase 2 SCOC recommendations in \citeds{PSTN-055}, the five 
+confirmed DDFs were:
+
+\begin{itemize}
+\item Elias S1 (00:37:48, -44:00:00)
+\item XMM-LSS (02:22:50, -04:45:00)
+\item Extended Chandra Deep Field-South (03:32:30, -28:06:00)
+\item COSMOS (10:00:24, +02:10:55)
+\item Euclid Deep Field South  (04:04:58, -48:25:23)\footnote{\url{https://www.cosmos.esa.int/web/euclid/euclid-survey}}
+\end{itemize}
+
+From a science and data-processing perspective, the DDFs do require 
+special processing or separate data products.
+
+
+\textbf{Mini-, Micro- and Nano-Surveys -- }
+Specific sky areas covered by a few hundred, a hundred, or tens of visits 
+(respectively; as in Phase 2 SCOC recommendations, \citeds{PSTN-055}).
+For a list of the current mini-surveys under consideration, see 
+\citeds{PSTN-055}.
+
+This document refers to them all together as mini-surveys.
+
+These sky areas are all (so far) either within or adjacent to the WFD area.
+In some cases these visits are non-standard (e.g., short exposures).
+
+From a data-processing and science perspective, most mini-surveys are 
+likely to require special processing or separate data products, and should 
+be considered on a case-by-base basis.
+
+
+\textbf{Visit Types -- }
+A visit is an observation of a single pointing at a given time, of which 
+there are three types:
+
+\begin{itemize}
+\item Standard Visit -- Composed of $2\times15$ second exposures (commonly referred to as ``snaps").
+\item Alternative Standard Visit -- Composed of a single $30$ second exposure.
+\item Non-Standard Visit -- Any other exposure time(s) or number of snaps.
+\end{itemize}
+
+The Phase 2 SCOC recommendations for the WFD (\citeds{PSTN-055}) are to 
+use alternative standard visits in the $u$-band and standard visits in all 
+other bands; variable exposure times were not recommended for the WFD. 
+
+Non-standard visits with shorter or longer exposure times are being 
+considered for some mini-surveys.
