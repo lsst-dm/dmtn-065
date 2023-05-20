@@ -2,11 +2,9 @@
 \usepackage{graphicx}
 \usepackage{url}
 \usepackage{latexsym}
-% \usepackage{color}
-% black, blue, brown, cyan, darkgray, gray, green, lightgray, lime, magenta, blue, orange, pink, purple, red, teal, violet, white, yellow.
 \usepackage{enumitem}
 
-\title[LSST Special Programs]{Data Management \\ and LSST Special Programs}
+\title[LSST Special Programs]{Data Management for LSST Special Programs}
 
 \author{M.~L.~Graham, M.~Juri\'{c}, K.-T.~Lim, E.~Bellm, G.~Dubois-Felsmann, L.~P.~Guy, and the Data Management System Science Team}
 
@@ -15,24 +13,28 @@
 \setDocUpstreamLocation{\url{https://github.com/lsst-dm/dmtn-065}}
 
 \setDocAbstract{
-The core LSST science goals will be met by the Wide-Fast-Deep (WFD) Main Survey, which is expected to be accomplished with 85--90\% of the observing time.
-The remaining 10--15\% of the time will be spent on Special Programs: additional survey areas and/or observing strategies that are driven by specific science goals which build on, or are beyond, the core science pillars of the LSST.
+This document provides a summary of the requirements on Rubin Data Management for processing and serving data products
+related to Special Programs: additional survey areas and/or observing strategies that are driven by specific science 
+goals which build on, or are beyond, the core science pillars of the LSST.
 
-\medskip
-This document provides a summary of the Special Programs being considered, the potential diversity of data they might produce (e.g., shorter or longer exposure times), and the role of Rubin Observatory in reducing, processing, and serving data products from Special Programs.
-The latter includes a discussion about the relevant system requirements, the needed capabilities of the LSST Science Pipelines and the Rubin Science Platform, and the cases in which Special Programs data products would be User-Generated.
+Recommendations for the specific implementations needed to fulfill these requirements and maximize science from
+Special Programs are provided on a case-by-case basis, with examples.
 
-\medskip
-The specialized, science-specific aspects of Special Programs processing and analysis that are best left to the science community are also described, and illustrated with case-study examples.
+Hardware and processing boundaries on the potential diversity of data from Special Programs 
+(e.g., longer or shorter exposure times), and the ability of the Data Management System to
+process this data, and also provided along with a discussion of when user-generated processing 
+and data products will be needed to meet some science goals.
 
-\medskip
-The main target audience of this document is Rubin Observatory staff -- the construction-era Data Management (DM) team and the operations-era Data Production (RDP) team -- but members of the science community who are planning to use Special Programs to reach their science goals may also find this document useful.
+The main target audience of this document is Rubin Observatory staff -- the construction- and operations-era Data Management
+teams -- but members of the science community who are planning to use Special Programs to reach their science goals may also 
+find this document useful.
 }
 
 \setDocChangeRecord{%
 \addtohist{0}{2017-11-14}{Status: internal working document.}{Melissa Graham}
 \addtohist{1}{2018-06-17}{Updated to finalize and issue.}{Melissa Graham}
 \addtohist{2}{2021-12-01}{Updates per DM-20375.}{Melissa Graham}
+\addtohist{3}{2023-05-31}{Updates per DM-32723.}{Melissa Graham}
 }
 
 \begin{document}
@@ -45,310 +47,28 @@ The main target audience of this document is Rubin Observatory staff -- the cons
 % \verb|\citep[][]|: \citep[e.g.,][are interesting]{LPM-17,LSE-29} \\
 % \verb|\cite|: \cite{LPM-17,LSE-29}
 
-% % % % % % % % % % % % % % % % % % 
-\section{Terms and Definitions} \label{sec:terms}
+\input{sec_intro.tex}
+x
+\input{sec_sci.tex}
 
-\subsection{Wide-Fast-Deep (WFD) Main Survey}\label{ssec:terms_wfd}
-The WFD Main Survey is the core science program of the LSST, designed to achieve the science goals defined by the Science Requirements Document (SRD; \citeds{LPM-17}).
-As of the Phase 1 SCOC recommendations in \citeds{PSTN-053}, the WFD Main Survey is thought of as several contiguous areas that cover at least $\sim$18000 deg$^2$ with $\gtrsim$800 visits per field, and is expected to be accomplished with $\sim$85\% of the observing time.
-These areas include the low-dust-extinction survey area (the largest area), the higher-extinction high stellar density Galactic Bulge, and the Magellanic Clouds.
+\input{sec_proc.tex}
 
-\subsection{Mini-Surveys}\label{sssec:terms_wfd_mini}
-As of the Phase 1 SCOC recommendations in \citeds{PSTN-053}, the term ``mini-survey" refers to additional areas that are adjacent to the WFD but are covered with a few hundred (100-300) visits per pointing.
-They are expected to be accomplished with $\sim$10\% of the total survey time.
-Mini-surveys include the North Ecliptic Spur (NES), the remainder of the Galactic Plane, and the South Celestial Pole.
-Boundaries, re-visit cadences, and depths for all WFD areas remain to be determined \citedsp{PSTN-053}.
-
-\subsection{Special Programs}\label{ssec:terms_sp}
-Special Programs are survey areas and/or observing strategies, aside from the WFD and mini-surveys, that are driven by specific science goals which either build on, or are outside of, the core science pillars of the LSST.
-Special Programs will fill the remaining $\sim$5\% of the available survey time, and include both ``deep drilling" fields and ``micro-surveys".
-
-\subsubsection{Deep Drilling Field (DDF)}\label{sssec:terms_sp_ddf}
-A DDF is a single pointing for which many exposures are obtained during the night.
-The five DDFs (below) are expected to take $\sim$5\% of the total available time.
-Generally, the LSST observing strategy for a DDF is to obtain some or all of these exposures consecutively, and to maintain a high inter-night cadence over a short season (e.g., returning every two nights over four months, \citealt{2019ApJ...873..111I}) -- but the exact strategies and total time for the LSST DDFs remain to be determined \citedsp{PSTN-053}.
-
-\begin{itemize}
-\item Elias S1 (00:37:48, -44:00:00)
-\item XMM-LSS (02:22:50, -04:45:00)
-\item Extended Chandra Deep Field-South (03:32:30, -28:06:00)
-\item COSMOS (10:00:24, +02:10:55)
-\item Euclid Deep Field South  (04:04:58, -48:25:23)\footnote{\url{https://www.cosmos.esa.int/web/euclid/euclid-survey}}
-\end{itemize}
-
-\subsubsection{Micro-Surveys}\label{sssec:terms_sp_micro}
-As of the Phase 1 SCOC recommendations in \citeds{PSTN-053}, the term ``micro-survey" refers to either new sky areas observed with a WFD-like survey, or sky areas within the WFD but observed with a specialized strategy.
-Micro-surveys are expected to take up the remaining $\sim$10\% of the total available survey time over LSST's 10 years, and those which would use $>$0.3\% of the time and are currently being considered by the SCOC are listed below (see also \citeds{PSTN-053}).
-
-\begin{itemize}
-\item short-exposure twilight visits (for near-Sun and near-Earth objects; NEOs)
-\item a static short-exposure (5 sec) map of the sky in $ugrizy$ in the first year (for calibration)
-\item an extended short-exposure survey of the sky in $ugrizy$ (for transient detection and static-sky calibration)
-\item target-of-opportunity (ToO) follow-up (to identify optical counterparts to gravitational wave sources)
-\item coverage of the Roman microlensing bulge field (potentially as a DDF)
-\item deeper $g$-band imaging of 10 local volume galaxies
-\item a high-cadence survey of 2 fields in the SMC (for microlensing)
-\item annual week-long surveys of the Carina nebula and surrounding star-forming regions
-\item a limited-visit (i.e., shallow) ``northern stripe" survey to declination $<$+30 degrees
-\item a survey of the Virgo cluster to WFD depth
-\end{itemize}
-
-Note that there remains some grey area between what is a mini-survey within the WFD, and what is a WFD-like micro-survey.
-For example, the last two on the list above (the northern stripe and the Virgo cluster) could also be (or might be in the future) called WFD mini-surveys, and not Special Programs micro-surveys.
-
-\subsection{Visit Types}\label{ssec:terms_visits}
-A visit is an observation of a single pointing at a given time, of which there are three types as listed below.
-As of the Phase 1 SCOC recommendations in \citeds{PSTN-053}, most WFD and DDF visits would be standard or alternative standard visits.
-However, non-standard visits with longer exposure times are being considered, especially for $u$-bands, and several of the micro-surveys are considering shorter exposure times.
-The full potential for diversity in Special Programs data is reviewed in Section~\ref{ssec:proc_datadiv}.
-
-\begin{itemize}
-\item Standard Visit -- Composed of $2\times15$ second exposures (commonly referred to as ``snaps").
-\item Alternative Standard Visit -- Composed of a single $30$ second exposure.
-\item Non-Standard Visit -- Any other exposure time(s) or number of snaps.
-\end{itemize}
-
-
-
-\clearpage
-% % % % % % % % % % % % % % % % % % 
-\section{Reduction and Processing for Special Programs Data Products}\label{sec:proc}
-
-
-\subsection{Requirements Related to Special Programs}\label{ssec:proc_reqs}
-% \lsrreq, \ossreq, \dmreq
-% \reqparam
-
-A detailed list of the requirements related to Special Programs is provided in Appendix~\ref{sec:docrev}.
-The most important requirements are summarized below.
-
-\subsubsection{Data Products}\label{sssec:proc_reqs_dp}
-
-Rubin Observatory and the LSST system (the observatory and the data management systems) are required to process Special Programs data to produce unique and separate data products ``whenever possible" (LSR-REQ-0121).
-
-The term ``whenever possible" includes cases where the original or reconfigured versions of the LSST Science Pipelines can be run, and excludes cases where the development of new algorithms or the allocation of significant additional computational resources are required (LSR-REQ-0121).
-
-The statement ``to produce unique and separate data products" typically refers to producing the same kinds of data products as will be generated by the Prompt and Data Release pipelines (processed visit images, coadded images, difference images, and catalogs of sources and objects for those images).
-
-It is a requirement that the cumulative size of the Special Programs data products generated by Rubin Observatory be no more than $\sim$10\% the size of the Data Release data products (i.e., proportional to the fraction of survey time spent; LSR-REQ-0121).
-
-It is a requirement that these Special Programs data products be distinct, and joinable with (in other words, they can be federated or cross-matched with) the Prompt and Data Release data products (DMS-REQ-0322).
-
-The derivation of value-added data products, such as HiPS or MOC maps, for Special Programs remains an open question (DMS-REQ-0379, 0383).
-
-\subsubsection{Metadata}\label{sssec:proc_reqs_meta}
-
-In order to support Special Programs processing, the LSST system is required to store metadata that includes program information for every raw image, such as identifiers for images obtained as part of the Main Survey or a Special Program (DMS-REQ-0068).
-
-It is required that this metadata be sufficient for Special Programs to trigger their own real-time data processing recipes ``whenever possible" (DMS-REQ-0320), and be included in alert packets (DMS-REQ-0274).
-
-\subsubsection{Processing}\label{sssec:proc_reqs_proc}
-
-It is a requirement that any Special Programs processing done with the Prompt pipeline (or a reconfigured version of it) is subject to the same timescales and latency constraints of 24 hours for the release of Prompt data products and 1 minute for the transmission of Alert packets (DMS-REQ-0344).
-
-It is also a requirement that Special Programs processing be done on timescales intermediate to the Prompt and Data Release processing, ``whenever possible" and whenever necessary to enable the intended science goals of the Special Program (LSR-REQ-0032).
-
-It is a requirement that the LSST system be able to process non-standard visits with short exposure times as low as 1 second, with a discussion note that such short exposures might have degraded image quality (LSR-REQ-0111).
-
-Processing for Special Programs by Rubin Observatory is expected to use no more than $\sim$10\% of computational and storage capacity of the Rubin data processing cluster (i.e., proportional to the fraction of survey time spent and the size of the Rubin-processed Special Programs data products; Section 6 of the DPDD).
-
-\subsubsection{User Processing}\label{sssec:proc_reqs_ug}
-
-In cases where the science goals of a Special Program require that new algorithms or software be developed, User-Generated pipelines and data products will be needed.
-
-The 10\% of the total data processing capacity that Rubin Observatory is required to reserve for all User-Generated processing includes that applied by users to Special Programs data -- in other words, there is no additional capacity {\it for users} that will be reserved only for Special Programs data (LSR-REQ-0041).
-
-
-
-\subsection{The Potential Diversity of Special Programs Data} \label{ssec:proc_datadiv}
-
-As discussed in Section~\ref{sec:terms}, most of the Special Programs that are currently under consideration will use standard or alternative standard visits.
-However, some are likely to require non-standard visits with shorter exposures (5 sec).
-Furthermore, some are likely to acquire images with a significantly brighter sky background (e.g., twilight images) than most nighttime survey images.
-
-The cadence and patterns of Special Programs might also differ from the WFD, such as long series of exposures obtained of the same field (e.g., DDFs), or a strategy optimized to find very fast-moving objects (e.g., NEOs).
-
-It does not appear that any of the currently-proposed Special Programs are likely to violate boundaries imposed by the Rubin Observatory hardware, but there remain a few open questions about boundaries on data processing imposed by the LSST Science Pipelines.
-
-\subsubsection{Hardware Boundaries}
-
-Appendix~\ref{sec:hardbounds} lists all of the hardware boundaries that might constrain the potential diversity of Special Programs data.
-
-The minimum exposure time is 1 second (stretch goal: 0.1 seconds), and there is a potential hardware boundary that limits the readout rate to 1 every 15 seconds.
-This would affect the image acquisition rate and increase the overheads of the proposed short-exposure micro-surveys.
-
-Special Programs which required the \emph{exact same} field pointing and rotation for \emph{every exposure} (to sub-arcsecond levels) might run into hardware boundaries on pointing and tracking, but none of the currently-proposed programs seem likely to be affected by this potential boundary. 
-
-Hardware imposes no other boundaries on how data can be obtained, but Special Programs that request a high number of filter changes and/or long slews could be inefficient due to large overheads.
-
-
-\subsubsection{Processing Boundaries}
-
-Appendix~\ref{sec:procbounds} describes the boundaries on what types of visits can be processed and calibrated by the LSST Science Pipelines, which are designed to process standard (or alternative standard) visits.
-
-Very short ($<$2 sec) exposures could be difficult to reduce due to an incompletely-formed PSF, and very short or very long ($>$150 sec) exposures could be difficult to calibrate due to having too few (or too few unsaturated) stars.
-As mentioned above in Section~\ref{ssec:proc_reqs}, the LSST system is required to be able to process exposure times as low as 1 second, and it is known that such short exposures might have degraded image quality.
-
-It is currently unclear whether images with very bright sky backgrounds (twilight images) can be processed with the LSST Science Pipelines, or whether user generated pipelines will be needed.
-
-The full reduction and calibration of images obtained with non-sidereal tracking, in which the stars are streaked, is currently beyond the scope of the LSST Science Pipelines, and will require a user generated pipeline.
-
-
-
-
-\subsection{Including Special Programs Data in the WFD Main Survey's Data Products}\label{ssec:proc_wfd}
-
-Instances where the Special Programs data might be included in the Prompt and/or Data Release data products alongside data from the WFD Main Survey -- i.e., the data products described by \citeds{lse-163} -- are preliminarily described.
-
-Generally, Rubin Observatory might incorporate Special Programs data into the data products for the WFD Main Survey whenever this is (1) possible and (2) scientifically beneficial.
-{\bf Decisions about when and whether to include Special Programs data in the WFD Main Survey's data products are left to the discretion of the Rubin Operations Data Production and System Performance teams.}
-
-\subsubsection{Prompt}
-
-It is expected that all Special Programs data that {\it can} be processed by the Prompt processing and Alert Production pipelines {\it would} be, alongside the standard visits from the WFD Main Survey, as this would be scientifically beneficial to the science pillars of the LSST.
-
-Non-standard visits that can be processed with the Prompt pipeline in accordance with the relevant requirements might also be included.
-
-Very short and very long exposure times might be excluded if they would need specialized algorithms or templates\footnote{If a Special Program's science goals do require specialized templates and Prompt processing, the DMS will have the capability to load and use an alternative template for some regions, based on the image metadata. However, there would not be enough memory to hold alternative templates for the whole sky region.}.
-Visits in sky regions that Rubin had not previously observed would not be able to contribute to Alert Production until a template could be generated.
-
-The data products from Special Programs images would thus contribute to all of the Prompt data products described in Section 3 of the DPDD \citedsp{lse-163}. 
-Images and catalog rows would be tagged with a program identifier indicating their Special Program of origin, so that the associated data products can be discovered and extracted by users.
-
-There are two potential issues which might complicate Prompt processing for Special Programs which obtain a sequence of images without slewing, such as the Deep Drilling Fields.
-(1) As alert packets contain the full records of all associated {\tt DIASources} from the past 12 months, alerts for {\tt DIAObjects} in the DDFs might become very large.
-(2) The association of {\it new} {\tt DIASources} into {\tt DIAObjects} will be somewhat compromised for a DDF sequence.
-The processing for the second image begins when the processing for the first image is only halfway done -- when the {\tt DIAObject} catalog has not yet updated with the new {\tt DIASources} detected in the first image.
-Thus, the {\tt DIASource} from images one and two for a new transient would not be associated with a single {\tt DIAObject}, but instead would each instantiate a new {\tt DIAObject}.
-
-As a side note, no User-Generated pipeline may contribute Alerts to the LSST Alert Stream, and since the latency on image availability is ``within 24 hours" ({\tt L1PublicT}\reqparam{L1PublicT}) no User-Generated pipeline would be able to obtain and process Special Programs data on a timescale similar to the Alert Stream (60 seconds, {\tt OTT1}\reqparam{OTT1}).
-
-\subsubsection{Solar System Processing}
-
-Since Solar System Processing takes \texttt{DIASources} as input, so any Special Programs images that can be run through the Alert Pipeline can also be incorporated into Solar System Processing.
-
-\subsubsection{Data Release}
-
-It would be both possible and scientifically beneficial to include all standard and alternative standard visits from Special Programs in {\it some aspects} of the Data Release processing -- such as the repository of processed visit images and the {\tt Source} and {\tt Forced Source} catalogs -- alongside the standard visits from the WFD Main Survey.
-Images and catalog rows would be tagged with a program identifier indicating their Special Program of origin, so that the associated data products can be discovered and extracted by users.
-
-However, some of the core LSST science goals require a WFD Main Survey data products of {\it uniform depth}.
-Whether and how to include any Special Programs data in the deep image coadds and the corresponding {\tt Object} catalog is left to the discretion of the appropriate Rubin teams in Operations.
-
-For example, perhaps Special Programs images will only be included when they bring additional area to the same depth as the rest of the WFD Main Survey, or when they suppress edge effects or low-order modes in the all-sky photometric solutions.
-
-
-\subsection{Anticipated Rubin- and User-Generated Special Programs Data Products}\label{ssec:proc_spdp}
-
-As mentioned in Section~\ref{ssec:proc_reqs}, Rubin Observatory and the LSST system are required to process Special Programs data to produce unique and separate data products whenever the original or reconfigured versions of the LSST Science Pipelines can be used.
-
-Cases where the development of new algorithms, or the allocation of significant additional computational resources, are required in order to produce unique and separate data products will require User-Generated processing.
-
-The anticipated divisions between what will be Rubin- versus User-Generated for the variety of anticipated ``unique and separate" Special Programs data products, which are designed to meet the specific science goals of the Special Programs, are {\it preliminarily} described.
-{\bf Decisions about when and whether Rubin Observatory will generate Special Programs data products are left to the discretion of the Rubin Operations Data Production and System Performance teams.}
-
-For Special Programs which will require User-Generated pipelines and data products, note that users will have access to all of the LSST Science Pipelines and its data processing infrastructure, as well as dedicated computational resources next-to-the-data (via the Rubin Science Platform; \citeds{lse-319}).
-Details of the planned ``User Batch" facility for data processing are described in \citeds{dmtn-202}.
-However, very computationally intense processing might require external resources. 
-
-Furthermore, it is expected that some User-Generated pipelines and data products might be ``adopted" or ``federated" into the LSST Science Pipelines and the Prompt and Data Release data products. 
-Details regarding this process are to be provided elsewhere.
-
-Appendix~\ref{sec:spcs} provides more detailed, step-by-step data processing examples for some potential Special Programs as further illustration. 
-
-\subsubsection{Deep Drilling Fields}
-
-As the DDFs will likely be observed with standard or alternative standard visits, it is likely that Rubin Observatory will be able to reconfigure existing pipelines to process the DDF data and produce ``unique and separate" DDF data products.
-
-Rubin-generated data products might include:\\
- - nightly-coadded images (24 h)\\
- - nightly-coadded difference images (24 h)\\
- - deeply-coadded images (all images to date; yearly)\\
- - templates for the nightly-coadded difference images (yearly)\\
- - Source- and Object-like catalogs for the night and deep coadds (yearly)\\
- - DIASource- and DIAObject-like catalogs for the nightly-coadds (24 h)\\
-
-User-Generated data products might include, for example, DDF images coadded on other timescales, or using algorithms outside of the LSST Science Pipelines.
-
-\subsubsection{Short-Exposure Surveys}
-
-Short-exposure images obtained during twilight, which will have a very bright sky background unlike other LSST images, might require User-Generated algorithms to subtract the high sky background. 
-Short-exposure images obtained during the night would have fewer stars for astrometric and photometric calibration, and might require User-Generated processing pipelines.
-
-If the Rubin Operations team decides that the LSST Science Pipelines can be reconfigured and used for short exposures, then the Rubin-generated data products would likely be similar to the Data Release data products (Section 4, \citeds{lse-163}).
-For example, a separate repository of processed visit images and coadded images, and separate (but joinable) {\tt Source}, {\tt Forced Source}, and {\tt Object} catalogs.
-
-\subsubsection{GW Target-of-Opportunity}
-
-As the science goals of any target-of-opportunity program are the immediate processing and discovery of new transient phenomena, it is very likely that all ToO programs would be designed to use standard or alternative standard visits and Prompt processing data products such as Alerts.
-Prompt processing would proceed automatically for all ToO for which an LSST template image exists.
-
-Options for Rubin Observatory to assist with or expedite the processing of ToO programs, especially during the first year of Operations when the template coverage will be low, are discussed in more detail in \citeds{rtn-008}.
-
-Other science-driven data products from ToO programs, such as custom deep stacks and difference images to find $<$5$\sigma$ transients in the fields on intermediate timescales in cases where the optical counterpart was not detected, would require User-Generated processing.
-
-\subsubsection{Micro-Surveys}
-
-Potential micro-surveys include additional sky areas, in some cases covered to a depth that is different from the WFD Main Survey, such as the proposed micro-surveys for the Roman bulge field; deeper $g$-band imaging of 10 local volume galaxies; the SMC; the Carina nebula; the northern stripe; and the Virgo Cluster.
-
-In all of these cases, if the Rubin Operations team decides that the LSST Science Pipelines can be reconfigured and used for the visits associated with these micro-surveys -- which is likely if they're using standard or alternative standard visits --  then the Rubin-generated data products would be similar to the Data Release data products (Section 4, \citeds{lse-163}).
-For example, separate repositories of processed visit images and coadded images, and separate (but joinable) {\tt Source}, {\tt Forced Source}, and {\tt Object} catalogs would be created for all of these micro-surveys.
-
-In cases where data for the micro-survey is obtained throughout the year, then the separate data products would also be produced on a yearly basis.
-In cases where the data might be all obtained within a week (e.g., Carina nebular survey), such data products would likely be generated on a shorter (intermediate) timescales. 
-
-Micro-surveys with time-domain science goals that aren't met by the Prompt pipelines -- for example if they require difference imaging with coadded images on an intermediate timescale (e.g., a weekly stack) --  might require User-Generated processing.
-
-
-\clearpage
-% % % % % % % % % % % % % % % % % % 
-\section{Enabling the Discovery and Analysis of Special Programs Data Products}\label{sec:analysis}
-
-\subsection{``Discoverability Considerations" (Visit Labels)}
-
-\begin{itemize}
-\item needs for labelling
-\item survey characterizability, selection biases
-\item provenance and origin
-\item not just for separate data products but all regions
-\item what if someone puts a micro survey in NES? labeling useful
-\end{itemize}
-
-
-\subsection{Anticipated Rubin Science Platform Capabilities for Special Programs}
-
-\begin{itemize}
-\item discoverability of SP data when browsing an all-sky map
-\item to query data by tag of WFD, WFD mini-survey, or Special Program (e.g., DDF field, micro-survey identifier)
-\end{itemize}
-
-
-\subsection{Computational Resources for User (Re-)Processing}
-
-As mentioned in Section~\ref{sssec:proc_reqs_ug}, Rubin Observatory will reserve 10\% of its total data processing capacity for users.
-This component would include {\it all} user processing and re-processing of any and all LSST data, including Special Programs. 
-
-As described in Section~\ref{ssec:proc_spdp} this processing capacity will be accessed via Rubin Science Platform, with a supported software environment and infrastructure for batch processing \citedsp{dmtn-202}.
-
-Very computationally intense processing (e.g., shift-and-stack for faint moving objects) will likely require external resources\footnote{For more details about the boundary between what Rubin Observatory will provide (in terms of data products and processing resources) and what will be left to the expertise of the science community, see \url{https://www.lsst.org/about/dm/data-products}}.
-
-
+\input{sec_req.tex}
 
 % % % % % % % % % % % % % % % % % %
 \clearpage
 \bibliography{local,lsst,refs,books,refs_ads}
 
-
 % % % % % % % % % % % % % % % % % %
 \clearpage
 \appendix
 
-\input{ap_docrev.tex}
-
-\input{ap_hardbounds.tex}
+\input{ap_spcs.tex}
 
 \input{ap_procbounds.tex}
 
-\input{ap_spcs.tex}
+\input{ap_hardbounds.tex}
+
+\input{ap_docrev.tex}
 
 \end{document}
