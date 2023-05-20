@@ -11,14 +11,14 @@ The LSST Science Pipelines and the DMS are designed to process standard
 It depends on the science goals related to the Special Program, but some 
 Special Programs' data can and should be processed and served along with 
 (or as a part of) the WFD data products (Section~\ref{ssec:proc_wfd}).
-Others will require unique and separate data products 
+Others will require RDM to generate unique and separate data products 
 (Section~\ref{ssec:proc_rdm}). 
 
 Cases where the Special Program obtains non-standard visits that cannot 
 be processed by the DMS (Section~\ref{ssec:proc_bounds}), and/or where 
 development of new algorithms or the allocation of significant additional 
-computational resources are needed, will require user processing 
-(Section~\ref{ssec:proc_user}).
+computational resources are needed, will require users tp generate unique
+and separate data products (Section~\ref{ssec:proc_user}).
 
 
 \subsection{Boundaries on Obtaining and Processing Non-Standard Visits} \label{ssec:proc_bounds}
@@ -29,14 +29,15 @@ use standard or alternative standard visits.
 However some Special Programs are likely to use non-standard visits with 
 shorter exposures (5 sec), and some are likely to acquire images with a 
 significantly brighter sky background (e.g., twilight images) than 
-nighttime survey images.
+standard (or altnerative) WFD main survey visits.
 
 The cadence and patterns of Special Programs might also differ from the 
 WFD, such as long series of exposures obtained of the same field 
 (e.g., DDFs), or a strategy optimized to find very fast-moving objects 
 (e.g., NEOs).
 
-None of the currently proposed Special Programs (\citedsp{PSTN-055}) 
+None of the currently proposed Special Programs listed in the Phase 2 
+SCOC recommendations \citedsp{PSTN-055} 
 seem likely to approach (or violate) any harware boundaries 
 (Section~\ref{ssec:proc_bounds_hardware}).
 
@@ -70,7 +71,8 @@ slews could be inefficient due to large overheads.
 
 \subsubsection{Processing Boundaries}\label{ssec:proc_bounds_processing}
 
-Appendix~\ref{sec:procbounds} describes the boundaries on what types of visits can be processed and calibrated by the DMS.
+Appendix~\ref{sec:procbounds} describes the boundaries on what types of visits 
+can be processed and calibrated by the DMS.
 
 Very short ($<$2 sec) exposures could be difficult to reduce due to an 
 incompletely-formed PSF, and very short or very long ($>$150 sec) 
@@ -89,7 +91,7 @@ tracking, in which the stars are streaked, is currently beyond the scope
 of the LSST Science Pipelines, and will require a user generated pipeline.
 
 
-\subsection{RDM Including Special Programs in the WFD Data Products}\label{ssec:proc_wfd}
+\subsection{Inclusion in the WFD Data Products}\label{ssec:proc_wfd}
 
 Generally, data from Special Programs should be included in the Prompt 
 and/or Data Release processing and data products alongside data from the 
@@ -108,9 +110,10 @@ of the LSST, all Special Programs data that {\it can} be processed by the
 prompt processing and alert production pipelines {\it should} be, 
 alongside visits from the WFD.
 
-This would include all standard and alternative visits in sky regions for which a template image exists.
-
-This might also include some non-standard visits (shorter or longer exposures) as long as they can be processed by the Prompt 
+This would include all standard and alternative visits in sky regions for which 
+a template image exists.
+This might also include some non-standard visits (shorter or longer exposures) 
+as long as they can be processed by the Prompt 
 pipeline\footnote{If a Special Program's science goals do require 
 specialized templates and 
 Prompt processing, the DMS will have the capability to load and use an 
@@ -126,25 +129,26 @@ Special Programs data that is processed by the Prompt pipeline would
 contribute to the Prompt data products described in Section 3 of the 
 DPDD \citedsp{lse-163}. 
 
-Difference images, {\tt DiaSources}, and alerts would have region and program labels (Section~\ref{ssec:sci_labels}), providing origin and
+Difference images, {\tt DiaSources}, and alerts would have region and 
+program labels (Section~\ref{ssec:sci_labels}), providing origin and
 provenance for brokers and users.
 
-\textbf{Two potential issues with Prompt processing for DDFs}
-(or any mini-survey that obtains a sequence of images without slewing)
-are:
+\textbf{Two potential issues with Prompt processing for DDFs}, 
+or any mini-survey that obtains a sequence of images without slewing, 
+include:
 
 (1) As alert packets contain the full records of all associated 
-{\tt DIASources} from the past 12 months, alerts for {\tt DIAObjects} in 
+{\tt DiaSources} from the past 12 months, alerts for {\tt DiaObjects} in 
 the DDFs might become very large.
 
-(2) The association of {\it new} {\tt DIASources} into {\tt DIAObjects} 
+(2) The association of {\it new} {\tt DiaSources} into {\tt DiaObjects} 
 will be somewhat compromised for a DDF sequence.
 The processing for the second image begins when the processing for the 
-first image is only halfway done; when the {\tt DIAObject} catalog has 
-not yet updated with the new {\tt DIASources} detected in the first image.
-Thus, the {\tt DIASource} from images one and two for a new transient 
-would not be associated with a single {\tt DIAObject}, but instead would 
-each instantiate a new {\tt DIAObject}.
+first image is only halfway done; when the {\tt DiaObject} catalog has 
+not yet updated with the new {\tt DiaSources} detected in the first image.
+Thus, the {\tt DiaSource} from images one and two for a new transient 
+would not be associated with a single {\tt DiaObject}, but instead would 
+each instantiate a new {\tt DiaObject}.
 
 These two issues would not impact time-domain science.
 Brokers and users would be able to use the region and program labels
@@ -154,7 +158,7 @@ data products) and, for example, avoid DDF alerts should they so choose.
 
 \subsubsection{WFD Solar System Processing}
 
-Since Solar System Processing takes \texttt{DIASources} as input, so any 
+Since Solar System Processing takes {\tt DiaSource}s as input, so any 
 Special Programs images that can be run through the Alert Pipeline can 
 also be incorporated into Solar System Processing.
 
@@ -176,20 +180,20 @@ For the same reasons as above, all Special Programs data that
 {\it can} be processed with the Data Release pipieline alongside the WFD 
 visits {\it should} be.
 
-\textbf{Deep coadds and the Object catalog -- }
+\textbf{Deep coadds and the {\tt Object} catalog -- }
 Some of the core LSST science goals require a WFD main survey data 
-products of nearly {\it uniform depth}.
+products of nearly uniform depth.
 Whether and how to include any Special Programs data in the deep image 
 coadds and the corresponding {\tt Object} catalog is left entirely to the 
-discretion of the appropriate Rubin teams in Operations.
+discretion of the RDM team in Operations.
 
 For example, perhaps Special Programs images will only be included when 
-they bring additional area to the same depth as the rest of the WFD, or when they suppress edge effects or low-order modes in the 
+they bring additional area to the same depth as the rest of the WFD, or 
+when they suppress edge effects or low-order modes in the 
 all-sky photometric solutions.
 
 For stacked images and their associated catalogs, the region labels should be
-included but the program labels would not be needed (or possible).
-
+included (but the program labels would not be needed or possible).
 
 
 \subsection{RDM-Generated ``Unique and Separate" Data Products}\label{ssec:proc_rdm}
@@ -205,16 +209,16 @@ products; especially the Prompt or DIA data products for standard visits.
 Thus, most of the RDM-generated data products considered below are for 
 static-sky Data Release data products, or data products for non-standard visits.
 
-\textbf{Custom coadds -- }
-As with the annual WFD deeply coadded images and associated catalogs, RMD would 
+\textbf{A note about intermediate-depth ``custom" coadds -- }
+As with the annual WFD deeply coadded images and associated catalogs, RDM would 
 only generate one coadd (including all images to date) for a given special region.
-Custom coadds (e.g., weekly, monthly) for specific science goals are considered 
+Custom coadds (e.g., weekly, monthly) for very specific science goals are considered 
 user-generated data products, for both WFD and Special Programs.
 
 Decisions about when to produce separate Special Programs data products are 
 left to the discretion of RDM.
-
-Appendix~\ref{sec:spcs} provides more detailed, step-by-step data processing examples for some potential Special Programs as further illustration. 
+Appendix~\ref{sec:spcs} provides more detailed, step-by-step data processing 
+examples for some potential Special Programs as further illustration. 
 
 
 \subsubsection{Deep Drilling Fields}
@@ -228,7 +232,7 @@ include:
 \begin{itemize}
 \item nightly-coadded images (24 h)
 \item nightly-coadded difference images (24 h)
-\item {\tt DIASource}- and {\tt DIAObject}-like catalogs for the nightly-coadds (24 h)
+\item {\tt DiaSource}- and {\tt DiaObject}-like catalogs for the nightly-coadds (24 h)
 \item deeply-coadded images (all images to date; yearly)
 \item templates for the nightly-coadded difference images (yearly)
 \item {\tt Source}- and {\tt Object}-like catalogs for the nightly-coadded and deeply-coadded images (yearly)
@@ -255,7 +259,7 @@ for short exposures, then the RDM-generated data products would likely be
 of a similar format to the Data Release data products 
 (Section 4, \citeds{lse-163}).
 For example, a separate repository of processed visit images and coadded 
-images, and separate (but joinable) {\tt Source}, {\tt Forced Source}, and 
+images, and separate (but joinable) {\tt Source}, {\tt ForcedSource}, and 
 {\tt Object} catalogs.
 
 
@@ -269,7 +273,7 @@ Data Release data products: static-sky coadded images and associated
 
 In cases where the observations are all obtained with a short season 
 (e.g., a week spent observing a specific region), such ``annual" 
-data products might be generated on an intermediate time scale, 
+data products might be generated and released on an intermediate time scale, 
 if resources allow.
 
 
@@ -303,7 +307,7 @@ might be ``adopted" or ``federated" into the LSST Science Pipelines and the Prom
 and Data Release data products, however, details regarding the federation of 
 user-generated data products are to be provided elsewhere.
 
-\textbf{Prompt Processing / Alert Production -- }
+\textbf{A note prompt processing and alert production -- }
 As the latency on processed visit image availability has an 80-hour
 embargo, no user-generated pipeline will be able to process Special Programs 
 data on a timescale similar to prompt processing and alert production 
@@ -336,6 +340,7 @@ Mini-surveys with time-domain science goals that aren't met by the Prompt pipeli
 e.g., those that require difference imaging with coadded images on an intermediate 
 timescale (e.g., a weekly stack), might require user-generated processing.
 
-Appendix~\ref{sec:spcs} provides more detailed, step-by-step data processing examples for some potential Special Programs as further illustration. 
+Appendix~\ref{sec:spcs} provides more detailed, step-by-step data processing examples 
+for some potential Special Programs as further illustration. 
 
 
