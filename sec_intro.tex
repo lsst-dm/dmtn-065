@@ -1,14 +1,16 @@
 \section{Introduction} \label{sec:intro}
 
+\subsection{Takeaways for Rubin Data Management}
+
 The three memoranda for Rubin Data Management regarding Special Programs are:
 \begin{enumerate}
 \item All visits should have both a region and a program label.
-These labels should be propagated to all derived data products
-(e.g., processed images, catalog data, and alerts; Section~\ref{ssec:sci_labels}).
+These labels should be propagated to all derived data products, such as
+processed images, catalog data, and alerts. (Section~\ref{ssec:sci_labels})
 \item All visits that \emph{can} be processed by the Prompt pipelines and generate 
-alerts \emph{should} be, in support of time domain and Solar System science goals (Section~\ref{ssec:proc_wfd}).
+alerts \emph{should} be, in support of time domain and Solar System science goals. (Section~\ref{ssec:proc_wfd})
 \item Special Processing to create ``unique and separate" data products for Special Programs
-should be done when it is possible and necessary, as defined in Section~\ref{ssec:proc_rdm}. 
+should be done when it is possible and necessary, as defined in Section~\ref{ssec:proc_rdm}.
 \end{enumerate}
 
 \subsection{Terms and Definitions}\label{ssec:intro_terms}
@@ -27,24 +29,27 @@ there are three types:
 Non-standard visits with shorter or longer exposure times are being 
 considered for some Special Programs.
 
-\subsubsection{Wide Fast Deep (WFD) Main Survey}
+\subsubsection{Wide Fast Deep (WFD) Program}
 
-The WFD program is the core science program of the LSST, designed to achieve the science 
+The WFD is the core science program of the LSST, designed to achieve the science 
 goals defined by the Science Requirements Document (SRD; \citeds{LPM-17}).
 
-The WFD is defined from a scheduling perspective as a certain cadence and filter balance 
-(i.e., an observing strategy; a program) 
-that covers the low-dust region (extragalactic areas) and several special regions:
+The WFD program is defined from a scheduling perspective as a certain observing strategy
+(i.e., a set of cadences and filter balances) applied to the low-dust region 
+(extragalactic areas) and several special regions:
 the Galactic bulge and plane; the South Celestial Pole (SCP); the North Ecliptic Spur (NES);
 and the Virgo Cluster \citedsp{PSTN-055}.
 
-The WFD's regions will compose a contiguous sky footprint that covers at least $\sim$18000 deg$^2$ with 
-$\gtrsim$800 visits per field, expected to be accomplished with 85--90\% 
-of the observing time.
+The WFD's regions will compose a contiguous sky footprint that covers at 
+least $\sim$18000 deg$^2$ with $\gtrsim$800 visits per field, 
+and is expected to be accomplished with 85--90\% of the observing time.
 
 The WFD is expected to use alternative standard visits in the $u$-band and 
 standard visits in all other bands \citedsp{PSTN-055}.
-Rolling cadence is expected to be implemented in the low-dust region only.
+Different cadences, filter balances, rotational dithers, etc., might
+be applied in the different regions composing WFD.
+For example, rolling cadence is expected to be implemented in the low-dust region only.
+WFD program data will be processed with regular (non-special) processing.
 
 \subsubsection{Regular (non-special) processing}
 
@@ -90,7 +95,6 @@ Guidelines for user-generated processing that can be run in the
 Rubin Science Platform, and for user-generated data products that can
 be federated with the Rubin-product data products (i.e., joinable tables),
 is forthcoming.
-
 
 \subsubsection{Deep Drilling Field (DDF)}
 
