@@ -1,68 +1,99 @@
-\section{Enabling Science from Special Programs}\label{sec:sci}
+\section{Recommended Implementations to Enable Science from Special Programs}\label{sec:sci}
 
-High-level recommendations regarding RDM implementations to meet the 
-requirements related to Special Programs summarized in Section~\ref{sec:req}.
+Recommendations regarding implementations by Rubin Data Management to meet the 
+requirements related to Special Programs summarized in Section~\ref{sec:req},
+which will enable science with data from Special Programs.
 
-
-\subsection{Labeling for Queryability}\label{ssec:sci_labels}
-
-As described in Section~\ref{sec:req}, there is a requirement that metadata for 
-observations associated with Special Programs is stored and is sufficient for 
-triggering real-time data processing recipes.
-
-Additionally, the Special Program science goals require that users are able to 
-query and retrieve processed image and catalog data by specifiying the Special Program. 
-
-Labelling is also essential for provenance and mini-survey 
-characterizability (estimate selection biases), and for Special Programs 
-processing by RDM or by users.
+\subsection{Region and Program Labels}\label{ssec:sci_labels}
 
 \textbf{All visits should have a region label \textit{and} a program 
-label, and these labels should be propagated to all processed images and catalog data.}
+label, and these labels should be propagated to processed images and catalog data.}
 
 \textbf{Region Labels -- } based on Right Acension and Declination.
 Region labels should include, e.g., WFD low-dust, Galactic Plane, Galactic 
-Bulge, SCP, NES, or Virgo; DDF fieldname; mini-survey region.
-Region labels should be propagated to all processed images (visit, 
-difference, and deep coadds) and all cataloged sources and objects. 
+Bulge, SCP, NES, or Virgo; DDF fieldname; mini-survey region name.
+Region labels should be propagated to processed images (visit, 
+difference, and deep coadds), catalog sources, and catalog static-sky objects. 
 
 \textbf{Program Labels -- } 
-Should be based on survey cadeance or strategy.
+Based on survey cadeance or strategy.
 Program labels might include, e.g., WFD, DDF, mini-survey name, or other 
 options like engineering, commissioning, and director's discretionary.
-Program labels should be propagated to all single-visit processed and 
-difference images, and all cataloged sources.
+Program labels should be propagated to single-visit processed and 
+difference images and catalog sources.
 
 It would not make sense to propagate program labels to deep coadds or 
 object tables, as these data products could be a mix of programs.
 
-The existence and propagation of these labels is not a requirement.
-This document suggests that these labels be the adopted implementation for 
-the metadata requirements (see Section~\ref{ssec:req_meta}).
+The existence and propagation of these labels is not itself a requirement.
+It is recommended for implementation for three reasons.
+
+\begin{enumerate}
+
+\item To meet the requirement that metadata for observations associated 
+with Special Programs is stored, and is sufficient for triggering 
+real-time data processing recipes (Section~\ref{ssec:req_meta}).
+
+\item To enable users to query and retrieve processed image and catalog
+data associated with a specific Special Program, and meet the science goals
+of that Special Program, when regular processing as been applied 
+(e.g., Prompt Processing, Section~\ref{ssec:sci_pproc}).
+
+\item To enable provenance when Special Programs data in included in regular
+processing and the WFD program data products (e.g., if used to improve the
+all-sky coadd).
+
+\end{enumerate}
+
+\subsection{Special Processing}\label{ssec:sci_sproc}
+
+\textbf{Special Processing should be done by Rubin Data Management to 
+produce unique and separate (but joinable) data products
+for Special Programs when it is both possible and necessary.}
+
+\textbf{Possible -- } When original or reconfigured versions of the LSST
+Science Pipelines can be used, and no new algorithmic or software development,
+or significant additional computational resources, are needed.
+
+\textbf{Necessary -- } When the science goals for a Special Program cannot
+be met by only including the data in regular processing (e.g., Prompt processing).
+
+\begin{enumerate}
+
+\item To meet the requirement that Rubin Observatory produce
+unique, separate, and joinable data products whenever this is possible 
+with the original or reconfigured versions of the LSST Science Pipelines
+(Section~\ref{sec:req}).
+
+\item To enable science with Special Programs by all users, not just those
+with the time and effort to process the data, and to reduce computational
+load (and potential redundancy) in User-Generated Processing.
+
+\end{enumerate}
+
+To further illustrate this recommendation, a few examples of Special Processing
+cases are provided below.
+
+\begin{itemize}
+
+\item \textbf{Possible and necessary:}
+
+\item \textbf{Possible but not necessary:}
+a time-domain mini-survey that uses standard visits \emph{could}
+have separate difference-image analysis object and source catalogs
+generated, but this is not necessary as the science goals for the
+mini-survey can be met by processing its data with regular Prompt
+Processing (Section~\ref{ssec:sci_pproc}), and ensuring the
+data is properly labeled (Section~\ref{ssec:sci_labels}).
+
+\item \textbf{Necessary but not possible:}
+
+\end{itemize}
 
 
-\subsection{Processing and Data Products}
+RESTART EDITING PROCESS HERE
 
-As described in Section~\ref{sec:req}, there is a requirement that 
-Rubin Observatory produce unique, separate, and joinable data products 
-whenever this is possible with the original or reconfigured versions of the 
-LSST Science Pipelines (and no new algorithmic development or significant 
-computational resources are needed).
 
-From a science perspective, however, in some cases where it is \emph{possible} 
-to produce such separate data products it is not \emph{necessary}; these
-cases are discussed below.
-
-\textbf{Case A (possible but not necessary due to inclusion in WFD data products) -- } 
-For some science goals, although it would be possible to produce separate 
-data products for a Special Program with the LSST Science Pipelines, this 
-is not necessary because the visits can be processed with, and included in, 
-the WFD data products (Section~\ref{ssec:proc_wfd}).
-These cases are usually related to time domain astronomy, difference image
-analysis (DIA), prompt processing, and alert production.
-Users would simply incorporate the region and program labels in queries to restrict 
-their analysis to only a certain Special Program (or only WFD) where the 
-science goal requires it.
 
 \textbf{Case B (possible and necessary for RDM to create separate data products) -- }
 For some science goals, users will need distinct data products composed solely from visits associated with certain Special Programs (Section~\ref{ssec:proc_rdm}).
@@ -82,7 +113,14 @@ or non-standard visits that are outside the boundaries of what the LSST
 Science Pipelines can process (Section~\ref{ssec:proc_bounds}).
 
 
-\subsection{Computational Resources for User Processing}
+\subsection{Prompt Processing}\label{ssec:sci_pproc}
+
+\textbf{Special Processing should produce unique and separate data products
+for Special Programs when it is both possible and necessary.}
+
+
+
+\subsection{Computational Resources for User-Generated Processing}\label{ssec:sci_comp}
 
 As mentioned in Section~\ref{ssec:req_ug}, Rubin Observatory will reserve 10\% of its 
 total data processing capacity for users.
@@ -94,10 +132,13 @@ accessed via Rubin Science Platform, with a supported software environment and
 infrastructure for batch processing \citedsp{dmtn-202}.
 
 Very computationally intense processing (e.g., shift-and-stack for faint moving 
-objects) will likely require external resources\footnote{For more details about the boundary between what Rubin Observatory will provide (in terms of data products and processing resources) and what will be left to the expertise of the science community, see \url{https://www.lsst.org/about/dm/data-products}}.
+objects) will likely require external resources\footnote{For more details about 
+the boundary between what Rubin Observatory will provide (in terms of data products 
+and processing resources) and what will be left to the expertise of the science community, 
+see \url{https://www.lsst.org/about/dm/data-products}}.
 
 
-\subsection{Rubin Science Platform Capabilities}
+\subsection{Rubin Science Platform Capabilities}\label{ssec:sci_rsp}
 
 Users will need to be able to query for data that restricts by sky region and 
 program label. 
