@@ -1,8 +1,8 @@
-\section{Recommended Implementations to Enable Science from Special Programs}\label{sec:sci}
+\section{Recommendations to Enable Science from Special Programs}\label{sec:sci}
 
-Recommendations regarding implementations by Rubin Data Management to meet the 
-requirements related to Special Programs summarized in Section~\ref{sec:req},
-which will enable science with data from Special Programs.
+Recommended implementations for Rubin Data Management to meet the 
+requirements related to Special Programs (Section~\ref{sec:req})
+and enable science with data from Special Programs.
 
 \subsection{Region and Program Labels}\label{ssec:sci_labels}
 
@@ -17,16 +17,14 @@ difference, and deep coadds), catalog sources, and catalog static-sky objects.
 
 \textbf{Program Labels -- } 
 Based on survey cadeance or strategy.
-Program labels might include, e.g., WFD, DDF, mini-survey name, or other 
+Program labels might include, e.g., WFD, DDF, TOO, mini-survey name, or other 
 options like engineering, commissioning, and director's discretionary.
 Program labels should be propagated to single-visit processed and 
 difference images and catalog sources.
-
 It would not make sense to propagate program labels to deep coadds or 
 object tables, as these data products could be a mix of programs.
 
-The existence and propagation of these labels is not itself a requirement.
-It is recommended for implementation for three reasons.
+There are three main reasons for this recommendation.
 
 \begin{enumerate}
 
@@ -59,8 +57,9 @@ or significant additional computational resources, are needed.
 cannot be met by including the data in regular processing (e.g., Prompt processing),
 or where doing so would compromise the WFD data products (e.g., introduce non-uniformity).
 
-The definitions of possible and necessary are ultimately left to the
-discretion of Rubin Data Management in Operations.
+The definitions of possible and necessary, and the scope of Special Processing,
+are ultimately left to the discretion of Rubin Data Management in Operations.
+Note that secondary science goals may be considered as ``not necessary".
 
 There are two main reasons for this recommendation.
 
@@ -77,10 +76,8 @@ load (and potential redundancy) in User-Generated Processing.
 
 \end{enumerate}
 
-Specific examples are provided only to illustrate this recommendation,
-not to place limits on what Special Processing might be done.
-Note in particular that secondary science goals may be considered
-to require User-Generated Processing. 
+Specific examples are provided only to illustrate this recommendation.
+These examples do not place limits on what Special Processing might be done.
 
 \begin{itemize}
 
@@ -103,12 +100,12 @@ data is properly labeled (Section~\ref{ssec:sci_labels}).
 a time-domain mini-survey (or DDF) has a secondary science goal of detecting
 precursor outbursts for transients, which requires coadding images
 within windows of days, weeks, and months to reach various depths.
-This set of custom coadds may be considered as "not necessary" and requiring 
+This set of custom coadds may be considered as ``not necessary" and requiring 
 User-Generated Processing.
 
 \item \textbf{Necessary but not possible:}
 in order to find the most distant, faint Kuiper Belt Objects in the DDF,
-a specialized, computationally intensive form of "shift-and-stack" processing
+a specialized, computationally intensive form of ``shift-and-stack" processing
 is required for detection, but such algorithms are not used by the 
 LSST Science Pipelines and so User-Generated Processing will be needed (Section~\ref{ssec:SPCS_TNO}).
 A second example here is a twilight survey that uses non-standard visits 
@@ -149,7 +146,6 @@ However, a few concerns are raised in Section~\ref{ssec:proc_prompt}.
 
 Rubin Observatory will reserve 10\% of its total data processing capacity for users.
 This is already a requirement, as mentioned in Section~\ref{ssec:req_ug}.
-
 This component would include {\it all} user processing and re-processing of any and 
 all LSST data, including Special Programs. 
 
@@ -172,6 +168,9 @@ metadata as described in Section~\ref{ssec:sci_labels}, as the TAP service
 and butler already provide the mechanism for user-specified queries.
 
 Users will need to be able to discover Special Programs data products when 
-browsing data, such as all-sky maps. 
+browsing data.
+This could be accomplished with, e.g., a toggle to overlay region boundaries
+for Special Programs when browsing all-sky coadds built from WFD program data
+in the Portal Aspect.
 
 
