@@ -153,7 +153,7 @@ every few nights for a few months.
 
 \begin{enumerate}
 
-\item \textbf{{\tt DiaObject} histories may become too large for the sizing model.}
+\item \textbf{DIA Object histories may become too large for the sizing model.}
 Alert packets contain the full records of all associated 
 {\tt DiaSources} from the past 12 months, but the alert
 stream bandwidth is sized for the expected histories for
@@ -167,8 +167,7 @@ and potentially impose a mitigation strategy such as
 limiting histories to the last $N$ observations instead
 of the last 12 months in heavily-observed regions.
 
-\item \textbf{The association of {\it new} {\tt DiaSources} into {\tt DiaObjects} 
-may be compromised.}
+\item \textbf{The association of new DIA Sources into DIA Objects may be compromised.}
 For consecutive images, processing for the second image begins when the processing for the 
 first image is only halfway done.
 At this point, the {\tt DiaObject} catalog has 
@@ -257,15 +256,14 @@ in order to detect high-redshift (faint) galaxies in the DDFs,
 Rubin Data Management uses the LSST Science Pipelines to deeply
 coadd images for each field, and store the results of source
 detection and characterization in unique and separate tables that
-are included in the annual data release (Section~\ref{ssec:proc_rdm_ddf}).
+are included in the annual data release.
 
 \item \textbf{Possible but not necessary:}
 a time-domain mini-survey that uses standard visits \emph{could}
 have separate difference-image analysis object and source catalogs
 generated, but this is not necessary as the science goals for the
 mini-survey can be met by processing its data with regular Prompt
-Processing (Section~\ref{ssec:sci_pproc}), and ensuring the
-data is properly labeled (Section~\ref{ssec:sci_labels}).
+Processing, and ensuring the data is properly labeled.
 
 \item \textbf{Possible but not necessary (secondary science goals):}
 a time-domain mini-survey (or DDF) has a secondary science goal of detecting
@@ -280,16 +278,15 @@ as beyond scope and in need of User-Generated Processing.
 in order to find the most distant, faint Kuiper Belt Objects in the DDF,
 a specialized, computationally intensive form of ``shift-and-stack" processing
 is required for detection, but such algorithms are not used by the 
-LSST Science Pipelines and so User-Generated Processing will be needed (Section~\ref{ssec:SPCS_TNO}).
-A second example here is a twilight survey that uses non-standard visits 
-which are outside the boundaries of what the LSST
-Science Pipelines can process (Section~\ref{ssec:proc_bounds}).
+LSST Science Pipelines and so User-Generated Processing will be needed.
+A second example is a twilight survey that uses non-standard visits 
+which are outside the boundaries of what the LSST Science Pipelines can process.
 
 \end{itemize}
 
-Further examples of Special Processing are provided below.
+Further examples of potential Special Processing for anticipated Special Programs are provided below.
 
-\subsubsection{Deep Drilling Fields (DDFs)}
+\subsubsection{Deep Drilling Fields (DDFs)}\label{sssec:proc_special_ddf}
 
 As the DDFs will likely be observed with standard or alternative standard 
 visits, Data Management will be able to reconfigure existing pipelines for
@@ -377,7 +374,7 @@ data on a timescale similar to prompt processing and alert production
 Thus, no User-Generated Processing may contribute alerts to the LSST alert stream on 
 any timescale.
 
-Further examples of User-Generated Processing are provided below.
+Further examples of potential User-Generated Processing for anticipated Special Programs are provided below.
 
 \subsubsection{Deep Drilling Fields}
 
