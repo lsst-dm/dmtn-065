@@ -1,30 +1,16 @@
 \section{Processing Data from Special Programs}\label{sec:proc}
 
-% Rubin Observatory and the LSST Data Management System (DMS) are required 
-% to process Special Programs data to produce unique and separate data 
-% products whenever the original or reconfigured versions of the LSST 
-% Science Pipelines can be used to do so (Section~\ref{sec:req}).
+A discussion of the anticipated details and challenges related to 
+obtaining and processing data from Special Programs.
 
-% The LSST Science Pipelines and the DMS are designed to process standard 
-% (or alternative standard) visits.
+Appendix~\ref{sec:spcs} provides detailed examples for the processing
+of data from Special Programs, including scenarios in which regular,
+Special, and User-Generate Processing are all involved.
 
-% It depends on the science goals related to the Special Program, but some 
-% Special Programs' data can and should be processed and served along with 
-% (or as a part of) the WFD data products (Section~\ref{ssec:proc_wfd}).
-% Others will require RDM to generate unique and separate data products 
-% (Section~\ref{ssec:proc_rdm}). 
-
-% Cases where the Special Program obtains non-standard visits that cannot 
-% be processed by the DMS (Section~\ref{ssec:proc_bounds}), and/or where 
-% development of new algorithms or the allocation of significant additional 
-% computational resources are needed, will require users to generate unique
-% and separate data products (Section~\ref{ssec:proc_user}).
-
-
-\subsection{Boundaries on Obtaining and Processing Non-Standard Visits} \label{ssec:proc_bounds}
+\subsection{Boundaries on Non-Standard Visits} \label{ssec:proc_bounds}
 
 Special Programs that do not use standard or alternative standard visits
-might be limited by hardware or processing boundaries.
+might be affected by hardware or processing boundaries.
 
 \subsubsection{Hardware Boundaries}\label{ssec:proc_bounds_hardware}
 
@@ -34,8 +20,8 @@ might constrain the potential diversity of Special Programs data.
 In general, the currently-proposed Special Programs in \citeds{PSTN-055}
 are not anticipated to be limited by hardware boundaries.
 
-A few potential challenges to Special Programs posed by hardware
-boundaries are discussed below.
+A few potential challenges posed by hardware
+boundaries are summarized below.
 
 \begin{itemize}
 
@@ -70,8 +56,8 @@ However, those which use non-standard visits, especially those with
 short exposure time or those obtained during twilight, might
 be affected by processing boundaries.
 
-The most likely challenges to Special Programs posed by processing
-boundaries are discussed below.
+The most likely challenges posed by processing
+boundaries are summarized below.
 
 \begin{itemize}
 
@@ -97,23 +83,43 @@ User-Generated Processing would be needed.
 
 \end{itemize}
 
+\subsection{Regular (non-special) processing}\label{ssec:proc_reg}
 
-\subsection{Inclusion in the WFD Data Products}\label{ssec:proc_wfd}
+Recall that the term ``regular processing" is used only within this document,
+and refers to the image processing pipelines that are designed for, 
+and will be applied to, the WFD program's observations (Section~\ref{sec:intro}).
 
-Generally, data from Special Programs should be included in the Prompt 
-and/or Data Release processing and data products alongside data from the 
-WFD (i.e., included in the data products described by \citeds{lse-163}) 
-whenever this is (1) possible and (2) scientifically beneficial.
-
-Decisions about when and whether to include Special Programs data in 
-the WFD's processing and data products are left to the discretion of the 
-Rubin Operations Data Production and System Performance teams.
-
-Appendix~\ref{sec:spcs} provides more detailed, step-by-step data processing 
-examples for some potential Special Programs as further illustration. 
+Decisions about when to apply regular processing to Special Programs data,
+or when to include it in the data products for the WFD program 
+(e.g., if it improves the all-sky coadds), 
+are ultimately left to the discretion of the Rubin Observatory's 
+Data Management and System Performance teams.
 
 
-\subsubsection{WFD Prompt Processing and Alert Production}
+\subsubsection{Prompt Processing and Alert Production}\label{sssec:proc_reg_prompt}
+
+This might also include some non-standard visits (shorter or longer exposures), 
+as long as they can be processed by the Prompt pipeline and an appropriate template image exists.
+Visits with very short or very long exposure times (or very bright sky 
+backgrounds) might be excluded if they would need specialized algorithms for,
+e.g., instrument signature removal, difference-imaging, template-generation 
+(Section~\ref{ssec:proc_bounds}).
+
+If a Special Program's primary science goal requires specialized templates and 
+Prompt processing, the Data Management System will have the capability to load 
+and use an alternative template for some sky regions, based on the image metadata 
+(i.e., the labels described in Section~\ref{ssec:sci_labels}). 
+However, there would not be enough memory to hold alternative templates 
+for the whole sky.
+
+Including visits from Special Programs in regular Prompt processing alongside
+vists from the WFD program is not, in general, anticipated to affect WFD science goals.
+For example, analyses for a WFD-only subset could still be done using the program and
+region labels described in Section~\ref{ssec:sci_labels}.
+
+
+OLD
+
 
 As all visits can contribute to the time-domain astronomy science goals 
 of the LSST, all Special Programs data that {\it can} be processed by the 
@@ -166,14 +172,14 @@ in the data as context (i.e., as flags for potentially-compromised
 data products) and, for example, avoid DDF alerts should they so choose.
 
 
-\subsubsection{WFD Solar System Processing}
+\subsubsection{Solar System Processing}\label{sssec:proc_reg_ss}
 
 Since Solar System Processing takes {\tt DiaSource}s as input, so any 
 Special Programs images that can be run through the Alert Pipeline can 
 also be incorporated into Solar System Processing.
 
 
-\subsubsection{WFD Data Release Processing}
+\subsubsection{Data Release Processing}\label{sssec:proc_reg_dr}
 
 \textbf{Difference images, {\tt DiaSource} and {\tt DiaObject} catalogs -- }
 As all visits can contribute to the time-domain astronomy science goals 
@@ -206,20 +212,58 @@ For stacked images and their associated catalogs, the region labels should be
 included (but the program labels would not be needed or possible).
 
 
-\subsection{RDM-Generated ``Unique and Separate" Data Products}\label{ssec:proc_rdm}
+\subsection{Special Processing}\label{ssec:proc_special}
 
-Rubin Data Management (RDM) is required to produce unique, separate, and 
-joinable data products for Special Programs whenever this is possible with the 
-original or reconfigured versions of the LSST Science Pipelines, and no new 
-algorithmic development or significant computational resources are needed.
+As described in Section~\ref{ssec:sci_sproc}, 
+Special Processing should be done by Rubin Data Management to 
+produce unique and separate data products
+for Special Programs when it is both possible and necessary.
 
-As described in Section~\ref{ssec:proc_wfd}, in some cases the science goals 
-of a Special Program might be met by including the data in the WFD data 
-products; especially the Prompt or DIA data products for standard visits.
-Thus, most of the RDM-generated data products considered below are for 
-static-sky Data Release data products, or data products for non-standard visits.
-Decisions about when to produce separate Special Programs data products are 
-left to the discretion of RDM.
+In short, \emph{possible} means that original or reconfigured versions of the LSST
+Science Pipelines can be used , and \emph{necessary} means the primary science goal for Special Program
+could not be met without the data products produced by the Special Processing.
+The definitions of possible and necessary, and the scope of Special Processing,
+are ultimately left to the discretion of Rubin Data Management in Operations.
+
+Specific examples are provided only to illustrate this interpretation of possible and necessary.
+These examples do not place limits on what Special Processing might be done.
+
+\begin{itemize}
+
+\item \textbf{Possible and necessary:}
+in order to detect high-redshift (faint) galaxies in the DDFs,
+Rubin Data Management uses the LSST Science Pipelines to deeply
+coadd images for each field, and store the results of source
+detection and characterization in unique and separate tables that
+are included in the annual data release (Section~\ref{ssec:proc_rdm_ddf}).
+
+\item \textbf{Possible but not necessary:}
+a time-domain mini-survey that uses standard visits \emph{could}
+have separate difference-image analysis object and source catalogs
+generated, but this is not necessary as the science goals for the
+mini-survey can be met by processing its data with regular Prompt
+Processing (Section~\ref{ssec:sci_pproc}), and ensuring the
+data is properly labeled (Section~\ref{ssec:sci_labels}).
+
+\item \textbf{Possible but not necessary (secondary science goals):}
+a time-domain mini-survey (or DDF) has a secondary science goal of detecting
+precursor outbursts for transients, which requires coadding images
+within windows of days, weeks, and months to reach various depths.
+This set of custom coadds may be considered as ``not necessary" and requiring 
+User-Generated Processing.
+
+\item \textbf{Necessary but not possible:}
+in order to find the most distant, faint Kuiper Belt Objects in the DDF,
+a specialized, computationally intensive form of ``shift-and-stack" processing
+is required for detection, but such algorithms are not used by the 
+LSST Science Pipelines and so User-Generated Processing will be needed (Section~\ref{ssec:SPCS_TNO}).
+A second example here is a twilight survey that uses non-standard visits 
+which are outside the boundaries of what the LSST
+Science Pipelines can process (Section~\ref{ssec:proc_bounds}).
+
+\end{itemize}
+
+\textbf{Tables should be joinable -- } where feasible.
 
 \textbf{A note about intermediate-depth ``custom" coadds -- }
 As with the annual WFD deeply coadded images and associated catalogs, RDM would 
@@ -227,8 +271,6 @@ only generate one coadd (including all images to date) for a given special regio
 Custom coadds (e.g., weekly, monthly) for very specific science goals are considered 
 user-generated data products, for both WFD and Special Programs.
 
-Appendix~\ref{sec:spcs} provides more detailed, step-by-step data processing 
-examples for some potential Special Programs as further illustration. 
 
 
 \subsubsection{Deep Drilling Fields}
@@ -294,7 +336,7 @@ when the template coverage will be low, are discussed in more detail in
 \citeds{rtn-008}.
 
 
-\subsection{User-Generated ``Unique and Separate" Data Products}\label{ssec:proc_user}
+\subsection{User-Generated Processing}\label{ssec:proc_user}
 
 Science goals that require data products which are not possible to create with 
 the original or reconfigured versions of the LSST Science Pipelines, 
