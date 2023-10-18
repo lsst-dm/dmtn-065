@@ -354,6 +354,7 @@ are needed, will require user processing and user-generated data products.
 As described above, custom coadds (e.g., weekly, monthly) are also left to users 
 to generate, as required by their specific science goals.
 
+\textbf{Computational resources -- }
 Users will have access to the LSST Science Pipelines and data processing 
 infrastructure, as well as dedicated computational resources next-to-the-data, 
 via the Rubin Science Platform; \citeds{lse-319}.
@@ -361,42 +362,42 @@ Details of the planned ``User Batch" facility for data processing are described 
 \citeds{dmtn-202}.
 Very computationally intense user processing might require external resources. 
 
+\textbf{Adopting user code or data products --}
 It is expected that some User-Generated pipelines and data products 
 might be ``adopted" or ``federated" into the LSST Science Pipelines and the Prompt 
-and Data Release data products, however, details regarding the federation of 
-user-generated data products are to be provided elsewhere.
+and Data Release data products.
+Details regarding this are to be provided elsewhere.
 
-\textbf{A note prompt processing and alert production -- }
+\textbf{Alert production is restricted -- }
+User-Generated Processing will not be able to release alert packets in the LSST alert stream.
 As the latency on processed visit image availability has an 80-hour
 embargo, no user-generated pipeline will be able to process Special Programs 
 data on a timescale similar to prompt processing and alert production 
 (60 seconds to 24 hours).
-No user-generated pipeline may contribute alerts to the LSST alert stream on 
+Thus, no User-Generated Processing may contribute alerts to the LSST alert stream on 
 any timescale.
 
-Appendix~\ref{sec:spcs} provides more detailed, step-by-step data processing examples 
-for some potential Special Programs as further illustration.
+Further examples of User-Generated Processing are provided below.
 
 \subsubsection{Deep Drilling Fields}
 
-User-generated data products might include, for example, DDF images coadded on custom 
-timescales (e.g., weekly, monthly), or coadded using algorithms outside of the LSST 
-Science Pipelines.
-
+User-Generated Processing and data products might include, for example, DDF images coadded 
+on custom timescales (e.g., weekly, monthly), or coadded using algorithms outside of the 
+LSST Science Pipelines.
 
 \subsubsection{Short-Exposure Mini-Surveys}
 
 Short-exposure images obtained during twilight, which will have a very bright sky 
-background unlike other LSST images, might require user-generated algorithms to 
-subtract the high sky background. 
+background unlike other LSST images, might require specialized algorithms
+to subtract the high sky background which are not available in the LSST Science Pipelines,
+and might require User-Generated Processing.
 
-Short-exposure images obtained during the night would have fewer stars for 
-astrometric and photometric calibration, and might require user-generated 
-processing pipelines.
-
+Short-exposure images obtained during the night might have too-few stars to satisfy the
+astrometric and photometric calibration routines in the LSST Science Pipelines,
+and might require User-Generated Processing.
 
 \subsubsection{Mini-Surveys}
 
 Mini-surveys with time-domain science goals that aren't met by the Prompt pipelines, 
 e.g., those that require difference imaging with coadded images on an intermediate 
-timescale (e.g., a weekly stack), would require user-generated processing.
+timescale (e.g., a weekly stack), would require User-Generated Processing.
