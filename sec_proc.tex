@@ -5,7 +5,7 @@ obtaining and processing data from Special Programs.
 
 Appendix~\ref{sec:spcs} provides detailed examples for the processing
 of data from Special Programs, including scenarios in which regular,
-Special, and User-Generate Processing are all involved.
+Special, and User-Generated Processing are all involved.
 
 \subsection{Boundaries on Non-Standard Visits} \label{ssec:proc_bounds}
 
@@ -25,24 +25,27 @@ boundaries are summarized below.
 
 \begin{itemize}
 
-\item Special Programs that use short exposures would be limited to the
+\item \textbf{Short exposures --}
+Special Programs that use short exposures would be limited to the
 minimum exposure time is 1 second (stretch goal: 0.1 seconds).
 There is a potential hardware boundary that limits the readout rate to 1 
 every 15 seconds, which would affect the image acquisition rate and 
 increase the overheads on short exposures.
 
-\item Special Programs which require the \emph{exact same} field pointing and 
+\item \textbf{Repeated pointing --}
+Special Programs which require the \emph{exact same} field pointing and 
 rotation for \emph{every exposure} (to sub-arcsecond levels) might run 
 into hardware boundaries on pointing and tracking.
 
-\item Special Programs that request a high number of filter changes and/or long 
-slews could be inefficient due to large overheads, but there are no
-boundaries on how data can be obtained.
-
-\item Special Programs that obtain twilight images will be subject to safe
+\item \textbf{Twilight images --}
+Special Programs that obtain twilight images will be subject to safe
 limits on sky background flux, as with any astronomical camera.
 
 \end{itemize}
+
+Finally, as a side note, Special Programs that request a high number of 
+filter changes and/or long slews could be inefficient due to large overheads,
+but would not be limited by hardware boundaries.
 
 \subsubsection{Processing Boundaries}\label{ssec:proc_bounds_processing}
 
@@ -61,22 +64,26 @@ boundaries are summarized below.
 
 \begin{itemize}
 
-\item Special Programs which use very short ($<$2 sec) exposures 
+\item \textbf{Very short exposures --}
+Special Programs which use very short ($<$2 sec) exposures 
 could be difficult to reduce due to an incompletely-formed PSF 
 (Section~\ref{ssec:procbounds_expt}).
 The Data Management System is required to be able to process exposure 
 times as low as 1 second, but it is known that such short exposures might 
 have degraded image quality.
 
-\item Special Programs that use very short or very long ($>$150 sec) 
+\item \textbf{Very short or very long exposures --}
+Special Programs that use very short or very long ($>$150 sec) 
 exposures could be difficult to calibrate due to having too few 
 (or too few unsaturated) stars.
 
-\item For Special Programs which obtain images with very bright sky backgrounds
+\item \textbf{Twilight images --}
+For Special Programs which obtain images with very bright sky backgrounds
 (twilight images), it is currently unclear whether they can be processed
 with the LSST Science Pipelines; User-Generated Processing might be needed.
 
-\item The full reduction and calibration of data from any Special Programs that 
+\item \textbf{Streaked images --}
+The full reduction and calibration of data from any Special Programs that 
 use non-sidereal tracking, which produce images with star streaks, is
 currently beyond the scope of the LSST Science Pipelines; 
 User-Generated Processing would be needed.
@@ -98,6 +105,14 @@ Data Management and System Performance teams.
 
 \subsubsection{Prompt Processing and Alert Production}\label{sssec:proc_reg_prompt}
 
+As described in Section~\ref{ssec:sci_pproc}, 
+all visits that \emph{can} be processed by the Prompt pipelines and generate 
+alerts \emph{should} be, in support of time domain and Solar System science goals.
+
+\textbf{The meaning of ``can be processed".}
+The condition ``can be processed" is ultimately left to the discretion of
+Rubin Data Management in Rubin Operations, but is expected to include
+all standard and alternative visits in sky regions for which a template image exists.
 This might also include some non-standard visits (shorter or longer exposures), 
 as long as they can be processed by the Prompt pipeline and an appropriate template image exists.
 Visits with very short or very long exposure times (or very bright sky 
@@ -105,6 +120,7 @@ backgrounds) might be excluded if they would need specialized algorithms for,
 e.g., instrument signature removal, difference-imaging, template-generation 
 (Section~\ref{ssec:proc_bounds}).
 
+\textbf{The use of specialized (alternative) template images.}
 If a Special Program's primary science goal requires specialized templates and 
 Prompt processing, the Data Management System will have the capability to load 
 and use an alternative template for some sky regions, based on the image metadata 
@@ -112,72 +128,72 @@ and use an alternative template for some sky regions, based on the image metadat
 However, there would not be enough memory to hold alternative templates 
 for the whole sky.
 
+\textbf{WFD and Special Program data would co-reside.}
+No ``unique and separate" data products for the Special Progams would be 
+produced by regular Prompt processing.
+Special Programs data that is processed by the Prompt pipeline would 
+contribute to the Prompt data products for the WFD program as 
+described in Section 3 of the DPDD \citedsp{lse-163}. 
+These data products are the results of Difference Image Analysis (DIA),
+such as the difference images, catalogs of sources detected in difference
+images ({\tt DiaSources}) and associated static-sky {\tt DiaSources}
+into {\tt DiaObjects}, and alert packets.
+
 Including visits from Special Programs in regular Prompt processing alongside
 vists from the WFD program is not, in general, anticipated to affect WFD science goals.
 For example, analyses for a WFD-only subset could still be done using the program and
-region labels described in Section~\ref{ssec:sci_labels}.
+region labels described in Section~\ref{ssec:sci_labels}, which would be
+propogated to difference images, difference-image catalogss, and alerts.
 
+\subsubsubsection{Potential issues with Prompt processing for untiled sequences from Special Programs.}
 
-OLD
+There are two potential issues with Prompt processing for DDFs, or any mini-survey 
+that obtains a sequence of untiled images: images at the same pointing or which overlap.
+For example, a DDF which obtains a hour-long series of about a hundred images at the same coordinates,
+every few nights for a few months.
 
+\begin{enumerate}
 
-As all visits can contribute to the time-domain astronomy science goals 
-of the LSST, all Special Programs data that {\it can} be processed by the 
-prompt processing and alert production pipelines {\it should} be, 
-alongside visits from the WFD.
+\item {\tt DiaObject} histories may become too large for the sizing model.
+Alert packets contain the full records of all associated 
+{\tt DiaSources} from the past 12 months, but the alert
+stream bandwidth is sized for the expected histories for
+WFD program fields. 
+The Prompt pipeline resources are also sized for the
+WFD program, and it might not be possible to load up
+thousands of epochs at a time.
+The Data Management team will have to test the realized
+capabilities of Prompt processing and alert distribtuion,
+and potentially impose a mitigation strategy such as
+limiting histories to the last $N$ observations instead
+of the last 12 months in heavily-observed regions.
 
-This would include all standard and alternative visits in sky regions for which 
-a template image exists.
-This might also include some non-standard visits (shorter or longer exposures) 
-as long as they can be processed by the Prompt 
-pipeline\footnote{If a Special Program's science goals do require 
-specialized templates and 
-Prompt processing, the DMS will have the capability to load and use an 
-alternative template for some regions, based on the image metadata. 
-However, there would not be enough memory to hold alternative templates 
-for the whole sky region.}.
-
-Visits with very short or very long exposure times (or very bright sky 
-backgrounds) might be excluded if they would 
-need specialized algorithms for difference-imaging or template-generation.
-
-Special Programs data that is processed by the Prompt pipeline would 
-contribute to the Prompt data products described in Section 3 of the 
-DPDD \citedsp{lse-163}. 
-
-Difference images, {\tt DiaSources}, and alerts would have region and 
-program labels (Section~\ref{ssec:sci_labels}), providing origin and
-provenance for brokers and users.
-
-\textbf{Two potential issues with Prompt processing for DDFs}, 
-or any mini-survey that obtains a sequence of images without slewing, 
-include:
-
-(1) As alert packets contain the full records of all associated 
-{\tt DiaSources} from the past 12 months, alerts for {\tt DiaObjects} in 
-the DDFs might become very large.
-
-(2) The association of {\it new} {\tt DiaSources} into {\tt DiaObjects} 
-will be somewhat compromised for a DDF sequence.
-The processing for the second image begins when the processing for the 
-first image is only halfway done; when the {\tt DiaObject} catalog has 
-not yet updated with the new {\tt DiaSources} detected in the first image.
-Thus, the {\tt DiaSource} from images one and two for a new transient 
+\item The association of {\it new} {\tt DiaSources} into {\tt DiaObjects} 
+may be compromised.
+For consecutive images, processing for the second image begins when the processing for the 
+first image is only halfway done.
+At this point, the {\tt DiaObject} catalog has 
+not yet been updated with the new {\tt DiaSources} detected in the first image.
+Thus, the {\tt DiaSource}s from images one and two for a new transient 
 would not be associated with a single {\tt DiaObject}, but instead would 
 each instantiate a new {\tt DiaObject}.
 
-These two issues would not impact time-domain science.
-Brokers and users would be able to use the region and program labels
-in the data as context (i.e., as flags for potentially-compromised 
-data products) and, for example, avoid DDF alerts should they so choose.
+\end{enumerate}
 
+These two potential issues pose challenges, but are not showstoppers in processing 
+Special Programs data with the Prompt pipelines. 
+The overall impact on time-domain science would still be positive, even 
+if mitigations are needed for these issues.
+For example, brokers and users would be able to use the region and program labels
+in the data as context (i.e., as flags) and avoid including 
+limited-history or potentially-compromised {\tt DiaSources} in their
+analyses if necessary.
 
 \subsubsection{Solar System Processing}\label{sssec:proc_reg_ss}
 
-Since Solar System Processing takes {\tt DiaSource}s as input, so any 
-Special Programs images that can be run through the Alert Pipeline can 
-also be incorporated into Solar System Processing.
-
+Since Solar System Processing takes {\tt DiaSource}s as input, any 
+Special Programs images that are processed by the Prompt pipeline
+could be incorporated into Solar System Processing as well.
 
 \subsubsection{Data Release Processing}\label{sssec:proc_reg_dr}
 
