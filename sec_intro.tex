@@ -4,15 +4,18 @@ The three memoranda for Rubin Data Management regarding Special Programs are:
 
 \begin{enumerate}
 
-\item All visits should have both a region and a program label.
-These labels should be propagated to all derived data products, such as
-processed images, catalog data, and alerts. (Section~\ref{ssec:sci_labels})
+\item All visits should have a region label \textit{and} a program 
+label, and these labels should be propagated to processed images and catalog data.
+(Section~\ref{ssec:sci_labels})
+
+\item Special Processing should be done by Rubin Data Management to 
+produce unique and separate (but joinable) data products
+for Special Programs when it is both possible and necessary.
+(Section~\ref{ssec:sci_sproc}).
 
 \item All visits that \emph{can} be processed by the Prompt pipelines and generate 
-alerts \emph{should} be, in support of time domain and Solar System science goals. (Section~\ref{ssec:proc_wfd})
-
-\item Special Processing to create ``unique and separate" data products for Special Programs
-should be done when it is possible and necessary, as defined in Section~\ref{ssec:proc_rdm}.
+alerts \emph{should} be, in support of time domain and Solar System science goals.
+(Section~\ref{ssec:sci_pproc})
 
 \end{enumerate}
 
@@ -76,11 +79,10 @@ the WFD program's plans for that region (e.g., different visit type, cadence, fi
 
 Special Programs are typically driven by specific science goals that build on or 
 add to the core science pillars of the LSST.
-
-About 10--15\% of the total 10-year LSST time-span will be spent obtaining 
-observations associated with Special Programs.
-Special Programs includes non-WFD LSST components such as the Deep Drilling 
+They include non-WFD LSST components such as the Deep Drilling 
 Fields (DDFs) and the mini-, micro-, and nano-surveys \citedsp{PSTN-055}.
+About 10--15\% of the total 10-year LSST will be spent obtaining 
+observations associated with Special Programs.
 
 Data products from Special Programs is subject to the Rubin Data Policy \citedsp{RDO-013}
 in the same way as data products from the WFD program.
@@ -133,8 +135,8 @@ confirmed DDFs were:
 \item Euclid Deep Field South  (04:04:58, -48:25:23)\footnote{\url{https://www.cosmos.esa.int/web/euclid/euclid-survey}}
 \end{itemize}
 
-The DDFs will require Special Processing (Section~\ref{ssec:proc_rdm})
-and may also benefit from User-Generated Processing.
+Processing for the DDF images is likely to be a combination of regular (Prompt) processing,
+Special Processing, and User-Generated Processing.
 
 \subsection{Mini-, Micro- and Nano-Surveys}
 
@@ -143,9 +145,10 @@ This document will refer to them collectively as mini-surveys.
 
 The sky areas of mini-surveys can be within, adjacent to, or detached from the WFD footprint.
 Mini-surveys can have non-standard visits.
-
+Target-of-opportunity observations for, e.g., the discovery of optical counterparts to 
+multi-messenger astrophysical phenomena, are considered a type of mini-survey in this document.
 For a list of the mini-surveys under consideration,
 see \citeds{PSTN-055}.
 
-Most mini-surveys are likely to require Special Processing (to be considered on a case-by-case basis),
-and some are also likely to require User-Generated Processing.
+Processing for the mini-surveys is likely to be a combination of regular (Prompt) processing,
+Special Processing, and User-Generated Processing.
