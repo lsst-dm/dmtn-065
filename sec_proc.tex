@@ -110,7 +110,7 @@ all visits that \emph{can} be processed by the Prompt pipelines and generate
 alerts \emph{should} be, in support of time domain and Solar System science goals.
 
 \textbf{The meaning of ``can be processed".}
-The condition ``can be processed" is ultimately left to the discretion of
+This is ultimately left to the discretion of
 Rubin Data Management in Rubin Operations, but is expected to include
 all standard and alternative visits in sky regions for which a template image exists.
 This might also include some non-standard visits (shorter or longer exposures), 
@@ -128,7 +128,7 @@ and use an alternative template for some sky regions, based on the image metadat
 However, there would not be enough memory to hold alternative templates 
 for the whole sky.
 
-\textbf{WFD and Special Program data would co-reside.}
+\textbf{How WFD and Special Program data would co-reside.}
 No ``unique and separate" data products for the Special Progams would be 
 produced by regular Prompt processing.
 Special Programs data that is processed by the Prompt pipeline would 
@@ -153,7 +153,7 @@ every few nights for a few months.
 
 \begin{enumerate}
 
-\item {\tt DiaObject} histories may become too large for the sizing model.
+\item \textbf{{\tt DiaObject} histories may become too large for the sizing model.}
 Alert packets contain the full records of all associated 
 {\tt DiaSources} from the past 12 months, but the alert
 stream bandwidth is sized for the expected histories for
@@ -167,8 +167,8 @@ and potentially impose a mitigation strategy such as
 limiting histories to the last $N$ observations instead
 of the last 12 months in heavily-observed regions.
 
-\item The association of {\it new} {\tt DiaSources} into {\tt DiaObjects} 
-may be compromised.
+\item \textbf{The association of {\it new} {\tt DiaSources} into {\tt DiaObjects} 
+may be compromised.}
 For consecutive images, processing for the second image begins when the processing for the 
 first image is only halfway done.
 At this point, the {\tt DiaObject} catalog has 
@@ -196,36 +196,26 @@ could be incorporated into Solar System Processing as well.
 
 \subsubsection{Data Release Processing}\label{sssec:proc_reg_dr}
 
-\textbf{Difference images, {\tt DiaSource} and {\tt DiaObject} catalogs -- }
-As all visits can contribute to the time-domain astronomy science goals 
-of the LSST, all Special Programs data that {\it can} be processed with 
-the difference image analysis (DIA) pipeline alongside the WFD visits 
-{\it should} be.
-All of this processing should use the same template image for a given
-field.
-Users who want, e.g., only {\tt DiaSources} a given DDF, would be 
-able to write queries using the region and program labels in the catalog.
+\textbf{Time-domain DIA data products --}
+This includes the results of the annual reprocessing of WFD program data with 
+Difference Image Analysis (DIA), and the production of Data Release
+versions of the processed images (single-visit and difference images)
+and associated catalogs ({\tt DiaSource}, {\tt DiaObject}, {\tt Source},
+{\tt ForcedSource}, {\tt DiaForcedSource}, and so on).
+These data products will be used primarily for time-domain science.
+They should include Special Programs data for the same reasons as
+provided in Section~\ref{ssec:sci_pproc}, and with the same 
+considerations as discussed in Section~\ref{sssec:proc_reg_prompt}.
+This processing should use the same template image for a given field.
 
-\textbf{Processed visit images, {\tt Source} and {\tt ForcedSource} catalogs -- }
-For the same reasons as above, all Special Programs data that 
-{\it can} be processed with the Data Release pipieline alongside the WFD 
-visits {\it should} be.
-
-\textbf{Deep coadds and the {\tt Object} catalog -- }
-Some of the core LSST science goals require a WFD main survey data 
-products of nearly uniform depth.
-Whether and how to include any Special Programs data in the deep image 
-coadds and the corresponding {\tt Object} catalog is left entirely to the 
-discretion of the RDM team in Operations.
-
-For example, perhaps Special Programs images will only be included when 
-they bring additional area to the same depth as the rest of the WFD, or 
-when they suppress edge effects or low-order modes in the 
+\textbf{Static-sky data products --}
+This includes the tessellation and coaddition of WFD program images
+and the associated multi-band {\tt Object} catalog and survey property maps.
+Whether and how to include any Special Programs data in these data products
+is left entirely to the discretion of the Rubin Data Management team in Operations.
+As an example, perhaps Special Programs images will only be included when they 
+assist with uniformity or suppress edge effects or low-order modes in the 
 all-sky photometric solutions.
-
-For stacked images and their associated catalogs, the region labels should be
-included (but the program labels would not be needed or possible).
-
 
 \subsection{Special Processing}\label{ssec:proc_special}
 
@@ -237,7 +227,24 @@ for Special Programs when it is both possible and necessary.
 In short, \emph{possible} means that original or reconfigured versions of the LSST
 Science Pipelines can be used , and \emph{necessary} means the primary science goal for Special Program
 could not be met without the data products produced by the Special Processing.
-The definitions of possible and necessary, and the scope of Special Processing,
+
+\textbf{Joinable tables --}
+Any tables for the unique and separate data products should be joinable to the 
+data products for the WFD program, when possible.
+
+\textbf{Survey property maps --}
+As for the tesslated all-sky coadded images made from WFD program data, survey property maps
+should be made individually as part of any Special Programs that generates
+tesselated coadded images.
+
+\textbf{Special Processing timescales --}
+The timescales for Special Processing should be adopted that best serve the
+primary science goal for the Special Program.
+For example, nighly-coadd difference-image analysis for DDFs is the most
+scientifically useful if done on a daily cadence, but the deeply coadded
+images for DDF fields could be released annually.
+
+The interpretations of possible and necessary, and the scope of Special Processing,
 are ultimately left to the discretion of Rubin Data Management in Operations.
 
 Specific examples are provided only to illustrate this interpretation of possible and necessary.
@@ -266,6 +273,8 @@ precursor outbursts for transients, which requires coadding images
 within windows of days, weeks, and months to reach various depths.
 This set of custom coadds may be considered as ``not necessary" and requiring 
 User-Generated Processing.
+Note that for the WFD program data, such custom coadds are also considered 
+as beyond scope and in need of User-Generated Processing.
 
 \item \textbf{Necessary but not possible:}
 in order to find the most distant, faint Kuiper Belt Objects in the DDF,
@@ -278,24 +287,15 @@ Science Pipelines can process (Section~\ref{ssec:proc_bounds}).
 
 \end{itemize}
 
-\textbf{Tables should be joinable -- } where feasible.
+Further examples of Special Processing are provided below.
 
-\textbf{A note about intermediate-depth ``custom" coadds -- }
-As with the annual WFD deeply coadded images and associated catalogs, RDM would 
-only generate one coadd (including all images to date) for a given special region.
-Custom coadds (e.g., weekly, monthly) for very specific science goals are considered 
-user-generated data products, for both WFD and Special Programs.
-
-
-
-\subsubsection{Deep Drilling Fields}
+\subsubsection{Deep Drilling Fields (DDFs)}
 
 As the DDFs will likely be observed with standard or alternative standard 
-visits, it is likely that RDM will be able to reconfigure existing pipelines 
-to process the DDF data and produce ``unique and separate" DDF data products.
+visits, Data Management will be able to reconfigure existing pipelines for
+Special Processing to produce unique and separate DDF data products.
 
-For example, RDM-generated ``unique and separate" DDF data products might 
-include:
+For example, Special Processing for the DDF data products might include:
 \begin{itemize}
 \item nightly-coadded images (24 h)
 \item nightly-coadded difference images (24 h)
@@ -305,51 +305,45 @@ include:
 \item {\tt Source}- and {\tt Object}-like catalogs for the nightly-coadded and deeply-coadded images (yearly)
 \end{itemize}
 
-
 \subsubsection{Short-Exposure Mini-Surveys}
 
-As of the Phase 2 SCOC recommendations \citedsp{PSTN-055}, three kinds of 
-short-exposure mini-surveys were under consideration: 
-a static short exposure map of the sky in $ugrizy$ for calibration; 
-a static to transient short exposure survey; and 
-an Near-Earth Objects (NEO) twilight survey.
+As described in \citedsp{PSTN-055}, there are a few
+short-exposure mini-surveys are under consideration.
+Two examples are a short exposure map of the sky in $ugrizy$ for calibration,
+and a Near-Earth Objects (NEO) twilight survey.
 
-If either the transients or NEO short-exposure suvey is executed, and if 
-RDM finds that the LSST Science Pipelines and, specifically, template images 
-can be made and difference image analysis (DIA) run, then the RDM-generated 
-data products may be similar to the Prompt data products (potentially 
-including alerts; Section 3 of \citeds{lse-163}).
+Special Processing for short-exposure mini-surveys remains to
+be determined.
+Since it falls under the remit of Data Management to perform proper calibration,
+an evaluatation of whether short exposures for calibration are necessary
+will be done. 
+If Data Management does find that short-exposure and/or high-sky brightness images
+can be processed with reconfigured versions of the LSST Science Pipelines,
+then unique and separate data products could be generated with Special Processing.
+For the NEO twilight survey, these data products would likely be similar to the
+Prompt or DIA data products.
+For the calibration survey, these data products would like be similar to the
+annual data release tessellated coadds and associated catalog.
 
-If either of the static short-exposure mini-surveys is executed, and if 
-RDM finds that the LSST Science Pipelines can be reconfigured and used 
-for short exposures, then the RDM-generated data products would likely be 
-of a similar format to the Data Release data products 
-(Section 4, \citeds{lse-163}).
-For example, a separate repository of processed visit images and coadded 
-images, and separate (but joinable) {\tt Source}, {\tt ForcedSource}, and 
-{\tt Object} catalogs.
+\subsubsection{Standard Visit Mini-Surveys}
 
+Consider a Special Program in which a special region of sky is observed with standard
+visits but a a special strategy or cadence which is significantly distinct from the WFD program,
+and lasts for a limited amount of time.
+For example, a short-term survey of the Magellanic Clouds, with dual primary science
+goals in time-domain and static-sky science.
 
-\subsubsection{Mini-Surveys}
-
-The cases where ``unique and separate" data products for mini-surveys are 
-needed to reach the science goals of a Special Program, and are possible for 
-RDM to generate, are most likely to be of a similar format to the annual 
-Data Release data products: static-sky coadded images and associated 
-{\tt Source}- and {\tt Object}-like cataogs for standard or alternative visits.
-
-In cases where the observations are all obtained with a short season 
-(e.g., a week spent observing a specific region), such ``annual" 
-data products might be generated and released on an intermediate time scale, 
-if resources allow.
-
+In cases like this, a set of unique and separate data products with the same formats as the 
+time-domain DIA and static-sky data products described in Section~\ref{sssec:proc_reg_dr}
+should be created with Special Processing.
+They might be released with an annual data release or on an intermediate timescale, e.g.,
+within six months of the conclusion of the mini-survey observations.
 
 \subsubsection{Target-of-Opportunity (TOO) Observations}
 
 Options for RDM to process TOO observations, especially during the first year of Operations 
 when the template coverage will be low, are discussed in more detail in 
 \citeds{rtn-008}.
-
 
 \subsection{User-Generated Processing}\label{ssec:proc_user}
 
