@@ -1,94 +1,101 @@
-\section{Processing for Special Programs Data Products}\label{sec:proc}
+\section{Processing Data from Special Programs}\label{sec:proc}
 
-Rubin Observatory and the LSST Data Management System (DMS) are required 
-to process Special Programs data to produce unique and separate data 
-products whenever the original or reconfigured versions of the LSST 
-Science Pipelines can be used to do so (Section~\ref{sec:req}).
+% Rubin Observatory and the LSST Data Management System (DMS) are required 
+% to process Special Programs data to produce unique and separate data 
+% products whenever the original or reconfigured versions of the LSST 
+% Science Pipelines can be used to do so (Section~\ref{sec:req}).
 
-The LSST Science Pipelines and the DMS are designed to process standard 
-(or alternative standard) visits.
+% The LSST Science Pipelines and the DMS are designed to process standard 
+% (or alternative standard) visits.
 
-It depends on the science goals related to the Special Program, but some 
-Special Programs' data can and should be processed and served along with 
-(or as a part of) the WFD data products (Section~\ref{ssec:proc_wfd}).
-Others will require RDM to generate unique and separate data products 
-(Section~\ref{ssec:proc_rdm}). 
+% It depends on the science goals related to the Special Program, but some 
+% Special Programs' data can and should be processed and served along with 
+% (or as a part of) the WFD data products (Section~\ref{ssec:proc_wfd}).
+% Others will require RDM to generate unique and separate data products 
+% (Section~\ref{ssec:proc_rdm}). 
 
-Cases where the Special Program obtains non-standard visits that cannot 
-be processed by the DMS (Section~\ref{ssec:proc_bounds}), and/or where 
-development of new algorithms or the allocation of significant additional 
-computational resources are needed, will require users tp generate unique
-and separate data products (Section~\ref{ssec:proc_user}).
+% Cases where the Special Program obtains non-standard visits that cannot 
+% be processed by the DMS (Section~\ref{ssec:proc_bounds}), and/or where 
+% development of new algorithms or the allocation of significant additional 
+% computational resources are needed, will require users to generate unique
+% and separate data products (Section~\ref{ssec:proc_user}).
 
 
 \subsection{Boundaries on Obtaining and Processing Non-Standard Visits} \label{ssec:proc_bounds}
 
-Most of the Special Programs that are currently under consideration will 
-use standard or alternative standard visits.
-
-However some Special Programs are likely to use non-standard visits with 
-shorter exposures (5 sec), and some are likely to acquire images with a 
-significantly brighter sky background (e.g., twilight images) than 
-standard (or altnerative) WFD main survey visits.
-
-The cadence and patterns of Special Programs might also differ from the 
-WFD, such as long series of exposures obtained of the same field 
-(e.g., DDFs), or a strategy optimized to find very fast-moving objects 
-(e.g., NEOs).
-
-None of the currently proposed Special Programs listed in the Phase 2 
-SCOC recommendations \citedsp{PSTN-055} 
-seem likely to approach (or violate) any harware boundaries 
-(Section~\ref{ssec:proc_bounds_hardware}).
-
-However, some Special Programs observations seem likely to generate 
-images that cannot be processed with original or reconfigured versions of 
-the LSST Science Pipelines (Section~\ref{ssec:proc_bounds_processing}), 
-and will require user processing.
-
+Special Programs that do not use standard or alternative standard visits
+might be limited by hardware or processing boundaries.
 
 \subsubsection{Hardware Boundaries}\label{ssec:proc_bounds_hardware}
 
 Appendix~\ref{sec:hardbounds} lists all of the hardware boundaries that 
 might constrain the potential diversity of Special Programs data.
 
-The minimum exposure time is 1 second (stretch goal: 0.1 seconds), and 
-there is a potential hardware boundary that limits the readout rate to 1 
-every 15 seconds.
-This would affect the image acquisition rate and increase the overheads 
-on short exposures.
+In general, the currently-proposed Special Programs in \citeds{PSTN-055}
+are not anticipated to be limited by hardware boundaries.
 
-Special Programs which required the \emph{exact same} field pointing and 
+A few potential challenges to Special Programs posed by hardware
+boundaries are discussed below.
+
+\begin{itemize}
+
+\item Special Programs that use short exposures would be limited to the
+minimum exposure time is 1 second (stretch goal: 0.1 seconds).
+There is a potential hardware boundary that limits the readout rate to 1 
+every 15 seconds, which would affect the image acquisition rate and 
+increase the overheads on short exposures.
+
+\item Special Programs which require the \emph{exact same} field pointing and 
 rotation for \emph{every exposure} (to sub-arcsecond levels) might run 
 into hardware boundaries on pointing and tracking.
-None of the currently-proposed programs seem likely to be affected by 
-this potential boundary. 
 
-Hardware imposes no other boundaries on how data can be obtained, but 
-Special Programs that request a high number of filter changes and/or long 
-slews could be inefficient due to large overheads.
+\item Special Programs that request a high number of filter changes and/or long 
+slews could be inefficient due to large overheads, but there are no
+boundaries on how data can be obtained.
 
+\item Special Programs that obtain twilight images will be subject to safe
+limits on sky background flux, as with any astronomical camera.
+
+\end{itemize}
 
 \subsubsection{Processing Boundaries}\label{ssec:proc_bounds_processing}
 
 Appendix~\ref{sec:procbounds} describes the boundaries on what types of visits 
-can be processed and calibrated by the DMS.
+can be processed and calibrated by the Data Management System and the LSST
+Science Pipelines.
 
-Very short ($<$2 sec) exposures could be difficult to reduce due to an 
-incompletely-formed PSF, and very short or very long ($>$150 sec) 
-exposures could be difficult to calibrate due to having too few (or too 
-few unsaturated) stars.
-As mentioned above the DMS is required to be able to process exposure 
-times as low as 1 second, and it is known that such short exposures might 
+Most of the currently-proposed Special Programs in \citeds{PSTN-055}
+are not anticipated to be limited by hardware boundaries.
+However, those which use non-standard visits, especially those with
+short exposure time or those obtained during twilight, might
+be affected by processing boundaries.
+
+The most likely challenges to Special Programs posed by processing
+boundaries are discussed below.
+
+\begin{itemize}
+
+\item Special Programs which use very short ($<$2 sec) exposures 
+could be difficult to reduce due to an incompletely-formed PSF 
+(Section~\ref{ssec:procbounds_expt}).
+The Data Management System is required to be able to process exposure 
+times as low as 1 second, but it is known that such short exposures might 
 have degraded image quality.
 
-It is currently unclear whether images with very bright sky backgrounds 
-(twilight images) can be processed with the LSST Science Pipelines, or 
-whether user generated pipelines will be needed.
+\item Special Programs that use very short or very long ($>$150 sec) 
+exposures could be difficult to calibrate due to having too few 
+(or too few unsaturated) stars.
 
-The full reduction and calibration of images obtained with non-sidereal 
-tracking, in which the stars are streaked, is currently beyond the scope 
-of the LSST Science Pipelines, and will require a user generated pipeline.
+\item For Special Programs which obtain images with very bright sky backgrounds
+(twilight images), it is currently unclear whether they can be processed
+with the LSST Science Pipelines; User-Generated Processing might be needed.
+
+\item The full reduction and calibration of data from any Special Programs that 
+use non-sidereal tracking, which produce images with star streaks, is
+currently beyond the scope of the LSST Science Pipelines; 
+User-Generated Processing would be needed.
+
+\end{itemize}
 
 
 \subsection{Inclusion in the WFD Data Products}\label{ssec:proc_wfd}
