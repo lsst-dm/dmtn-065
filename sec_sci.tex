@@ -55,8 +55,14 @@ for Special Programs when it is both possible and necessary.}
 Science Pipelines can be used, and no new algorithmic or software development,
 or significant additional computational resources, are needed.
 
-\textbf{Necessary -- } When the science goals for a Special Program cannot
-be met by only including the data in regular processing (e.g., Prompt processing).
+\textbf{Necessary -- } When the primary science goal for a Special Program 
+cannot be met by including the data in regular processing (e.g., Prompt processing),
+or where doing so would compromise the WFD data products (e.g., introduce non-uniformity).
+
+The definitions of possible and necessary are ultimately left to the
+discretion of Rubin Data Management in Operations.
+
+There are two main reasons for this recommendation.
 
 \begin{enumerate}
 
@@ -71,12 +77,19 @@ load (and potential redundancy) in User-Generated Processing.
 
 \end{enumerate}
 
-To further illustrate this recommendation, a few examples of Special Processing
-cases are provided below.
+Specific examples are provided only to illustrate this recommendation,
+not to place limits on what Special Processing might be done.
+Note in particular that secondary science goals may be considered
+to require User-Generated Processing. 
 
 \begin{itemize}
 
 \item \textbf{Possible and necessary:}
+in order to detect high-redshift (faint) galaxies in the DDFs,
+Rubin Data Management uses the LSST Science Pipelines to deeply
+coadd images for each field, and store the results of source
+detection and characterization in unique and separate tables that
+are included in the annual data release (Section~\ref{ssec:proc_rdm_ddf}).
 
 \item \textbf{Possible but not necessary:}
 a time-domain mini-survey that uses standard visits \emph{could}
@@ -86,44 +99,57 @@ mini-survey can be met by processing its data with regular Prompt
 Processing (Section~\ref{ssec:sci_pproc}), and ensuring the
 data is properly labeled (Section~\ref{ssec:sci_labels}).
 
+\item \textbf{Possible but not necessary (secondary science goals):}
+a time-domain mini-survey (or DDF) has a secondary science goal of detecting
+precursor outbursts for transients, which requires coadding images
+within windows of days, weeks, and months to reach various depths.
+This set of custom coadds may be considered as "not necessary" and requiring 
+User-Generated Processing.
+
 \item \textbf{Necessary but not possible:}
+in order to find the most distant, faint Kuiper Belt Objects in the DDF,
+a specialized, computationally intensive form of "shift-and-stack" processing
+is required for detection, but such algorithms are not used by the 
+LSST Science Pipelines and so User-Generated Processing will be needed (Section~\ref{ssec:SPCS_TNO}).
+A second example here is a twilight survey that uses non-standard visits 
+which are outside the boundaries of what the LSST
+Science Pipelines can process (Section~\ref{ssec:proc_bounds}).
 
 \end{itemize}
 
-
-RESTART EDITING PROCESS HERE
-
-
-
-\textbf{Case B (possible and necessary for RDM to create separate data products) -- }
-For some science goals, users will need distinct data products composed solely from visits associated with certain Special Programs (Section~\ref{ssec:proc_rdm}).
-These cases are usually associated with image coaddition and the static-sky catalogs 
-of sources detected and measured in the deeply coadded images. 
-
-\textbf{Case C (not possible, so user-generated data products will be needed) -- }
-For some science goals, users might require unique and separate data products, 
-new algorithms or processing routines, and/or significant additional 
-computational resources for Special Programs.
-In these situations, user processing and user-generated data products will be 
-needed (Section~\ref{ssec:proc_user}).
-These cases are usually related to time domain science goals that utilize 
-intermediate-timescale ``custom" coadds (e.g., weekly, monthly stacks), 
-science goals that require special processing like shift-and-stack techniques, 
-or non-standard visits that are outside the boundaries of what the LSST
-Science Pipelines can process (Section~\ref{ssec:proc_bounds}).
-
-
 \subsection{Prompt Processing}\label{ssec:sci_pproc}
 
-\textbf{Special Processing should produce unique and separate data products
-for Special Programs when it is both possible and necessary.}
+\textbf{All visits that \emph{can} be processed by the Prompt pipelines and generate 
+alerts \emph{should} be, in support of time domain and Solar System science goals.}
 
+The phrase ``can be processed" includes all standard and alternative visits in 
+sky regions for which a template image exists.
+This might also include some non-standard visits (shorter or longer exposures), 
+as long as they can be processed by the Prompt pipeline and an appropriate template image exists.
 
+Visits with very short or very long exposure times (or very bright sky 
+backgrounds) might be excluded if they would need specialized algorithms for,
+e.g., instrument signature removal, difference-imaging, template-generation 
+(Section~\ref{ssec:proc_bounds}).
+
+If a Special Program's primary science goal requires specialized templates and 
+Prompt processing, the Data Management System will have the capability to load 
+and use an alternative template for some sky regions, based on the image metadata 
+(i.e., the labels described in Section~\ref{ssec:sci_labels}). 
+However, there would not be enough memory to hold alternative templates 
+for the whole sky.
+
+Including visits from Special Programs in regular Prompt processing alongside
+vists from the WFD program is not, in general, anticipated to affect WFD science goals.
+For example, analyses for a WFD-only subset could still be done using the program and
+region labels described in Section~\ref{ssec:sci_labels}.
+However, a few concerns are raised in Section~\ref{ssec:proc_prompt}.
 
 \subsection{Computational Resources for User-Generated Processing}\label{ssec:sci_comp}
 
-As mentioned in Section~\ref{ssec:req_ug}, Rubin Observatory will reserve 10\% of its 
-total data processing capacity for users.
+Rubin Observatory will reserve 10\% of its total data processing capacity for users.
+This is already a requirement, as mentioned in Section~\ref{ssec:req_ug}.
+
 This component would include {\it all} user processing and re-processing of any and 
 all LSST data, including Special Programs. 
 
@@ -136,7 +162,6 @@ objects) will likely require external resources\footnote{For more details about
 the boundary between what Rubin Observatory will provide (in terms of data products 
 and processing resources) and what will be left to the expertise of the science community, 
 see \url{https://www.lsst.org/about/dm/data-products}}.
-
 
 \subsection{Rubin Science Platform Capabilities}\label{ssec:sci_rsp}
 
