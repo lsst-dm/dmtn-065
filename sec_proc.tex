@@ -69,8 +69,8 @@ Special Programs which use very short ($<$2 sec) exposures
 could be difficult to reduce due to an incompletely-formed PSF 
 (Section~\ref{ssec:procbounds_expt}).
 The Data Management System is required to be able to process exposure 
-times as low as 1 second, but it is known that such short exposures might 
-have degraded image quality.
+times as low as 1 second (Section~\ref{ssec:req_proc}), 
+but it is known that such short exposures might have degraded image quality.
 
 \item \textbf{Very short or very long exposures --}
 Special Programs that use very short or very long ($>$150 sec) 
@@ -120,6 +120,8 @@ Visits with very short or very long exposure times (or very bright sky
 backgrounds) might be excluded if they would need specialized algorithms for,
 e.g., instrument signature removal, difference-imaging, template-generation 
 (Section~\ref{ssec:proc_bounds}).
+Alert latency requirements do apply to Special Programs data (Section~\ref{ssec:req_proc}),
+and if they cannot be met then Prompt processing is ``not possible".
 
 \textbf{The use of specialized (alternative) template images.}
 If a Special Program's primary science goal requires specialized templates and 
@@ -129,7 +131,7 @@ and use an alternative template for some sky regions, based on the image metadat
 However, there would not be enough memory to hold alternative templates 
 for the whole sky.
 
-\textbf{How WFD and Special Program data would co-reside.}
+\textbf{How WFD and Special Program data would co-exist.}
 No ``unique and separate" data products for the Special Progams would be 
 produced by regular Prompt processing.
 Special Programs data that is processed by the Prompt pipeline would 
@@ -179,7 +181,7 @@ each instantiate a new {\tt DiaObject}.
 
 \end{enumerate}
 
-These two potential issues pose challenges, but are not showstoppers in processing 
+These two potential issues pose challenges, but are not necessarily showstoppers in processing 
 Special Programs data with the Prompt pipelines. 
 The overall impact on time-domain science would still be positive, even 
 if mitigations are needed for these issues.
@@ -223,6 +225,7 @@ As described in Section~\ref{ssec:sci_sproc},
 Special Processing should be done by Rubin Data Management to 
 produce unique and separate data products
 for Special Programs when it is both possible and necessary.
+This is a requirement (Section~\ref{ssec:req_dp}).
 
 In short, \emph{possible} means that original or reconfigured versions of the LSST
 Science Pipelines can be used , and \emph{necessary} means the primary science goal for Special Program
@@ -231,11 +234,13 @@ could not be met without the data products produced by the Special Processing.
 \textbf{Joinable tables --}
 Any tables for the unique and separate data products should be joinable to the 
 data products for the WFD program, when possible.
+This is a requirement (Section~\ref{ssec:req_dp}).
 
 \textbf{Survey property maps --}
 As for the tesslated all-sky coadded images made from WFD program data, survey property maps
 should be made individually as part of any Special Programs that generates
-tesselated coadded images.
+tesselated coadded images. This is \emph{not} a requirement (Section~\ref{ssec:req_dp}).
+
 
 \textbf{Special Processing timescales --}
 The timescales for Special Processing should be adopted that best serve the
