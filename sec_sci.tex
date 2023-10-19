@@ -46,7 +46,7 @@ all-sky coadd).
 \subsection{Special Processing}\label{ssec:sci_sproc}
 
 \textbf{Special Processing should be done by Rubin Data Management to 
-produce unique and separate data products
+produce unique and separate (and joinable) data products
 for Special Programs when it is both possible and necessary.}
 
 \textbf{Possible -- } When original or reconfigured versions of the LSST
@@ -57,10 +57,6 @@ or significant additional computational resources, are needed.
 cannot be met by including the data in regular processing (e.g., Prompt processing),
 or where doing so would compromise the WFD data products (e.g., introduce non-uniformity).
 
-The definitions of possible and necessary, and the scope of Special Processing,
-are ultimately left to the discretion of Rubin Data Management in Operations.
-Note that secondary science goals may be considered as ``not necessary".
-
 There are two main motivations for this recommendation.
 
 \begin{enumerate}
@@ -68,13 +64,20 @@ There are two main motivations for this recommendation.
 \item To meet the requirement that Rubin Observatory produce
 unique, separate, and joinable data products whenever this is possible 
 with the original or reconfigured versions of the LSST Science Pipelines
-(Section~\ref{sec:req}).
+(Section~\ref{ssec:req_dp}).
 
 \item To enable science with Special Programs by all users, not just those
 with the time and effort to process the data, and to reduce computational
 load (and potential redundancy) in User-Generated Processing.
 
 \end{enumerate}
+
+The definitions of possible and necessary are further illustrated with examples in Section~\ref{ssec:proc_special}.
+Note that secondary science goals may be considered as ``not necessary".
+
+The general scope of Special Processing, including situations in which cross-match and table joins 
+would be possible and scientifically relevant, 
+are ultimately left to the discretion of Rubin Data Management in Operations.
 
 Further discussion on Special Processing, with examples, is provided in Section~\ref{ssec:proc_special}.
 
@@ -99,9 +102,9 @@ is provided in Section~\ref{sssec:proc_reg_prompt}.
 \subsection{Computational Resources for User-Generated Processing}\label{ssec:sci_comp}
 
 Rubin Observatory will reserve 10\% of its total data processing capacity for users.
-This is already a requirement, as mentioned in Section~\ref{ssec:req_ug}.
 This component would include {\it all} user processing and re-processing of any and 
 all LSST data, including Special Programs. 
+This is already a requirement, as mentioned in Section~\ref{ssec:req_proc}.
 
 As described in Section~\ref{ssec:proc_user} this processing capacity will be 
 accessed via Rubin Science Platform, with a supported software environment and 
