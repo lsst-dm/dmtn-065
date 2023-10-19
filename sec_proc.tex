@@ -1,4 +1,4 @@
-\section{Processing Data from Special Programs}\label{sec:proc}
+\section{Details and Challenges of Processing Data from Special Programs}\label{sec:proc}
 
 A discussion of the anticipated details and challenges related to 
 obtaining and processing data from Special Programs.
@@ -141,7 +141,6 @@ These data products are the results of Difference Image Analysis (DIA),
 such as the difference images, catalogs of sources detected in difference
 images ({\tt DiaSources}) and associated static-sky {\tt DiaSources}
 into {\tt DiaObjects}, and alert packets.
-
 Including visits from Special Programs in regular Prompt processing alongside
 vists from the WFD program is not, in general, anticipated to affect WFD science goals.
 For example, analyses for a WFD-only subset could still be done using the program and
@@ -150,7 +149,7 @@ propogated to difference images, difference-image catalogss, and alerts.
 
 \textbf{Potential issues with Prompt processing for untiled sequences from Special Programs.}
 There are two potential issues with Prompt processing for DDFs, or any mini-survey 
-that obtains a sequence of untiled images: images at the same pointing or which overlap.
+that obtains a sequence of untiled images (images at the same pointing or which overlap).
 For example, a DDF which obtains a hour-long series of about a hundred images at the same coordinates,
 every few nights for a few months.
 
@@ -169,6 +168,8 @@ capabilities of Prompt processing and alert distribtuion,
 and potentially impose a mitigation strategy such as
 limiting histories to the last $N$ observations instead
 of the last 12 months in heavily-observed regions.
+Alerts from Special Programs data are subject to the same latency
+requirements as WFD program alerts (Section~\ref{ssec:req_proc}).
 
 \item \textbf{The association of new DIA Sources into DIA Objects may be compromised.}
 For consecutive images, processing for the second image begins when the processing for the 
@@ -241,13 +242,14 @@ As for the tesslated all-sky coadded images made from WFD program data, survey p
 should be made individually as part of any Special Programs that generates
 tesselated coadded images. This is \emph{not} a requirement (Section~\ref{ssec:req_dp}).
 
-
 \textbf{Special Processing timescales --}
 The timescales for Special Processing should be adopted that best serve the
 primary science goal for the Special Program.
 For example, nighly-coadd difference-image analysis for DDFs is the most
 scientifically useful if done on a daily cadence, but the deeply coadded
 images for DDF fields could be released annually.
+
+\subsubsection{Scenarios to illustrate ``possible and necessary"}
 
 The interpretations of possible and necessary, and the scope of Special Processing,
 are ultimately left to the discretion of Rubin Data Management in Operations.
