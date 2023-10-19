@@ -5,6 +5,17 @@
 Appendix~\ref{sec:docrev} provides a full description of the requirements 
 on the Data Management System related to Special Programs, which are summarized here.
 
+\subsection{Metadata}\label{ssec:req_meta}
+
+\textbf{Program metadata that is sufficient to trigger Special Processing should be stored. -- }
+In order to support Special Programs processing, the LSST system is 
+required to store metadata that includes program information for every raw 
+image, such as identifiers for images obtained as part of the Main Survey 
+or a Special Program (DMS-REQ-0068).
+It is required that this metadata be sufficient for Special Programs to 
+trigger their own real-time data processing recipes ``whenever possible" 
+(DMS-REQ-0320), and be included in alert packets (DMS-REQ-0274).
+
 \subsection{Data Products}\label{ssec:req_dp}
 
 \textbf{Produce unique and special (and joinable) data products when possible. --}
@@ -44,19 +55,6 @@ Special Programs remains an open question (DMS-REQ-0379, 0383), and is not requi
 However, they are suggested to be produced with Special Processing where
 appropriate (Section~\ref{ssec:proc_special}).
 
-
-\subsection{Metadata}\label{ssec:req_meta}
-
-\textbf{Program metadata that is sufficient to trigger Special Processing should be stored. -- }
-In order to support Special Programs processing, the LSST system is 
-required to store metadata that includes program information for every raw 
-image, such as identifiers for images obtained as part of the Main Survey 
-or a Special Program (DMS-REQ-0068).
-It is required that this metadata be sufficient for Special Programs to 
-trigger their own real-time data processing recipes ``whenever possible" 
-(DMS-REQ-0320), and be included in alert packets (DMS-REQ-0274).
-
-
 \subsection{Processing}\label{ssec:req_proc}
 
 \textbf{Latency requirements apply to alerts from Special Programs images. --}
@@ -81,9 +79,6 @@ note that such short exposures might have degraded image quality
 It is not a requirement, but processing for Special Programs by Rubin Observatory is expected to use no 
 more than $\sim$10\% of computational and storage capacity of the Rubin data processing cluster 
 (i.e., proportional to the fraction of survey time spent; Section 6 of LSE-163).
-
-
-\subsection{User Processing}\label{ssec:req_ug}
 
 The 10\% of the total data processing capacity that Rubin Observatory is 
 required to reserve for \emph{all} User-Generated Processing includes that 
