@@ -4,25 +4,29 @@ Recommended implementations for Rubin Data Management to meet the
 requirements related to Special Programs (Section~\ref{sec:req})
 and enable science with data from Special Programs.
 
-\subsection{Region and Program Labels}\label{ssec:sci_labels}
+\subsection{Region and Observing Mode Labels}\label{ssec:sci_labels}
 
-\textbf{All visits should have a region label \textit{and} a program 
+\textbf{All visits should have a region label \textit{and} an observing mode 
 label, and these labels should be propagated to processed images and catalog data.}
 
-\textbf{Region Labels -- } based on Right Acension and Declination.
-Region labels should include, e.g., WFD low-dust, Galactic Plane, Galactic 
+\textbf{Region Labels -- } 
+Based on Right Acension and Declination.
+To be applied to data by Rubin Data Management, e.g., using a look-up table.
+Region labels would include, e.g., WFD low-dust, Galactic Plane, Galactic 
 Bulge, SCP, NES, or Virgo; DDF fieldname; mini-survey region name.
 Region labels should be propagated to processed images (visit, 
 difference, and deep coadds), catalog sources, and catalog static-sky objects. 
 
-\textbf{Program Labels -- } 
-Based on survey cadeance or strategy.
-Program labels might include, e.g., WFD, DDF, TOO, mini-survey name, or other 
+\textbf{Observing Mode Labels -- } 
+Based on the scheduler mode at the time of the observation
+(i.e., survey cadence or strategy).
+To be applied by the Survey Scheduler team via the observations scheduler.
+Observing mode labels might include, e.g., WFD, DDF, TOO, mini-survey name, or other 
 options like engineering, commissioning, and director's discretionary.
-Program labels should be propagated to single-visit processed and 
+Observing mode  labels should be propagated to single-visit processed and 
 difference images and catalog sources.
-It would not make sense to propagate program labels to deep coadds or 
-object tables, as these data products could be a mix of programs.
+It would not make sense to propagate observing mode labels to deep coadds or 
+object tables, as these data products could be a mix of modes.
 
 There are three main motivations for this recommendation.
 
@@ -38,7 +42,7 @@ of that Special Program, when regular processing as been applied
 (e.g., Prompt Processing, Section~\ref{ssec:sci_pproc}).
 
 \item To enable provenance when Special Programs data in included in regular
-processing and the WFD program data products (e.g., if used to improve the
+processing and the Main Survey's data products (e.g., if used to improve the
 all-sky coadd).
 
 \end{enumerate}
@@ -55,7 +59,7 @@ or significant additional computational resources, are needed.
 
 \textbf{Necessary -- } When the primary science goal for a Special Program 
 cannot be met by including the data in regular processing (e.g., Prompt processing),
-or where doing so would compromise the WFD data products (e.g., introduce non-uniformity).
+or where doing so would compromise the Main Survey data products (e.g., introduce non-uniformity).
 
 There are two main motivations for this recommendation.
 
@@ -93,7 +97,7 @@ all standard and alternative visits in sky regions for which a template image ex
 The main motivation for this recommendation is that all time-domain and 
 moving-object science goals (two of the four science pillars for the LSST) are
 enhanced by any and all additional observations, even if they are not
-optimized for the science (as the WFD program's cadence is being optimized).
+optimized for the science (as the WFD area's cadence is being optimized).
 
 Further discussion of regular Prompt processing of Special Programs data, with
 examples and a discussion of a few challenges,
@@ -119,7 +123,7 @@ see \url{https://www.lsst.org/about/dm/data-products}}.
 \subsection{Rubin Science Platform Capabilities}\label{ssec:sci_rsp}
 
 Users will need to be able to query for data that restricts by sky region and 
-program label. 
+observign mode label. 
 This can be accomplished by including those labels in all image and catalog 
 metadata as described in Section~\ref{ssec:sci_labels}, as the TAP service 
 and butler already provide the mechanism for user-specified queries.
@@ -127,7 +131,7 @@ and butler already provide the mechanism for user-specified queries.
 Users will need to be able to discover Special Programs data products when 
 browsing data.
 This could be accomplished with, e.g., a toggle to overlay region boundaries
-for Special Programs when browsing all-sky coadds built from WFD program data
+for Special Programs when browsing all-sky coadds built from Main Survey data
 in the Portal Aspect.
 
 
