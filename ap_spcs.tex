@@ -11,7 +11,7 @@ The steps used to describe the hypothetical processing for each case scenario ar
 Step 1. Data acquisition. \\
 Step 2. Regular Prompt processing and Alert Production. \\
 Step 3. Special Processing with reconfigured pipelines. \\
-Step 4. Regular processing for inclusion in WFD program data products. \\
+Step 4. Regular processing for inclusion in Main Survey data products. \\
 Step 5. User-Generated Processing. \\
 
 \subsection{Outer solar system mini-survey}\label{ssec:SPCS_TNO}
@@ -33,7 +33,7 @@ Within 24 hours, the {\tt DiaSource} and {\tt DiaObject} catalogs are updated
 to include the results of Prompt processing of these visits.
 After 80 hours, the processed visit images and difference images become available.
 All images and sources originating from this Special Program have 
-region and program labels, e.g., ``SP-OSSO".
+region and observing mode labels, e.g., ``SP-OSSO".
 
 The results of Prompt processing are not very relevant for this Special Program's primary science goal,
 which requires a year of dispersed observations before the processing pipelines for shift-and-stack can be run.
@@ -44,9 +44,9 @@ Step 3. Special Processing with reconfigured pipelines. \\
 None possible. 
 Shift-and-stack processing is beyond the scope of existing algorithms in the LSST Science Pipelines.
 
-Step 4. Regular processing for inclusion in WFD program data products. \\
+Step 4. Regular processing for inclusion in Main Survey data products. \\
 Every year, each $2\times15$ second standard visit is reprocessed by the DIA data release pipelines
-and the results are included alongside WFD program data in the relevant DIA data products
+and the results are included alongside Main Survey data in the relevant DIA data products
 (e.g., processed visit images, difference images, associated source catalogs).
 In the first year after the Special Program is executed,
 Rubin Data Management finds that 10\% of the standard visits from this Special Program
@@ -54,7 +54,7 @@ had coordinates and image quality that help improve uniformity of the all-sky co
 and so they are included.
 In later years, this fraction decreases (remember, this is \emph{hypothetical}).
 In all data releases, any and all processed images and catalog sources that originate in visits from this Special Program
-have the same region and program labels, e.g., ``SP-OSSO".
+have the same region and observing mode labels, e.g., ``SP-OSSO".
 
 Step 5. User-Generated Processing. \\
 The User-Generated Processing pipeline running the shift-and-stack processing is be set up and submitted 
@@ -74,7 +74,7 @@ with a small dither pattern between visits.
 This happens every other night for a three month season for four years.
 
 Step 2. Regular Prompt processing and Alert Production. \\
-Same as above, but the program label would be, e.g., ``SP-DDF-COSMOS".
+Same as above, but the observing mode label might be, e.g., ``SP-DDF-COSMOS".
 
 Step 3. Special Processing with reconfigured pipelines. \\
 First, a template image of appropriate depth for ``nightly" difference imaging is created.
@@ -86,14 +86,14 @@ as {\tt DiaObject} and {\tt DiaSource} are updated within 24 hours (not a requir
 At the end of each season, deeply coadded images that include all of the DDF's visits 
 from all years are re-generated, along with a separate {\tt Object}-like catalog.
 All images and catalogs are stored in separate butler collections and TAP tables from
-the WFD program data products.
+the Main Survey data products.
 
-Step 4. Regular processing for inclusion in WFD program data products. \\
+Step 4. Regular processing for inclusion in Main Survey data products. \\
 Every year, each standard visit is reprocessed by the DIA data release pipelines
-and the results are included alongside WFD program data in the relevant DIA data products
+and the results are included alongside Main Survey data in the relevant DIA data products
 (e.g., processed visit images, difference images, associated source catalogs).
 Due to their small dither and lack of rotation, not even a single DDF image 
-is used to supplement the WFD program's all-sky coadd.
+is used to supplement the Main Survey's all-sky coadd.
 
 Step 5. User-Generated Processing. \\
 In order to achieve a secondary science goal of finding very high-$z$ faint supernovae,
@@ -122,8 +122,8 @@ Step 3. Special Processing with reconfigured pipelines. \\
 Pending studies of the LSST Science Pipelines capabilities to process 
 short-exposure, high sky-background images (see Section~\ref{ssec:proc_bounds_processing}).
 
-Step 4. Regular processing for inclusion in WFD program data products. \\
-These short-exposure, high sky background images would not contribute to the data products created for the WFD program.
+Step 4. Regular processing for inclusion in Main Survey data products. \\
+These short-exposure, high sky background images would not contribute to the data products created for the Main Survey.
 
 Step 5. User-Generated Processing. \\
 If short-exposure images cannot be processed with the existing DM algorithms, 
