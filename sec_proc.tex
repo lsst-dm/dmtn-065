@@ -100,10 +100,10 @@ User-Generated Processing would be needed.
 
 Recall that the term ``regular processing" is used only within this document,
 and refers to the image processing pipelines that are designed for, 
-and will be applied to, the WFD program's observations (Section~\ref{sec:intro}).
+and will be applied to, the Main Survey's observations (Section~\ref{sec:intro}).
 
 Decisions about when to apply regular processing to Special Programs data,
-or when to include it in the data products for the WFD program 
+or when to include it in the data products for the Main Survey
 (e.g., if it improves the all-sky coadds), 
 are ultimately left to the discretion of the Rubin Observatory's 
 Data Management and System Performance teams.
@@ -136,20 +136,21 @@ and use an alternative template for some sky regions, based on the image metadat
 However, there would not be enough memory to hold alternative templates 
 for the whole sky.
 
-\textbf{How WFD and Special Program data would co-exist.}
+\textbf{How Main Survey and Special Program data would co-exist.}
 No ``unique and separate" data products for the Special Progams would be 
 produced by regular Prompt processing.
 Special Programs data that is processed by the Prompt pipeline would 
-contribute to the Prompt data products for the WFD program as 
+contribute to the Prompt data products for the Main Survey as 
 described in Section 3 of the DPDD \citedsp{lse-163}. 
 These data products are the results of Difference Image Analysis (DIA),
 such as the difference images, catalogs of sources detected in difference
 images ({\tt DiaSources}) and associated static-sky {\tt DiaSources}
 into {\tt DiaObjects}, and alert packets.
 Including visits from Special Programs in regular Prompt processing alongside
-vists from the WFD program is not, in general, anticipated to affect WFD science goals.
-For example, analyses for a WFD-only subset could still be done using the program and
-region labels described in Section~\ref{ssec:sci_labels}, which would be
+vists from the Main Survey is not, in general, anticipated to affect Main Survey 
+or WFD-specific science goals.
+For example, analyses for a WFD-only subset could still be done using the observing mode
+and region labels described in Section~\ref{ssec:sci_labels}, which would be
 propogated to difference images, difference-image catalogss, and alerts.
 
 \textbf{Potential issues with Prompt processing for untiled sequences from Special Programs.}
@@ -164,9 +165,9 @@ every few nights for a few months.
 Alert packets contain the full records of all associated 
 {\tt DiaSources} from the past 12 months, but the alert
 stream bandwidth is sized for the expected histories for
-WFD program fields. 
+Main Survey fields. 
 The Prompt pipeline resources are also sized for the
-WFD program, and it might not be possible to load up
+Main Survey, and it might not be possible to load up
 thousands of epochs at a time.
 The Data Management team will have to test the realized
 capabilities of Prompt processing and alert distribtuion,
@@ -174,7 +175,7 @@ and potentially impose a mitigation strategy such as
 limiting histories to the last $N$ observations instead
 of the last 12 months in heavily-observed regions.
 Alerts from Special Programs data are subject to the same latency
-requirements as WFD program alerts (Section~\ref{ssec:req_proc}).
+requirements as Main Survey alerts (Section~\ref{ssec:req_proc}).
 
 \item \textbf{The association of new DIA Sources into DIA Objects may be compromised.}
 For consecutive images, processing for the second image begins when the processing for the 
@@ -187,12 +188,12 @@ each instantiate a new {\tt DiaObject}.
 
 \end{enumerate}
 
-These two potential issues pose challenges, but are not necessarily showstoppers in processing 
-Special Programs data with the Prompt pipelines. 
+These two potential issues pose challenges, but are not necessarily showstoppers 
+in processing Special Programs data with the Prompt pipelines. 
 The overall impact on time-domain science would still be positive, even 
 if mitigations are needed for these issues.
-For example, brokers and users would be able to use the region and program labels
-in the data as context (i.e., as flags) and avoid including 
+For example, brokers and users would be able to use the region and observing mode 
+labels in the data as context (i.e., as flags) and avoid including 
 limited-history or potentially-compromised {\tt DiaSources} in their
 analyses if necessary.
 
@@ -205,7 +206,7 @@ could be incorporated into Solar System Processing.
 \subsubsection{Data Release Processing}\label{sssec:proc_reg_dr}
 
 \textbf{Time-domain DIA data products --}
-This includes the results of the annual reprocessing of WFD program data with 
+This includes the results of the annual reprocessing of Main Survey data with 
 Difference Image Analysis (DIA), and the production of Data Release
 versions of the processed images (single-visit and difference images)
 and associated catalogs ({\tt DiaSource}, {\tt DiaObject}, {\tt Source},
@@ -217,7 +218,7 @@ considerations as discussed in Section~\ref{sssec:proc_reg_prompt}.
 This processing should use the same template image for a given field.
 
 \textbf{Static-sky data products --}
-This includes the tessellation and coaddition of WFD program images
+This includes the tessellation and coaddition of Main Survey images
 and the associated multi-band {\tt Object} catalog and survey property maps.
 Whether and how to include any Special Programs data in these data products
 is left entirely to the discretion of the Rubin Data Management team in Operations.
@@ -239,11 +240,11 @@ could not be met without the data products produced by the Special Processing.
 
 \textbf{Joinable tables --}
 Any tables for the unique and separate data products should be joinable to the 
-data products for the WFD program, when possible.
+data products for the Main Survey, when possible.
 This is a requirement (Section~\ref{ssec:req_dp}).
 
 \textbf{Survey property maps --}
-As for the tesslated all-sky coadded images made from WFD program data, survey property maps
+As for the tesslated all-sky coadded images made from Main Survey data, survey property maps
 should be made individually as part of any Special Programs that generates
 tesselated coadded images. This is \emph{not} a requirement (Section~\ref{ssec:req_dp}).
 
@@ -284,7 +285,7 @@ precursor outbursts for transients, which requires coadding images
 within windows of days, weeks, and months to reach various depths.
 This set of custom coadds may be considered as ``not necessary" and requiring 
 User-Generated Processing.
-Note that for the WFD program data, such custom coadds are also considered 
+Note that for the Main Survey data, such custom coadds are also considered 
 as beyond scope and in need of User-Generated Processing.
 
 \item \textbf{Necessary but not possible:}
@@ -338,8 +339,8 @@ annual data release tessellated coadds and associated catalog.
 \subsubsection{Standard Visit Mini-Surveys}
 
 Consider a Special Program in which a special region of sky is observed with standard
-visits but a a special strategy or cadence which is significantly distinct from the WFD program,
-and lasts for a limited amount of time.
+visits but a a special strategy or cadence which is significantly distinct from the Main Survey
+observing modes, and lasts for a limited amount of time.
 For example, a short-term survey of the Magellanic Clouds, with dual primary science
 goals in time-domain and static-sky science.
 
