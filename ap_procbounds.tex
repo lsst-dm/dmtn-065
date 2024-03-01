@@ -1,0 +1,108 @@
+\section{Potential Processing Boundaries}\label{sec:procbounds}
+
+The capability of the LSST Science Pipelines to process diverse data is explored below.
+
+Note that processing boundaries might ultimately be defined not by what is technically 
+possible, but by the resulting image quality parameters, e.g., the number of stars with 
+sufficient flux for photometric calibration.
+
+Furthermore, the processing boundaries might not be fully constrained until the final 
+performance of the LSST Science Pipelines, as described in the Data Management 
+Applications Design, \citeds{LDM-151}) document, is fully characterized.
+
+{\bf Summary.}\\
+
+\begin{itemize}
+\item \textbf{Short or long exposures.} Very short ($<$2 sec) exposures could be difficult to 
+process due to an incompletely-formed PSF. Short (or long, $>$150 sec) exposures 
+could be difficult to calibrate due to having too few (or too few unsaturated) stars.
+\item \textbf{Bright backgrounds (twilight).} It is currently unclear whether images with very 
+bright sky backgrounds (twilight images) can be processed with the LSST Science Pipelines, 
+or whether user generated pipelines will be needed.
+\item \textbf{Non-sidereal tracking.} The full reduction and calibration of images obtained 
+with non-sidereal tracking, in which the stars are streaked, is currently beyond the scope 
+of the LSST Science Pipelines, and will require a user generated pipeline.
+\end{itemize}
+
+
+\subsection{Exposure Times}\label{ssec:procbounds_expt}
+
+Images which deviate significantly from the $15$ second duration for the Main Survey 
+may encounter issues in the instrument signature removal routine, in the correction for 
+differential chromatic refraction, in the difference imaging analysis pipeline, and/or in 
+the photometric and astrometric calibrations due to a differently sampled set of standard 
+stars per CCD.
+
+\subsubsection{Short Exposures (Non-Standard Visits of $<$30 sec)}
+
+The LSST System Requirements document states that {\it ``The LSST shall be capable of 
+obtaining and processing exposures not taken in a standard visit mode including those 
+with a minimum exposure time of} {\tt minExpTime}", which is 1 second (stretch goal 0.1 
+seconds; LSR-REQ-0111 in \citeds{LSE-29}).
+
+However, for exposure times there are other considerations, as changing the exposure time 
+also affects the photometric and astrometric calibrations.
+Assuming that 1 second exposure can be reduced and calibrated, its detected point sources 
+will span a dynamic range of $r$$\approx$ 13 to 21 magnitudes.
+A template image built on 15 second exposures will saturate at $r$$\approx$15.8 mag, but 
+this still leaves stars between 15.8 and 21.0 magnitudes to be used in the PSF-matching 
+(and all other filters have a similarly large overlap).
+
+In order for an image to be successfully PSF-matched to the template, the PSF must be 
+well formed (no speckle pattern), and have a spatial variance that the pipeline is 
+capable of modeling (be smoothly varying on some minimal scale).
+As a simple demonstration, Figure \ref{fig:expt} shows that perhaps exposure times 
+shorter than $2$ seconds do not have a well-formed PSF (using the centroid of a 2D 
+Gaussian fit as a proxy for "well-formed").
+
+\begin{figure}
+\begin{center}
+\includegraphics[width=14cm,trim={0cm 0cm 0cm 0cm}, clip]{figures/exptime.png}
+\caption{At left, Arroyo atmosphere-only simulated PSF for LSST (with oversampled pixels) 
+with exposure times of 0.5, 2, and 15 seconds (top to bottom), courtesy of Bo Xin. At 
+right, blue and purple lines show the location of the centroid derived from a 2D Gaussian 
+fit to the PSF as a function of exposure time, with the red dashed line showing the true 
+center. We can see that for exposure times greater than 2 seconds, the centroid converges 
+near its true value. \label{fig:expt}}
+\end{center}
+\end{figure}
+
+\subsubsection{Long Exposures (Non-Standard Visits of $>$30 sec)}
+
+There is no maximum exposure time specified for an LSST image.
+Given that the template image will be a stack of at least a year or two of data, 
+processing a $5$--$10$ times deeper single image through the difference imaging pipeline 
+should be fine.
+
+However, a $2\times150$ second exposure would saturate at $r \approx 18.3$, perhaps 
+leaving too few stars overlapping with e.g., templates or Main Survey images, for astrometric and 
+photometric calibrations.
+
+Furthermore, cosmic-ray rejection completeness might be reduced for longer exposures 
+(unknown), which could impact the quality of a difference image and the detected sources. 
+Additionally, any system qualities that vary on short (but $>30$ second) timescales could 
+inhibit photometric calibration (e.g., tracking).
+
+\subsection{Twilight Images with a Bright Background}
+
+Images obtained during twilight for scientific purposes are also likely to have shorter 
+exposure times, and so the issues described in Section \ref{ssec:procbounds_expt} also 
+apply here.
+
+Whether or not bright-background images can (or shall) be fully processed -- reduced, 
+calibrated, background-subtracted, and delivered with astrometric and photometric 
+solutions -- or whether this will require a user generated pipeline, remains to be 
+determined (see also the example in Section \ref{ssec:SPCS_Twilight}). 
+This may depend on the exposure time and the number of stars available in the image.
+
+\subsection{Images Obtained with Non-Sidereal Tracking}
+
+Non-sidereal tracking leads to images in which stars are streaked, but the moving object 
+appears as a point source.
+
+Full processing -- providing reduced, calibrated, background-subtracted images that are 
+delivered with astrometric and photometric solutions -- of these images is beyond the 
+scope of the DM pipelines as it would require the development of new algorithms, and will 
+need to be done as a user generated pipeline. 
+The first steps of such a pipeline, such as Instrument Signature Removal, will probably 
+be possible to achieve by reconfiguring the relevant DM software tasks.

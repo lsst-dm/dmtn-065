@@ -1,0 +1,181 @@
+\section{Memoranda} \label{sec:mem}
+
+The three memoranda for Rubin Data Management regarding Special Programs are:
+
+\begin{enumerate}
+
+\item All visits should have a region label \textit{and} an observing mode
+label, and these labels should be propagated to processed images and catalog data.
+(Section~\ref{ssec:sci_labels})
+
+\item Special Processing should be done by Rubin Data Management to 
+produce unique and separate data products
+for Special Programs when it is both possible and necessary.
+(Section~\ref{ssec:sci_sproc}).
+
+\item All visits that \emph{can} be processed by the Prompt pipelines and generate 
+alerts \emph{should} be, in support of time domain and Solar System science goals.
+(Section~\ref{ssec:sci_pproc})
+
+\end{enumerate}
+
+\section{Terms and Definitions}\label{sec:intro}
+
+The following is an introduction to the key terms related to Special Programs.
+
+\subsection{Visit Types}
+
+A visit is an observation of a single pointing at a given time, of which 
+there are three types:
+
+\begin{itemize}
+\item Standard Visit -- Composed of $2\times15$ second exposures (commonly referred to as ``snaps").
+\item Alternative Standard Visit -- Composed of a single $30$ second exposure.
+\item Non-Standard Visit -- Any other exposure time(s) or number of snaps.
+\end{itemize}
+
+Non-standard visits with shorter or longer exposure times are being 
+considered for some Special Programs.
+
+\subsection{Region Label}
+
+Based on Right Acension and Declination.
+
+To be applied to data by Rubin Data Management, e.g., using a look-up table.
+
+Region labels would include, e.g., WFD low-dust, Galactic Plane, Galactic 
+Bulge, SCP, NES, or Virgo; DDF fieldname; mini-survey region name.
+
+\subsection{Observing Mode Label}
+
+Based on the scheduler mode at the time of the observation
+(i.e., survey cadence or strategy).
+
+To be applied by the Survey Scheduler team via the observations scheduler.
+
+Observing mode labels might include, e.g., WFD, DDF, TOO, mini-survey name, or other 
+options like engineering, commissioning, and director's discretionary.
+
+\subsection{Main Survey including Wide-Fast-Deep (WFD)}
+
+The LSST Main Survey includes the low-dust Wide-Fast-Deep (WFD) area 
+(which includes low-dust extragalactic and Galactic regions) 
+and several special regions:
+the dusty areas of the Galactic bulge and plane; the South Celestial Pole (SCP); 
+the North Ecliptic Spur (NES); and the Virgo Cluster \citedsp{PSTN-055}.
+The WFD component is the core component of the LSST Main Survey, designed to achieve the science 
+goals defined by the Science Requirements Document (SRD; \citeds{LPM-17}).
+
+The Main Survey will be executed with a set of observing modes, and 
+is expected to use alternative standard visits in the $u$-band and 
+standard visits in all other bands \citedsp{PSTN-055}.
+Different cadences, filter balances, rotational dithers, etc., 
+might be applied in the different regions composing Main Survey.
+For example, rolling cadence is expected to be implemented in the low-dust 
+WFD region only.
+
+Data from the Main Survey will be processed with standard (non-special) processing (Section~\ref{ssec:intro_stdproc}).
+This processing will produce, among other data products (LSE-163), 
+a contiguous sky footprint that covers at 
+least $\sim$18000 deg$^2$ (with $\gtrsim$800 visits per field in WFD regions), 
+and is expected to be accomplished with 85--90\% of the observing time.
+This contiguous all-sky "deep coadd" may have region-dependent processing parameters and inputs
+(e.g., different calibration parameters or deblending algorithms for crowded fields)
+and will be of variable depth, as most special regions recieve fewer visits.
+
+\subsection{Special Programs} 
+
+This is a Rubin Data Management term used to refer to sky regions within
+or beyond the Main Survey footprint that have a distinct observing strategy from
+the Main Survey's plans for that region (e.g., different visit type, cadence, filter distribution).
+
+Special Programs are typically driven by specific science goals that build on or 
+add to the core science pillars of the LSST.
+They include LSST components such as the Deep Drilling 
+Fields (DDFs) and the mini-, micro-, and nano-surveys \citedsp{PSTN-055}.
+About 10--15\% of the total 10-year LSST will be spent obtaining 
+observations associated with Special Programs.
+
+Data products from Special Programs is subject to the Rubin Data Policy \citedsp{RDO-013}
+in the same way as data products from the Main Survey.
+
+Some science goals for Special Programs can be met with standard processing,
+but some will require Special Processing by Rubin Data Management or user-generated processing.
+
+\subsection{Special Processing}
+
+This is a Rubin Data Management term to describe processing that 
+uses components of the LSST Science Pipelines and is applied by Rubin
+Data Management to images from Special Programs.
+Special Processing creates data products that are unique and separate from those produced
+by standard processing for the Main Survey.
+
+Special Processing is likely to use different inputs or configurations for the
+LSST Science Pipelines, or to run on different timescales, than standard processing - 
+as appropriate for the Special Programs' data and science goals.
+However, the development and application of specialized \emph{algorithms} or new software
+is beyond the scope of Special Processing.
+
+Examples of Special Processing include the processing
+of images with non-standard exposure times, images obtained
+during twilight, or nightly stacking and differencing
+of images in deep drilling fields.
+See Section~\ref{ssec:proc_special} for more detailed examples of Special Processing.
+
+\subsection{Standard (non-special) processing}\label{ssec:intro_stdproc}
+
+This is a term used only in this document to refer to the image processing 
+described in the Data Management Science Pipelines Design \citeds{LDM-151} that produces the data products described in the Data Products Definitions Document
+(\citeds{LSE-163}) that are designed for, and will be applied to, the Main Survey's observations.
+
+In some cases, standard processing is also appropriate for Special Programs.
+
+
+\subsection{User-Generated Processing}
+
+Any processing of Rubin data done by users in order to reach specific science goals, including
+processing for Special Programs data, is referred to as User-Generated Processing.
+
+User-Generated Processing for Special Programs data would be necessary in cases where
+the science goals require custom algorithms, software, or very large computational
+capacities which are beyond the scope of Special Processing or the Rubin-provided
+computational resources (Section~\ref{ssec:sci_comp}).
+
+Guidelines for User-Generated Processing, and for user-generated data products
+that can be federated with the Rubin-product data products (i.e., joinable tables),
+is forthcoming.
+
+\subsection{Deep Drilling Field (DDF)}
+
+A single pointing for which many (e.g., a hundred) visits are obtained 
+(usually sequentially) during a single night, and repeated every few 
+nights.
+
+As of the Phase 2 SCOC recommendations in \citeds{PSTN-055}, the five 
+confirmed DDFs were:
+
+\begin{itemize}
+\item Elias S1 (00:37:48, -44:00:00)
+\item XMM-LSS (02:22:50, -04:45:00)
+\item Extended Chandra Deep Field-South (03:32:30, -28:06:00)
+\item COSMOS (10:00:24, +02:10:55)
+\item Euclid Deep Field South  (04:04:58, -48:25:23)\footnote{\url{https://www.cosmos.esa.int/web/euclid/euclid-survey}}
+\end{itemize}
+
+Processing for the DDF images is likely to be a combination of standard (Prompt) processing,
+Special Processing, and User-Generated Processing.
+
+\subsection{Mini-, Micro- and Nano-Surveys}
+
+Specific sky areas covered by a few hundred, a hundred, or tens of visits (respectively).
+This document will refer to them collectively as mini-surveys.
+
+The sky areas of mini-surveys can be within, adjacent to, or detached from the Main Survey footprint.
+Mini-surveys can have non-standard visits.
+Target-of-opportunity (TOO) observations for, e.g., the discovery of optical counterparts to 
+multi-messenger astrophysical phenomena, are considered a type of mini-survey in this document.
+For a list of the mini-surveys under consideration,
+see \citeds{PSTN-055}.
+
+Processing for the mini-surveys is likely to be a combination of standard (Prompt) processing,
+Special Processing, and User-Generated Processing.

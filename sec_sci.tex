@@ -1,0 +1,144 @@
+\section{Recommendations to Enable Science from Special Programs}\label{sec:sci}
+
+Recommended implementations for Rubin Data Management to meet the 
+requirements related to Special Programs (Section~\ref{sec:req})
+and enable science with data from Special Programs.
+
+\subsection{Region and Observing Mode Labels}\label{ssec:sci_labels}
+
+\textbf{All visits should have at least one region label \textit{and} one observing mode 
+label, and these labels should be propagated to processed images and catalog data.}
+
+\textbf{Region Labels -- } 
+Based on Right Acension and Declination.
+To be applied to data by Rubin Data Management, e.g., using a look-up table.
+Region labels would include, e.g., WFD low-dust, Galactic Plane, Galactic 
+Bulge, SCP, NES, or Virgo; DDF fieldname; mini-survey region name.
+Region labels should be propagated to processed images (visit, 
+difference, and deep coadds), catalog sources, and catalog static-sky objects.
+A given image might have more than one region label due to overlaping regions,
+but they could be, e.g., held in a single string as a CSV.
+
+\textbf{Observing Mode Labels -- } 
+Based on the scheduler mode at the time of the observation
+(i.e., survey cadence or strategy).
+To be applied by the Survey Scheduler team via the observations scheduler.
+Observing mode labels might include, e.g., WFD, DDF, TOO, mini-survey name, or other 
+options like engineering, commissioning, and director's discretionary.
+Observing mode labels should be propagated to single-visit processed and 
+difference images and catalog sources.
+It would not make sense to propagate observing mode labels to deep coadds or 
+object tables, as these data products could be a mix of modes.
+It is left to the discretion of the Survey Scheduler team whether more than one
+observing mode labels might be applied at a time and, e.g., held in a single string as a CSV.
+
+A given image would probably only have one observing mode label
+
+
+There are three main motivations for this recommendation.
+
+\begin{enumerate}
+
+\item To meet the requirement that metadata for observations associated 
+with Special Programs is stored, and is sufficient for triggering 
+real-time data processing recipes (Section~\ref{ssec:req_meta}).
+
+\item To enable users to query and retrieve processed image and catalog
+data associated with a specific Special Program, and meet the science goals
+of that Special Program, when standard processing as been applied 
+(e.g., Prompt Processing, Section~\ref{ssec:sci_pproc}).
+
+\item To enable provenance when Special Programs data in included in standard
+processing and the Main Survey's data products (e.g., if used to improve the
+all-sky coadd).
+
+\end{enumerate}
+
+\subsection{Special Processing}\label{ssec:sci_sproc}
+
+\textbf{Special Processing should be done by Rubin Data Management to 
+produce unique and separate (and joinable) data products
+for Special Programs when it is both possible and necessary.}
+
+\textbf{Possible -- } When original or reconfigured versions of the LSST
+Science Pipelines can be used, and no new algorithmic or software development,
+or significant additional computational resources, are needed.
+
+\textbf{Necessary -- } When the primary science goal for a Special Program 
+cannot be met by including the data in standard processing (e.g., Prompt processing),
+or where doing so would compromise the Main Survey data products (e.g., introduce additional non-uniformity beyond what would be expected based on the survey strategy).
+
+There are two main motivations for this recommendation.
+
+\begin{enumerate}
+
+\item To meet the requirement that Rubin Observatory produce
+unique, separate, and joinable data products whenever this is possible 
+with the original or reconfigured versions of the LSST Science Pipelines
+(Section~\ref{ssec:req_dp}).
+
+\item To enable science with Special Programs by all users, not just those
+with the time and effort to process the data, and to reduce computational
+load (and potential redundancy) in User-Generated Processing.
+
+\end{enumerate}
+
+The definitions of possible and necessary are further illustrated with examples in Section~\ref{ssec:proc_special}.
+Note that secondary science goals may be considered as ``not necessary".
+
+The general scope of Special Processing, including situations in which cross-match and table joins 
+would be possible and scientifically relevant, 
+are ultimately left to the discretion of Rubin Data Management in Operations.
+
+Further discussion on Special Processing, with examples, is provided in Section~\ref{ssec:proc_special}.
+
+\subsection{Prompt Processing}\label{ssec:sci_pproc}
+
+\textbf{All visits that \emph{can} be processed by the Prompt pipelines and generate 
+alerts \emph{should} be, in support of time domain and Solar System science goals.}
+
+The condition ``can be processed" is ultimately left to the discretion of
+Rubin Data Management in Rubin Operations, but it is expected to include
+all standard and alternative visits in sky regions for which a template image exists.
+
+The main motivation for this recommendation is that all time-domain and 
+moving-object science goals (two of the four science pillars for the LSST) are
+enhanced by any and all additional observations, even if they are not
+optimized for the science (as the WFD area's cadence is being optimized).
+
+Further discussion of standard Prompt processing of Special Programs data, with
+examples and a discussion of a few challenges,
+is provided in Section~\ref{sssec:proc_reg_prompt}.
+
+\subsection{Computational Resources for User-Generated Processing}\label{ssec:sci_comp}
+
+Rubin Observatory will reserve 10\% of its total data processing capacity for users.
+This component would include {\it all} user processing and re-processing of any and 
+all LSST data, including Special Programs. 
+This is already a requirement, as mentioned in Section~\ref{ssec:req_proc}.
+
+As described in Section~\ref{ssec:proc_user} this processing capacity will be 
+accessed via Rubin Science Platform, with a supported software environment and 
+infrastructure for batch processing \citedsp{dmtn-202}.
+
+Very computationally intense processing (e.g., shift-and-stack for faint moving 
+objects) will likely require external resources\footnote{For more details about 
+the boundary between what Rubin Observatory will provide (in terms of data products 
+and processing resources) and what will be left to the expertise of the science community, 
+see \url{https://www.lsst.org/about/dm/data-products}}.
+
+\subsection{Rubin Science Platform Capabilities}\label{ssec:sci_rsp}
+
+Users will need to be able to query for data that restricts by sky region and 
+observing mode label. 
+This can be accomplished by including those labels in all image and catalog 
+metadata as described in Section~\ref{ssec:sci_labels}, as the TAP service 
+and butler already provide the mechanism for user-specified queries.
+
+Users will need to be able to discover Special Programs data products when 
+browsing data.
+This could be accomplished with, e.g., a toggle to overlay region boundaries
+for Special Programs when browsing all-sky coadds built from Main Survey data
+in the Portal Aspect.
+
+

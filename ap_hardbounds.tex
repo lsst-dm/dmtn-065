@@ -1,0 +1,94 @@
+\section{Potential Hardware Boundaries}\label{sec:hardbounds}
+
+The potential boundaries on the diversity of data products that could be imposed by 
+limitations from the Rubin Observatory hardware (camera, telescope, and/or site) 
+are considered.
+
+\subsection{Filter Changes}
+
+The maximum time for filter change is 120 seconds: 30 seconds for the telescope to 
+reorient the camera to its nominal zero angle position on the rotator, and 90 seconds to 
+the camera subsystem for executing the change (OSS-REQ-0293; \citeds{LSE-30}).
+
+Assuming that most Special Programs would be designed to keep overheads $<$100\% and would 
+be using standard 30 second visits, the filter change time indicates that it is likely 
+that at least 4 exposures in a given filter would be obtained between filter changes, but 
+this is not actually a hardware boundary.
+
+The filter change mechanism is designed to undergo a total of 100000 changes over its 
+lifetime, and each filter is designed to support up to 30000 changes over its lifetime, 
+where lifetime is 15 years.
+
+That is an average of $\sim$27 changes per day, some of which would occur in they day 
+during calibrations (estimate, $\sim$10) and the rest at night.
+
+As stated in the filter change memorandum (\url{ls.st/spt-494}), {\it ``the system could 
+support as many changes involving the 5 filters loaded in the carousel as desired, without 
+any practical limitation"}.
+
+\subsection{Filter Carousel Loads}
+
+The filter carousel can hold five of the six LSST filters at a time. 
+The system is designed to support $3000$ loads in $15$ years (\url{ls.st/spt-494}). 
+Filter loads are only done in the day, and there will never be data in more than five 
+filters in a given night.
+
+\subsection{Exposure Times}
+
+The minimum exposure time is $1$ second, with a stretch goal of $0.1$ seconds 
+(OSS-REQ-0291; \citeds{LSE-30}). 
+The maximum exposure time is not restricted.
+
+\subsection{Readout Time}
+
+The readout time is $2$ seconds, and would be significant overhead on short exposures.
+
+\subsection{Inter-Image Time}
+
+Images with exposure times $<15$ seconds {\it might} still have to be separated by $15$ 
+seconds for thermal tolerance; i.e., the minimum readout rate might be one image every 
+$15$ seconds, regardless of exposure time (OSS-REQ-0291; \citeds{LSE-30}).
+
+As discussed in Jira ticket DM-12573, the main issue is thermal and is related to the 
+shutter, both the motors and the brakes; an elevated Camera skin temperature would affect 
+image quality.
+
+As of 2022, early tests suggest that a sustained (30 minutes) sequence that increases the 
+heat load by large factors would not work, but further functional testing of the system 
+once the Camera was fully assembled are needed for full characterization of the issue.
+
+This potential $15$ interval between images is also a potential hardware boundary on the 
+potential diversity of data products.
+
+\subsection{Telescope Slew}
+
+As described in \citeds{Document-28382}, large slews would have considerable overheads, 
+but there are no hardware boundaries on the size of a single slew or the accrued slew 
+distance.
+
+\subsection{Pointing and Sidereal Tracking}
+
+The specifications for the telescope's pointing and tracking in \citeds{LSE-30} indicate 
+that $<$0.2 arcsecond precision in field pointing (OSS-REQ-0302) and $<$1 arcsecond in 
+open-loop tracking (OSS-REQ-0303) would not be possible, but guiding would improve the 
+latter (OSS-REQ-0305).
+
+Furthermore, obtaining the \emph{exact same} alignment of the pixel grid in RA-Dec 
+{\it ``would put demands on the camera rotator that were not planned"}\footnote{As per 
+C. Claver's comments in ticket DM-12573.}.
+
+\subsection{Non-Sidereal Tracking}
+
+The requirement that the LSST system be able to perform non-sidereal tracking is set by 
+OSS-REQ-0380 in \citeds{LSE-30}. 
+This capability will include angular rates of up to 220 arcseconds per second in both 
+azimuth and elevation. 
+
+\subsection{Camera Rotation}
+
+The requirements on the rotator's capabilities do not set any limits on the per-night or 
+total lifetime rotation (OSS-REQ-0301, -0300; \citeds{LSE-30}) which might put boundaries 
+on the distance between successive visits or the ability to jump between two widely 
+separated fields.
+
+Currently, there are no hardware boundaries imposed by camera rotation constraints on the potential diversity of data products.
