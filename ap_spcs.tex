@@ -1,7 +1,7 @@
 \section{Hypothetical Scenarios}\label{sec:spcs}
 
 \textbf{\emph{Hypothetical}} examples of Special Programs
-and the regular, Special, and User-Generated processing
+and the standard, Special, and User-Generated processing
 to illustrate what \emph{might be done}.
 
 The details of the data acquisition and processing mentioned below are 
@@ -9,9 +9,9 @@ The details of the data acquisition and processing mentioned below are
 
 The steps used to describe the hypothetical processing for each case scenario are: \\
 Step 1. Data acquisition. \\
-Step 2. Regular Prompt processing and Alert Production. \\
+Step 2. Standard Prompt processing and Alert Production. \\
 Step 3. Special Processing with reconfigured pipelines. \\
-Step 4. Regular processing for inclusion in Main Survey data products. \\
+Step 4. Standard processing for inclusion in Main Survey data products. \\
 Step 5. User-Generated Processing. \\
 
 \subsection{Outer solar system mini-survey}\label{ssec:SPCS_TNO}
@@ -26,7 +26,7 @@ These observations are repeated 2-3 nights later, and then this 2-night sequence
 is repeated 3 more times: 1.5 months, 3 months, and 13.5 months later. 
 They are not all at the same RA, Dec, but at selected ecliptic coordinates.
 
-Step 2. Regular Prompt processing and Alert Production. \\
+Step 2. Standard Prompt processing and Alert Production. \\
 Each $2\times15$ second standard visit is processed by the Prompt pipeline 
 and alerts are released within 60 seconds.
 Within 24 hours, the {\tt DiaSource} and {\tt DiaObject} catalogs are updated
@@ -44,7 +44,7 @@ Step 3. Special Processing with reconfigured pipelines. \\
 None possible. 
 Shift-and-stack processing is beyond the scope of existing algorithms in the LSST Science Pipelines.
 
-Step 4. Regular processing for inclusion in Main Survey data products. \\
+Step 4. Standard processing for inclusion in Main Survey data products. \\
 Every year, each $2\times15$ second standard visit is reprocessed by the DIA data release pipelines
 and the results are included alongside Main Survey data in the relevant DIA data products
 (e.g., processed visit images, difference images, associated source catalogs).
@@ -73,7 +73,7 @@ In the COSMOS DDF, the scheduler obtains 10 standard visits in a row in each of 
 with a small dither pattern between visits.
 This happens every other night for a three month season for four years.
 
-Step 2. Regular Prompt processing and Alert Production. \\
+Step 2. Standard Prompt processing and Alert Production. \\
 Same as above, but the observing mode label might be, e.g., ``SP-DDF-COSMOS".
 
 Step 3. Special Processing with reconfigured pipelines. \\
@@ -88,7 +88,7 @@ from all years are re-generated, along with a separate {\tt Object}-like catalog
 All images and catalogs are stored in separate butler collections and TAP tables from
 the Main Survey data products.
 
-Step 4. Regular processing for inclusion in Main Survey data products. \\
+Step 4. Standard processing for inclusion in Main Survey data products. \\
 Every year, each standard visit is reprocessed by the DIA data release pipelines
 and the results are included alongside Main Survey data in the relevant DIA data products
 (e.g., processed visit images, difference images, associated source catalogs).
@@ -114,7 +114,7 @@ At a specified time (or e.g., 6 degree twilight), the scheduler begins a dither 
 $2$-second exposures. 
 Coordinates and exposure times are set by the Sun distance, sky brightness, and desired saturation limits.
 
-Step 2. Regular Prompt processing and Alert Production. \\
+Step 2. Standard Prompt processing and Alert Production. \\
 Pending studies of DIA and Alert Production pipeline capabilities to process 
 short-exposure, high sky-background images (see Section~\ref{ssec:proc_bounds_processing}).
 
@@ -122,7 +122,7 @@ Step 3. Special Processing with reconfigured pipelines. \\
 Pending studies of the LSST Science Pipelines capabilities to process 
 short-exposure, high sky-background images (see Section~\ref{ssec:proc_bounds_processing}).
 
-Step 4. Regular processing for inclusion in Main Survey data products. \\
+Step 4. Standard processing for inclusion in Main Survey data products. \\
 These short-exposure, high sky background images would not contribute to the data products created for the Main Survey.
 
 Step 5. User-Generated Processing. \\
