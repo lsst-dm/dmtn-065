@@ -74,7 +74,7 @@ might be applied in the different regions composing Main Survey.
 For example, rolling cadence is expected to be implemented in the low-dust 
 WFD region only.
 
-Data from the Main Survey will be processed with regular (non-special) processing.
+Data from the Main Survey will be processed with standard (non-special) processing.
 This processing will produce, among other data products (LSE-163), 
 a contiguous sky footprint that covers at 
 least $\sim$18000 deg$^2$ (with $\gtrsim$800 visits per field in WFD regions), 
@@ -82,14 +82,6 @@ and is expected to be accomplished with 85--90\% of the observing time.
 This contiguous all-sky "deep coadd" may have region-dependent processing parameters and inputs
 (e.g., different calibration parameters or deblending algorithms for crowded fields)
 and will be of variable depth, as most special regions recieve fewer visits.
-
-\subsection{Regular (non-special) processing}
-
-This is a term used only in this document to refer to the image processing 
-described in the Data Management Science Pipelines Design \citeds{LDM-151} that produces the data products described in the Data Products Definitions Document
-(\citeds{LSE-163}) that are designed for, and will be applied to, the Main Survey's observations.
-
-In some cases, regular processing is also appropriate for Special Programs.
 
 \subsection{Special Programs} 
 
@@ -107,7 +99,7 @@ observations associated with Special Programs.
 Data products from Special Programs is subject to the Rubin Data Policy \citedsp{RDO-013}
 in the same way as data products from the Main Survey.
 
-Some science goals for Special Programs can be met with regular processing,
+Some science goals for Special Programs can be met with standard processing,
 but some will require Special Processing by Rubin Data Management or user-generated processing.
 
 \subsection{Special Processing}
@@ -116,13 +108,22 @@ This is a Rubin Data Management term to describe processing that
 uses components of the LSST Science Pipelines and is applied by Rubin
 Data Management to images from Special Programs.
 Special Processing creates data products that are unique and separate from those produced
-by regular processing for the Main Survey.
+by standard processing for the Main Survey.
 
 Special Processing is likely to use different inputs or configurations for the
-LSST Science Pipelines, or to run on different timescales, than regular processing - 
+LSST Science Pipelines, or to run on different timescales, than standard processing - 
 as appropriate for the Special Programs' data and science goals.
 However, the development and application of specialized \emph{algorithms} or new software
 is beyond the scope of Special Processing.
+
+\subsection{Standard (non-special) processing}
+
+This is a term used only in this document to refer to the image processing 
+described in the Data Management Science Pipelines Design \citeds{LDM-151} that produces the data products described in the Data Products Definitions Document
+(\citeds{LSE-163}) that are designed for, and will be applied to, the Main Survey's observations.
+
+In some cases, standard processing is also appropriate for Special Programs.
+
 
 \subsection{User-Generated Processing}
 
@@ -155,7 +156,7 @@ confirmed DDFs were:
 \item Euclid Deep Field South  (04:04:58, -48:25:23)\footnote{\url{https://www.cosmos.esa.int/web/euclid/euclid-survey}}
 \end{itemize}
 
-Processing for the DDF images is likely to be a combination of regular (Prompt) processing,
+Processing for the DDF images is likely to be a combination of standard (Prompt) processing,
 Special Processing, and User-Generated Processing.
 
 \subsection{Mini-, Micro- and Nano-Surveys}
@@ -170,5 +171,5 @@ multi-messenger astrophysical phenomena, are considered a type of mini-survey in
 For a list of the mini-surveys under consideration,
 see \citeds{PSTN-055}.
 
-Processing for the mini-surveys is likely to be a combination of regular (Prompt) processing,
+Processing for the mini-surveys is likely to be a combination of standard (Prompt) processing,
 Special Processing, and User-Generated Processing.
