@@ -6,7 +6,7 @@ and enable science with data from Special Programs.
 
 \subsection{Region and Observing Mode Labels}\label{ssec:sci_labels}
 
-\textbf{All visits should have a region label \textit{and} an observing mode 
+\textbf{All visits should have at least one region label \textit{and} one observing mode 
 label, and these labels should be propagated to processed images and catalog data.}
 
 \textbf{Region Labels -- } 
@@ -15,7 +15,9 @@ To be applied to data by Rubin Data Management, e.g., using a look-up table.
 Region labels would include, e.g., WFD low-dust, Galactic Plane, Galactic 
 Bulge, SCP, NES, or Virgo; DDF fieldname; mini-survey region name.
 Region labels should be propagated to processed images (visit, 
-difference, and deep coadds), catalog sources, and catalog static-sky objects. 
+difference, and deep coadds), catalog sources, and catalog static-sky objects.
+A given image might have more than one region label due to overlaping regions,
+but they could be, e.g., held in a single string as a CSV.
 
 \textbf{Observing Mode Labels -- } 
 Based on the scheduler mode at the time of the observation
@@ -23,10 +25,15 @@ Based on the scheduler mode at the time of the observation
 To be applied by the Survey Scheduler team via the observations scheduler.
 Observing mode labels might include, e.g., WFD, DDF, TOO, mini-survey name, or other 
 options like engineering, commissioning, and director's discretionary.
-Observing mode  labels should be propagated to single-visit processed and 
+Observing mode labels should be propagated to single-visit processed and 
 difference images and catalog sources.
 It would not make sense to propagate observing mode labels to deep coadds or 
 object tables, as these data products could be a mix of modes.
+It is left to the discretion of the Survey Scheduler team whether more than one
+observing mode labels might be applied at a time and, e.g., held in a single string as a CSV.
+
+A given image would probably only have one observing mode label
+
 
 There are three main motivations for this recommendation.
 
@@ -38,10 +45,10 @@ real-time data processing recipes (Section~\ref{ssec:req_meta}).
 
 \item To enable users to query and retrieve processed image and catalog
 data associated with a specific Special Program, and meet the science goals
-of that Special Program, when regular processing as been applied 
+of that Special Program, when standard processing as been applied 
 (e.g., Prompt Processing, Section~\ref{ssec:sci_pproc}).
 
-\item To enable provenance when Special Programs data in included in regular
+\item To enable provenance when Special Programs data in included in standard
 processing and the Main Survey's data products (e.g., if used to improve the
 all-sky coadd).
 
@@ -58,7 +65,7 @@ Science Pipelines can be used, and no new algorithmic or software development,
 or significant additional computational resources, are needed.
 
 \textbf{Necessary -- } When the primary science goal for a Special Program 
-cannot be met by including the data in regular processing (e.g., Prompt processing),
+cannot be met by including the data in standard processing (e.g., Prompt processing),
 or where doing so would compromise the Main Survey data products (e.g., introduce additional non-uniformity beyond what would be expected based on the survey strategy).
 
 There are two main motivations for this recommendation.
@@ -99,7 +106,7 @@ moving-object science goals (two of the four science pillars for the LSST) are
 enhanced by any and all additional observations, even if they are not
 optimized for the science (as the WFD area's cadence is being optimized).
 
-Further discussion of regular Prompt processing of Special Programs data, with
+Further discussion of standard Prompt processing of Special Programs data, with
 examples and a discussion of a few challenges,
 is provided in Section~\ref{sssec:proc_reg_prompt}.
 
