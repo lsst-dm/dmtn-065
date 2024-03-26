@@ -41,21 +41,22 @@ However, the field of view is so large that a finer resolution by ccd,
 or by a smaller-mesh HTM map if the regions are determined for sources and objects,
 would be possible (and more useful to users).
 
-
 \textbf{Observing Mode Labels -- } 
-Based on the scheduler mode at the time of the observation
+Applied to a visit based on the scheduler mode at the time of the observation
 (i.e., survey cadence or strategy).
+
 To be applied by the Survey Scheduler team via the observations scheduler.
 Observing mode labels might include, e.g., WFD, DDF, TOO, mini-survey name, or other 
 options like engineering, commissioning, and director's discretionary.
-Observing mode labels should be propagated to single-visit processed and 
-difference images and catalog sources.
-It would not make sense to propagate observing mode labels to deep coadds or 
-object tables, as these data products could be a mix of modes.
-It is left to the discretion of the Survey Scheduler team whether more than one
+A given image would probably only have one observing mode label, but
+it is left to the discretion of the Survey Scheduler team whether more than one
 observing mode labels might be applied at a time and, e.g., held in a single string as a CSV.
 
-A given image would probably only have one observing mode label
+The observing mode labels should be available to users as query constraints for
+all single-visit processed and difference images and catalog sources,
+via both the butler and the TAP service.
+It would not make sense to apply observing mode labels to deep coadds or 
+object tables, as these data products could be a mix of modes.
 
 
 There are three main motivations for this recommendation.
