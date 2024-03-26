@@ -10,14 +10,26 @@ and enable science with data from Special Programs.
 label, and these labels should be propagated to processed images and catalog data.}
 
 \textbf{Region Labels -- } 
-Based on Right Acension and Declination.
-To be applied to data by Rubin Data Management, e.g., using a look-up table.
+Applied to a visit based on its Right Acension and Declination.
+To be applied to data by Rubin Data Management using, e.g., a look-up table.
 Region labels would include, e.g., WFD low-dust, Galactic Plane, Galactic 
 Bulge, SCP, NES, or Virgo; DDF fieldname; mini-survey region name.
-Region labels should be propagated to processed images (visit, 
-difference, and deep coadds), catalog sources, and catalog static-sky objects.
-A given image might have more than one region label due to overlaping regions,
-but they could be, e.g., held in a single string as a CSV.
+A given visit is likely to have multiple region labels because, for example,
+the DDFs are within the WFD low-dust region.
+These could be stored in, e.g., a single string as a CSV.
+
+The region labels should be available to users as query constraints for
+all images and tables, via both the butler and the TAP service, but otherwise
+the details of region label implementation are left to Rubin Data Management.
+
+For example, for images, the region labels could be propagated to processed images
+(e.g., visit, difference, and deep coadds), so that users may query the ObsTAP 
+service for all images with a given region label.
+For catalogs, the region labels could be stored for individual sources and
+objects as a table column, or for TAP-accessible tables stored in a joinable
+table such as the Visit, ccdVisit, or coaddPatches tables.
+Another option may be to map regions into spatial divisions (htm or healpix),
+and enable users to query image and catalog products via their htm.
 
 \textbf{Observing Mode Labels -- } 
 Based on the scheduler mode at the time of the observation
