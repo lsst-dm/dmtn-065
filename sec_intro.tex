@@ -1,19 +1,20 @@
-\section{Memoranda} \label{sec:mem}
+\section{Summary} \label{sec:mem}
 
-The three memoranda for Rubin Data Management regarding Special Programs are:
+The three main takeaways for Rubin Data Management regarding Special Programs are:
 
 \begin{enumerate}
 
 \item All visits should have a region label \textit{and} an observing mode
-label, and these labels should be propagated to processed images and catalog data.
+label, and these labels should be available to users as query constraints for
+all images and tables.
 (Section~\ref{ssec:sci_labels})
 
-\item Special Processing should be done by Rubin Data Management to 
-produce unique and separate data products
-for Special Programs when it is both possible and necessary.
-(Section~\ref{ssec:sci_sproc}).
+\item Special Processing should be done by Rubin Data Management to
+produce unique and separate data products for Special Programs in
+certain cases that meet specific definitions of "possible and necessary".
+(Section~\ref{ssec:sci_sproc})
 
-\item All visits that \emph{can} be processed by the Prompt pipelines and generate 
+\item All visits that \emph{can} be processed by the Prompt pipelines and generate
 alerts \emph{should} be, in support of time domain and Solar System science goals.
 (Section~\ref{ssec:sci_pproc})
 
@@ -25,7 +26,7 @@ The following is an introduction to the key terms related to Special Programs.
 
 \subsection{Visit Types}
 
-A visit is an observation of a single pointing at a given time, of which 
+A visit is an observation of a single pointing at a given time, of which
 there are three types:
 
 \begin{itemize}
@@ -34,27 +35,17 @@ there are three types:
 \item Non-Standard Visit -- Any other exposure time(s) or number of snaps.
 \end{itemize}
 
-Non-standard visits with shorter or longer exposure times are being 
+Non-standard visits with shorter or longer exposure times are being
 considered for some Special Programs.
 
 \subsection{Region Label}
 
-Based on Right Acension and Declination.
-
-To be applied to data by Rubin Data Management, e.g., using a look-up table.
-
-Region labels would include, e.g., WFD low-dust, Galactic Plane, Galactic 
-Bulge, SCP, NES, or Virgo; DDF fieldname; mini-survey region name.
+Applied to a visit based on its Right Acension and Declination (Section~\ref{ssec:sci_labels}).
 
 \subsection{Observing Mode Label}
 
-Based on the scheduler mode at the time of the observation
-(i.e., survey cadence or strategy).
-
-To be applied by the Survey Scheduler team via the observations scheduler.
-
-Observing mode labels might include, e.g., WFD, DDF, TOO, mini-survey name, or other 
-options like engineering, commissioning, and director's discretionary.
+Applied to a visit based on the scheduler mode at the time of the observation,
+i.e., survey cadence or strategy (Section~\ref{ssec:sci_labels}).
 
 \subsection{Main Survey including Wide-Fast-Deep (WFD)}
 
