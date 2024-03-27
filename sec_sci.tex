@@ -1,17 +1,17 @@
-\section{Recommendations to Enable Science from Special Programs}\label{sec:sci}
+\section{Recommendations for Rubin DM to Enable Science from Special Programs}\label{sec:sci}
 
 Recommended implementations for Rubin Data Management to meet the 
 requirements related to Special Programs (Section~\ref{sec:req})
 and enable science with data from Special Programs.
 
-\subsection{Region and Observing Mode Labels}\label{ssec:sci_labels}
+\subsection{Apply Region and Observing Mode Labels}\label{ssec:sci_labels}
 
 \textbf{All visits should have at least one region label \textit{and} one observing mode 
 label, and these labels should be available to users as query constraints for
 all images and tables.}
 
-\textbf{Region Labels -- } 
-Applied to a visit based on its Right Acension and Declination.
+\textbf{Region labels -- } 
+applied to a visit based on its Right Acension and Declination.
 
 To be applied to data by Rubin Data Management using, e.g., a look-up table.
 Region labels would include, e.g., WFD low-dust, Galactic Plane, Galactic 
@@ -41,8 +41,8 @@ However, the field of view is so large that a finer resolution by ccd,
 or by a smaller-mesh HTM map if the regions are determined for sources and objects,
 would be possible (and more useful to users).
 
-\textbf{Observing Mode Labels -- } 
-Applied to a visit based on the scheduler mode at the time of the observation
+\textbf{Observing mode labels -- } 
+applied to a visit based on the scheduler mode at the time of the observation
 (i.e., survey cadence or strategy).
 
 To be applied by the Survey Scheduler team via the observations scheduler.
@@ -78,7 +78,7 @@ all-sky coadd).
 
 \end{enumerate}
 
-\subsection{Special Processing}\label{ssec:sci_sproc}
+\subsection{Run Special Processing When Possible and Necessary}\label{ssec:sci_sproc}
 
 \textbf{Special Processing should be done by Rubin Data Management to 
 produce unique and separate (and joinable) data products
@@ -116,7 +116,7 @@ are ultimately left to the discretion of Rubin Data Management in Operations.
 
 Further discussion on Special Processing, with examples, is provided in Section~\ref{ssec:proc_special}.
 
-\subsection{Prompt Processing}\label{ssec:sci_pproc}
+\subsection{Include Special Programs Data in Prompt Processing}\label{ssec:sci_pproc}
 
 \textbf{All visits that \emph{can} be processed by the Prompt pipelines and generate 
 alerts \emph{should} be, in support of time domain and Solar System science goals.}
@@ -134,7 +134,7 @@ Further discussion of standard Prompt processing of Special Programs data, with
 examples and a discussion of a few challenges,
 is provided in Section~\ref{sssec:proc_reg_prompt}.
 
-\subsection{Computational Resources for User-Generated Processing}\label{ssec:sci_comp}
+\subsection{Provide Computational Resources for User-Generated Processing}\label{ssec:sci_comp}
 
 Rubin Observatory will reserve 10\% of its total data processing capacity for users.
 This component would include {\it all} user processing and re-processing of any and 
