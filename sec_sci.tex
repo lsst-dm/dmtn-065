@@ -1,38 +1,62 @@
-\section{Recommendations to Enable Science from Special Programs}\label{sec:sci}
+\section{Recommendations for Rubin DM to Enable Science from Special Programs}\label{sec:sci}
 
 Recommended implementations for Rubin Data Management to meet the 
 requirements related to Special Programs (Section~\ref{sec:req})
 and enable science with data from Special Programs.
 
-\subsection{Region and Observing Mode Labels}\label{ssec:sci_labels}
+\subsection{Apply Region and Observing Mode Labels}\label{ssec:sci_labels}
 
 \textbf{All visits should have at least one region label \textit{and} one observing mode 
-label, and these labels should be propagated to processed images and catalog data.}
+label, and these labels should be available to users as query constraints for
+all images and tables.}
 
-\textbf{Region Labels -- } 
-Based on Right Acension and Declination.
-To be applied to data by Rubin Data Management, e.g., using a look-up table.
+\textbf{Region labels -- } 
+applied to a visit based on its Right Acension and Declination.
+
+To be applied to data by Rubin Data Management using, e.g., a look-up table.
 Region labels would include, e.g., WFD low-dust, Galactic Plane, Galactic 
 Bulge, SCP, NES, or Virgo; DDF fieldname; mini-survey region name.
-Region labels should be propagated to processed images (visit, 
-difference, and deep coadds), catalog sources, and catalog static-sky objects.
-A given image might have more than one region label due to overlaping regions,
-but they could be, e.g., held in a single string as a CSV.
+A given visit is likely to have multiple region labels because, for example,
+the DDFs are within the WFD low-dust region.
+These could be stored in, e.g., a single string as a CSV.
 
-\textbf{Observing Mode Labels -- } 
-Based on the scheduler mode at the time of the observation
+The region labels should be available to users as query constraints for
+all images and tables, via both the butler and the TAP service, but otherwise
+the details of region label implementation are left to Rubin Data Management.
+
+For example, for images, the region labels could be propagated to processed images
+(e.g., visit, difference, and deep coadds), so that users may query the ObsTAP 
+service for all images with a given region label.
+For catalogs, the region labels could be stored for individual sources and
+objects as a table column, or for TAP-accessible tables stored in a joinable
+table such as the Visit, ccdVisit, or coaddPatches tables.
+Another option may be to map regions into spatial divisions (HTM or HEALPix),
+and enable users to query image and catalog products this way.
+
+The spatial resolution of region labels is left to be determined as it depends
+somewhat on the implementation.
+In this document the region label is considered to be applied to a visit
+if the visit overlaps the region, as a very simple implementation.
+However, the field of view is so large that a finer resolution by ccd,
+or by a smaller-mesh HTM map if the regions are determined for sources and objects,
+would be possible (and more useful to users).
+
+\textbf{Observing mode labels -- } 
+applied to a visit based on the scheduler mode at the time of the observation
 (i.e., survey cadence or strategy).
+
 To be applied by the Survey Scheduler team via the observations scheduler.
 Observing mode labels might include, e.g., WFD, DDF, TOO, mini-survey name, or other 
 options like engineering, commissioning, and director's discretionary.
-Observing mode labels should be propagated to single-visit processed and 
-difference images and catalog sources.
-It would not make sense to propagate observing mode labels to deep coadds or 
-object tables, as these data products could be a mix of modes.
-It is left to the discretion of the Survey Scheduler team whether more than one
+A given image would probably only have one observing mode label, but
+it is left to the discretion of the Survey Scheduler team whether more than one
 observing mode labels might be applied at a time and, e.g., held in a single string as a CSV.
 
-A given image would probably only have one observing mode label
+The observing mode labels should be available to users as query constraints for
+all single-visit processed and difference images and catalog sources,
+via both the butler and the TAP service.
+It would not make sense to apply observing mode labels to deep coadds or 
+object tables, as these data products could be a mix of modes.
 
 
 There are three main motivations for this recommendation.
@@ -54,7 +78,7 @@ all-sky coadd).
 
 \end{enumerate}
 
-\subsection{Special Processing}\label{ssec:sci_sproc}
+\subsection{Run Special Processing When Possible and Necessary}\label{ssec:sci_sproc}
 
 \textbf{Special Processing should be done by Rubin Data Management to 
 produce unique and separate (and joinable) data products
@@ -64,9 +88,10 @@ for Special Programs when it is both possible and necessary.}
 Science Pipelines can be used, and no new algorithmic or software development,
 or significant additional computational resources, are needed.
 
-\textbf{Necessary -- } When the primary science goal for a Special Program 
+\textbf{Necessary -- } When the \emph{primary} science goal for a Special Program 
 cannot be met by including the data in standard processing (e.g., Prompt processing),
-or where doing so would compromise the Main Survey data products (e.g., introduce additional non-uniformity beyond what would be expected based on the survey strategy).
+or where doing so would compromise the Main Survey data products (e.g., introduce additional
+non-uniformity beyond what would be expected based on the survey strategy).
 
 There are two main motivations for this recommendation.
 
@@ -83,16 +108,35 @@ load (and potential redundancy) in User-Generated Processing.
 
 \end{enumerate}
 
-The definitions of possible and necessary are further illustrated with examples in Section~\ref{ssec:proc_special}.
-Note that secondary science goals may be considered as ``not necessary".
+The scope of Special Processing is at the discretion of
+Rubin Data Management, including the timelines for data releases,
+and there are two caveats to add to the above definitions.
 
-The general scope of Special Processing, including situations in which cross-match and table joins 
-would be possible and scientifically relevant, 
-are ultimately left to the discretion of Rubin Data Management in Operations.
+\textbf{Caveat I. The definition of possible} comes from the requirement referenced
+for the first motivation in the list above (i.e., is not defined by this document).
+However, this definition failed to recognize cost-benefit tradeoffs to implementing
+and operating Special Processing, and does not account for the costs of operating,
+documenting, and maintaining additional processing campaigns and their data products.
+These costs are especially challenging to estimate for non-standard data processing
+(e.g., very high sky backgrounds, very short exposures; Section~\ref{ssec:proc_bounds_processing}).
+Even in situations that require no algorithmic or software development,
+the Rubin DM team might not have the staffing to handle Special Processing
+for all cases that are technically "possible".
+Current ballpark estimates are that the DM effort for Special Processing
+should be commensurate with the 10\% level estimated for survey time,
+storage space, and computational resources allocated for Special Programs.
 
-Further discussion on Special Processing, with examples, is provided in Section~\ref{ssec:proc_special}.
+\textbf{Caveat II. The definition of necessary} is defined here in this document only.
+We emphasize that the term applies only to the \emph{primary} science goals, and does
+not cover secondary or "bespoke" science goals for a Special Program.
+Users should anticipate that User-Generated Processing will be needed for these cases.
 
-\subsection{Prompt Processing}\label{ssec:sci_pproc}
+The definitions of possible and necessary are further illustrated with examples of when
+Special Processing vs. User-Generate Processing will be needed, in Sections
+\ref{ssec:proc_special} and \ref{ssec:proc_user}, respectively.
+
+
+\subsection{Include Special Programs Data in Prompt Processing}\label{ssec:sci_pproc}
 
 \textbf{All visits that \emph{can} be processed by the Prompt pipelines and generate 
 alerts \emph{should} be, in support of time domain and Solar System science goals.}
@@ -110,7 +154,7 @@ Further discussion of standard Prompt processing of Special Programs data, with
 examples and a discussion of a few challenges,
 is provided in Section~\ref{sssec:proc_reg_prompt}.
 
-\subsection{Computational Resources for User-Generated Processing}\label{ssec:sci_comp}
+\subsection{Provide Computational Resources for User-Generated Processing}\label{ssec:sci_comp}
 
 Rubin Observatory will reserve 10\% of its total data processing capacity for users.
 This component would include {\it all} user processing and re-processing of any and 
@@ -127,7 +171,7 @@ the boundary between what Rubin Observatory will provide (in terms of data produ
 and processing resources) and what will be left to the expertise of the science community, 
 see \url{https://www.lsst.org/about/dm/data-products}}.
 
-\subsection{Rubin Science Platform Capabilities}\label{ssec:sci_rsp}
+\subsubsection{Rubin Science Platform Capabilities}\label{sssec:sci_rsp}
 
 Users will need to be able to query for data that restricts by sky region and 
 observing mode label. 
