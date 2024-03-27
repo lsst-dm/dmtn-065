@@ -102,15 +102,16 @@ but some will require Special Processing by Rubin Data Management or user-genera
 This is a Rubin Data Management term to describe processing that 
 uses components of the LSST Science Pipelines and is applied by Rubin
 Data Management to images from Special Programs.
-Special Processing creates data products that are unique and separate from those produced
-by standard processing for the Main Survey.
+
+Special Processing will only be done in certain cases when it
+is determined, by Rubin Data Management, to be both "possible and necessary"
+under the definitions provided in Section~\ref{ssec:sci_sproc}.
 
 Special Processing is likely to use different inputs or configurations for the
 LSST Science Pipelines, or to run on different timescales, than standard processing - 
 as appropriate for the Special Programs' data and science goals.
-However, the development and application of specialized \emph{algorithms} or new software
-is beyond the scope of Special Processing.
-
+Special Processing creates data products that are unique and separate from those produced
+by standard processing for the Main Survey.
 Examples of Special Processing include the processing
 of images with non-standard exposure times, images obtained
 during twilight, or nightly stacking and differencing
@@ -120,20 +121,23 @@ See Section~\ref{ssec:proc_special} for more detailed examples of Special Proces
 \subsection{Standard (non-special) processing}\label{ssec:intro_stdproc}
 
 This is a term used only in this document to refer to the image processing 
-described in the Data Management Science Pipelines Design \citeds{LDM-151} that produces the data products described in the Data Products Definitions Document
+described in the Data Management Science Pipelines Design \citeds{LDM-151}
+that produces the data products described in the Data Products Definitions Document
 (\citeds{LSE-163}) that are designed for, and will be applied to, the Main Survey's observations.
 
-In some cases, standard processing is also appropriate for Special Programs.
-
+In some cases, standard processing is also appropriate for Special Programs,
+as discussed in Sections \ref{ssec:sci_pproc} and \ref{ssec:proc_reg}.
 
 \subsection{User-Generated Processing}
 
 Any processing of Rubin data done by users in order to reach specific science goals, including
 processing for Special Programs data, is referred to as User-Generated Processing.
 
-User-Generated Processing for Special Programs data would be necessary in cases where
-the science goals require custom algorithms, software, or very large computational
-capacities which are beyond the scope of Special Processing or the Rubin-provided
+User-Generated Processing for Special Programs data will be necessary in cases that
+do not meet the conditions of "possible and necessary" as defined in
+Section~ref\{ssec:sci_sproc} and further illustrated in Section~\ref{ssec:proc_special}.
+This will include cases where the science goals require custom algorithms or software,
+or computational capacities which are beyond the Rubin-provided
 computational resources (Section~\ref{ssec:sci_comp}).
 
 Guidelines for User-Generated Processing, and for user-generated data products
