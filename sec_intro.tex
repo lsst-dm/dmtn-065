@@ -58,8 +58,10 @@ The WFD component is the core component of the LSST Main Survey, designed to ach
 goals defined by the Science Requirements Document (SRD; \citeds{LPM-17}).
 
 The Main Survey will be executed with a set of observing modes, and 
-is expected to use alternative standard visits in the $u$-band and 
-standard visits in all other bands \citedsp{PSTN-055}.
+has been recommended by the Survey Cadence Optimization Committee (SCOC)
+to use alternative standard visits in the $u$-band;
+whether the $grizy$ bands will use alternative or standard visits
+remains to be determined \citedsp{PSTN-055}.
 Different cadences, filter balances, rotational dithers, etc., 
 might be applied in the different regions composing Main Survey.
 For example, rolling cadence is expected to be implemented in the low-dust 
@@ -70,9 +72,11 @@ This processing will produce, among other data products (LSE-163),
 a contiguous sky footprint that covers at 
 least $\sim$18000 deg$^2$ (with $\gtrsim$800 visits per field in WFD regions), 
 and is expected to be accomplished with 85--90\% of the observing time.
-This contiguous all-sky "deep coadd" may have region-dependent processing parameters and inputs
-(e.g., different calibration parameters or deblending algorithms for crowded fields)
-and will be of variable depth, as most special regions recieve fewer visits.
+This contiguous all-sky "deep coadd" might have region-dependent processing parameters and inputs
+where this is determined to be necessary by Rubin Data Management
+(e.g., different calibration parameters or deblending algorithms for crowded fields),
+and will be of variable depth as most special regions receive fewer visits.
+Some depth variation is also expected to come from, e.g., observing conditions and cadence tradeoffs.
 
 \subsection{Special Programs} 
 
@@ -87,7 +91,7 @@ Fields (DDFs) and the mini-, micro-, and nano-surveys \citedsp{PSTN-055}.
 About 10--15\% of the total 10-year LSST will be spent obtaining 
 observations associated with Special Programs.
 
-Data products from Special Programs is subject to the Rubin Data Policy \citedsp{RDO-013}
+Data products from Special Programs are subject to the Rubin Data Policy \citedsp{RDO-013}
 in the same way as data products from the Main Survey.
 
 Some science goals for Special Programs can be met with standard processing,
