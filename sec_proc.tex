@@ -41,6 +41,8 @@ increase the overheads on short exposures.
 Special Programs that require the \emph{exact same} field pointing and 
 rotation for \emph{every exposure} (to sub-arcsecond levels) might run 
 into hardware boundaries on pointing and tracking.
+Atmospheric distortions also pose a major limitation on positional
+repeatability across the focal plane.
 
 \item \textbf{Twilight images --}
 Special Programs that obtain twilight images will be subject to safe
@@ -125,16 +127,24 @@ Visits with very short or very long exposure times (or very bright sky
 backgrounds) might be excluded if they would need specialized algorithms for,
 e.g., instrument signature removal, difference-imaging, template-generation 
 (Section~\ref{ssec:proc_bounds}).
-Alert latency requirements do apply to Special Programs data (Section~\ref{ssec:req_proc}),
-and if they cannot be met then Prompt processing is ``not possible".
+
+If, for example, Prompt processing takes longer on Special Programs data or short exposures demand
+additional processing because the image acquisition rate exceeds the nominal $\sim$2 per minute,
+the available compute capacity of Prompt processing might be saturated.
+This could compromise the latency of alert distribution while Special Programs are being executed,
+and could also impact alert distribution for subsequent Main Survey visits.
+It is left to the discretion of Rubin Data Management to prioritize alert distribution
+for Main Survey visits by potentially limiting Prompt processing for Special Programs in such cases.
 
 \textbf{The use of specialized (alternative) template images.}
-If a Special Program's primary science goal requires specialized templates and 
-Prompt processing, the Data Management System will have the capability to load 
-and use an alternative template for some sky regions, based on the image metadata 
-(i.e., the labels described in Section~\ref{ssec:sci_labels}). 
-However, there would not be enough memory to hold alternative templates 
-for the whole sky.
+If a Special Program's primary science goal requires specialized templates and
+Prompt processing, the Data Management System will have the capability to load
+and use an alternative template for some sky regions, based on the image metadata
+(i.e., the labels described in Section~\ref{ssec:sci_labels}).
+Potential processes for the creation and verification of such alternative
+templates, the cost-benefit of allocating disk storage space to hold
+alternative templates, and decisions about when a science goal requires specialized
+templates, are left to the discretion of Rubin Data Management.
 
 \textbf{How Main Survey and Special Program data would co-exist.}
 No ``unique and separate" data products for the Special Progams would be 
