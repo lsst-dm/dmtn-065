@@ -163,7 +163,7 @@ For example, analyses for a WFD-only subset could still be done using the observ
 and region labels described in Section~\ref{ssec:sci_labels}, which would be
 propogated to difference images, difference-image catalogss, and alerts.
 
-\textbf{Potential issues with Prompt processing for untiled sequences from Special Programs.}
+\textbf{Potential issues with Prompt processing for untiled (deep drilling) sequences.}
 There are two potential issues with Prompt processing for DDFs, or any mini-survey 
 that obtains a sequence of untiled images (images at the same pointing or which overlap).
 For example, a DDF which obtains a hour-long series of about a hundred images at the same coordinates,
@@ -244,9 +244,11 @@ produce unique and separate data products
 for Special Programs when it is both possible and necessary.
 This is a requirement (Section~\ref{ssec:req_dp}).
 
-In short, \emph{possible} means that original or reconfigured versions of the LSST
-Science Pipelines can be used , and \emph{necessary} means the primary science goal for Special Program
-could not be met without the data products produced by the Special Processing.
+There are several caveats and constraints on the definition of
+"possible and necessary" in Section~\ref{ssec:sci_sproc}, but
+in short \emph{possible} means that original or reconfigured versions of the LSST
+Science Pipelines can be used and \emph{necessary} means the \emph{primary} science goal
+of the Special Program could not otherwise be met.
 
 \textbf{Joinable tables --}
 Any tables for the unique and separate data products should be joinable to the 
@@ -256,7 +258,8 @@ This is a requirement (Section~\ref{ssec:req_dp}).
 \textbf{Survey property maps --}
 As for the tesslated all-sky coadded images made from Main Survey data, survey property maps
 should be made individually as part of any Special Programs that generates
-tesselated coadded images. This is \emph{not} a requirement (Section~\ref{ssec:req_dp}).
+tesselated coadded images.
+This is \emph{not} a requirement (Section~\ref{ssec:req_dp}).
 
 \textbf{Special Processing timescales --}
 The timescales for Special Processing should be adopted that best serve the
@@ -267,10 +270,8 @@ images for DDF fields could be released annually.
 
 \subsubsection{Scenarios to illustrate ``possible and necessary"}
 
-The interpretations of possible and necessary, and the scope of Special Processing,
-are ultimately left to the discretion of Rubin Data Management in Operations.
-
-Specific examples are provided only to illustrate this interpretation of possible and necessary.
+The scope of Special Processing is at the discretion of Rubin Data Management.
+Specific examples are provided here as illustration.
 These examples do not place limits on what Special Processing might be done.
 
 \begin{itemize}
@@ -278,7 +279,7 @@ These examples do not place limits on what Special Processing might be done.
 \item \textbf{Possible and necessary:}
 in order to detect high-redshift (faint) galaxies in the DDFs,
 Rubin Data Management uses the LSST Science Pipelines to deeply
-coadd images for each field, and store the results of source
+coadd images for each field, and store the results of object
 detection and characterization in unique and separate tables that
 are included in the annual data release.
 
@@ -287,7 +288,7 @@ a time-domain mini-survey that uses standard visits \emph{could}
 have separate difference-image analysis object and source catalogs
 generated, but this is not necessary as the science goals for the
 mini-survey can be met by processing its data with standard Prompt
-Processing, and ensuring the data is properly labeled.
+Processing and ensuring the data is properly labeled.
 
 \item \textbf{Possible but not necessary (secondary science goals):}
 a time-domain mini-survey (or DDF) has a secondary science goal of detecting
@@ -355,16 +356,16 @@ annual data release tessellated coadds and associated catalog.
 \subsubsection{Standard Visit Mini-Surveys}
 
 Consider a Special Program in which a special region of sky is observed with standard
-visits but a a special strategy or cadence which is significantly distinct from the Main Survey
+visits but a pecial strategy or cadence which is significantly distinct from the Main Survey
 observing modes, and lasts for a limited amount of time.
 For example, a short-term survey of the Magellanic Clouds, with dual primary science
 goals in time-domain and static-sky science.
 
 In cases like this, a set of unique and separate data products with the same formats as the 
 time-domain DIA and static-sky data products described in Section~\ref{sssec:proc_reg_dr}
-could be created with Special Processing, if they are necessary 
-(i.e., Special Processing and data products will not be made if they will be redundant
-with the products of Standard Processing).
+could be created with Special Processing, if they are necessary.
+Special Processing and data products will not be made if they will be redundant
+with the products of Standard Processing.
 They might be released with an annual data release or on an intermediate timescale, e.g.,
 within six months of the conclusion of the mini-survey observations.
 
@@ -379,7 +380,7 @@ when the template coverage will be low, are discussed in more detail in
 Science goals that require data products which are not possible to create with 
 the original or reconfigured versions of the LSST Science Pipelines, 
 and/or for which new algorithmic development or significant computational resources 
-are needed, will require user processing and user-generated data products.
+are needed, will require User-Generated Processing and user-generated data products.
 As described above, custom coadds (e.g., weekly, monthly) are also left to users 
 to generate, as required by their specific science goals.
 
@@ -395,7 +396,9 @@ Very computationally intense user processing might require external resources.
 It is expected that some User-Generated pipelines and data products 
 might be ``adopted" or ``federated" into the LSST Science Pipelines and the Prompt 
 and Data Release data products.
-Details regarding this are to be provided elsewhere.
+Guidelines for User-Generated Processing, and for user-generated data products
+that can be federated with the Rubin-product data products (i.e., joinable tables),
+is forthcoming.
 
 \textbf{Alert production is restricted -- }
 As processed visit images will be embargoed for 80 hours,
