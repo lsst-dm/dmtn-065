@@ -81,8 +81,10 @@ First, a template image of appropriate depth for ``nightly" difference imaging i
 At the end of each nightly sequence of observations, a pipeline based on recongfigured 
 components of the LSST Science Pipelines could be automatically triggered.
 This pipeline creates nightly coadds in each filter and runs DIA using the template.
-Alerts are \emph{not} produced, but unique and separate catalogs with the same format
-as {\tt DiaObject} and {\tt DiaSource} could be updated within 24 hours (not a requirement).
+Unique and separate catalogs with the same format
+as {\tt DiaObject} and {\tt DiaSource} could be updated within, e.g., 24 hours (not a requirement),
+and alert packets could be created and produced (with a flag set to identify them
+as longer-latency alerts from nightly stacked DDF images).
 Instead of running daily, this processing might run weekly instead (TBD).
 At the end of each season, deeply coadded images that include all of the DDF's visits 
 from all years are re-generated, along with a separate {\tt Object}-like catalog.
