@@ -41,6 +41,8 @@ increase the overheads on short exposures.
 Special Programs that require the \emph{exact same} field pointing and 
 rotation for \emph{every exposure} (to sub-arcsecond levels) might run 
 into hardware boundaries on pointing and tracking.
+Atmospheric distortions also pose a major limitation on positional
+repeatability across the focal plane.
 
 \item \textbf{Twilight images --}
 Special Programs that obtain twilight images will be subject to safe
@@ -125,16 +127,24 @@ Visits with very short or very long exposure times (or very bright sky
 backgrounds) might be excluded if they would need specialized algorithms for,
 e.g., instrument signature removal, difference-imaging, template-generation 
 (Section~\ref{ssec:proc_bounds}).
-Alert latency requirements do apply to Special Programs data (Section~\ref{ssec:req_proc}),
-and if they cannot be met then Prompt processing is ``not possible".
+
+If, for example, Prompt processing takes longer on Special Programs data or short exposures demand
+additional processing because the image acquisition rate exceeds the nominal $\sim$2 per minute,
+the available compute capacity of Prompt processing might be saturated.
+This could compromise the latency of alert distribution while Special Programs are being executed,
+and could also impact alert distribution for subsequent Main Survey visits.
+It is left to the discretion of Rubin Data Management to prioritize alert distribution
+for Main Survey visits by potentially limiting Prompt processing for Special Programs in such cases.
 
 \textbf{The use of specialized (alternative) template images.}
-If a Special Program's primary science goal requires specialized templates and 
-Prompt processing, the Data Management System will have the capability to load 
-and use an alternative template for some sky regions, based on the image metadata 
-(i.e., the labels described in Section~\ref{ssec:sci_labels}). 
-However, there would not be enough memory to hold alternative templates 
-for the whole sky.
+If a Special Program's primary science goal requires specialized templates and
+Prompt processing, the Data Management System will have the capability to load
+and use an alternative template for some sky regions, based on the image metadata
+(i.e., the labels described in Section~\ref{ssec:sci_labels}).
+Potential processes for the creation and verification of such alternative
+templates, the cost-benefit of allocating disk storage space to hold
+alternative templates, and decisions about when a science goal requires specialized
+templates, are left to the discretion of Rubin Data Management.
 
 \textbf{How Main Survey and Special Program data would co-exist.}
 No ``unique and separate" data products for the Special Progams would be 
@@ -153,7 +163,7 @@ For example, analyses for a WFD-only subset could still be done using the observ
 and region labels described in Section~\ref{ssec:sci_labels}, which would be
 propogated to difference images, difference-image catalogss, and alerts.
 
-\textbf{Potential issues with Prompt processing for untiled sequences from Special Programs.}
+\textbf{Potential issues with Prompt processing for untiled (deep drilling) sequences.}
 There are two potential issues with Prompt processing for DDFs, or any mini-survey 
 that obtains a sequence of untiled images (images at the same pointing or which overlap).
 For example, a DDF which obtains a hour-long series of about a hundred images at the same coordinates,
@@ -170,7 +180,7 @@ The Prompt pipeline resources are also sized for the
 Main Survey, and it might not be possible to load up
 thousands of epochs at a time.
 The Data Management team will have to test the realized
-capabilities of Prompt processing and alert distribtuion,
+capabilities of Prompt processing and alert distribution,
 and potentially impose a mitigation strategy such as
 limiting histories to the last $N$ observations instead
 of the last 12 months in heavily-observed regions.
@@ -234,9 +244,11 @@ produce unique and separate data products
 for Special Programs when it is both possible and necessary.
 This is a requirement (Section~\ref{ssec:req_dp}).
 
-In short, \emph{possible} means that original or reconfigured versions of the LSST
-Science Pipelines can be used , and \emph{necessary} means the primary science goal for Special Program
-could not be met without the data products produced by the Special Processing.
+There are several caveats and constraints on the definition of
+"possible and necessary" in Section~\ref{ssec:sci_sproc}, but
+in short \emph{possible} means that original or reconfigured versions of the LSST
+Science Pipelines can be used and \emph{necessary} means the \emph{primary} science goal
+of the Special Program could not otherwise be met.
 
 \textbf{Joinable tables --}
 Any tables for the unique and separate data products should be joinable to the 
@@ -246,21 +258,20 @@ This is a requirement (Section~\ref{ssec:req_dp}).
 \textbf{Survey property maps --}
 As for the tesslated all-sky coadded images made from Main Survey data, survey property maps
 should be made individually as part of any Special Programs that generates
-tesselated coadded images. This is \emph{not} a requirement (Section~\ref{ssec:req_dp}).
+tesselated coadded images.
+This is \emph{not} a requirement (Section~\ref{ssec:req_dp}).
 
 \textbf{Special Processing timescales --}
 The timescales for Special Processing should be adopted that best serve the
 primary science goal for the Special Program.
-For example, nighly-coadd difference-image analysis for DDFs is the most
+For example, nightly-coadd difference-image analysis for DDFs is the most
 scientifically useful if done on a daily cadence, but the deeply coadded
 images for DDF fields could be released annually.
 
 \subsubsection{Scenarios to illustrate ``possible and necessary"}
 
-The interpretations of possible and necessary, and the scope of Special Processing,
-are ultimately left to the discretion of Rubin Data Management in Operations.
-
-Specific examples are provided only to illustrate this interpretation of possible and necessary.
+The scope of Special Processing is at the discretion of Rubin Data Management.
+Specific examples are provided here as illustration.
 These examples do not place limits on what Special Processing might be done.
 
 \begin{itemize}
@@ -268,7 +279,7 @@ These examples do not place limits on what Special Processing might be done.
 \item \textbf{Possible and necessary:}
 in order to detect high-redshift (faint) galaxies in the DDFs,
 Rubin Data Management uses the LSST Science Pipelines to deeply
-coadd images for each field, and store the results of source
+coadd images for each field, and store the results of object
 detection and characterization in unique and separate tables that
 are included in the annual data release.
 
@@ -277,7 +288,7 @@ a time-domain mini-survey that uses standard visits \emph{could}
 have separate difference-image analysis object and source catalogs
 generated, but this is not necessary as the science goals for the
 mini-survey can be met by processing its data with standard Prompt
-Processing, and ensuring the data is properly labeled.
+Processing and ensuring the data is properly labeled.
 
 \item \textbf{Possible but not necessary (secondary science goals):}
 a time-domain mini-survey (or DDF) has a secondary science goal of detecting
@@ -308,13 +319,18 @@ Special Processing to produce unique and separate DDF data products.
 
 For example, Special Processing for the DDF data products might include:
 \begin{itemize}
-\item nightly-coadded images (24 h)
-\item nightly-coadded difference images (24 h)
-\item {\tt DiaSource}- and {\tt DiaObject}-like catalogs for the nightly-coadds (24 h)
-\item deeply-coadded images (all images to date; yearly)
-\item templates for the nightly-coadded difference images (yearly)
-\item {\tt Source}- and {\tt Object}-like catalogs for the nightly-coadded and deeply-coadded images (yearly)
+\item nightly-coadded images
+\item nightly-coadded difference images
+\item {\tt DiaSource}- and {\tt DiaObject}-like catalogs for the nightly-coadds
+\item deeply-coadded images
+\item templates for the nightly-coadded difference images
+\item {\tt Source}- and {\tt Object}-like catalogs for the nightly-coadded and deeply-coadded images
 \end{itemize}
+
+The release of nightly-coadded or difference images is subject to the 80-hour embargo.
+The timescales for updating catalogs based on the nightly-coadds could be daily
+or on another intermediate timescale; this is left to the discretion of Rubin Data Management.
+
 
 \subsubsection{Short-Exposure Mini-Surveys}
 
@@ -332,21 +348,24 @@ If Data Management does find that short-exposure and/or high-sky brightness imag
 can be processed with reconfigured versions of the LSST Science Pipelines,
 then unique and separate data products could be generated with Special Processing.
 For the NEO twilight survey, these data products would likely be similar to the
-Prompt or DIA data products.
+Prompt or DIA data products, but note the potential issues with alert
+latency from short exposures mentioned in Section~\ref{sssec:proc_reg_prompt}.
 For the calibration survey, these data products would like be similar to the
 annual data release tessellated coadds and associated catalog.
 
 \subsubsection{Standard Visit Mini-Surveys}
 
 Consider a Special Program in which a special region of sky is observed with standard
-visits but a a special strategy or cadence which is significantly distinct from the Main Survey
+visits but a special strategy or cadence which is significantly distinct from the Main Survey
 observing modes, and lasts for a limited amount of time.
 For example, a short-term survey of the Magellanic Clouds, with dual primary science
 goals in time-domain and static-sky science.
 
 In cases like this, a set of unique and separate data products with the same formats as the 
 time-domain DIA and static-sky data products described in Section~\ref{sssec:proc_reg_dr}
-should be created with Special Processing.
+could be created with Special Processing, if they are necessary.
+Special Processing and data products will not be made if they will be redundant
+with the products of Standard Processing.
 They might be released with an annual data release or on an intermediate timescale, e.g.,
 within six months of the conclusion of the mini-survey observations.
 
@@ -361,7 +380,7 @@ when the template coverage will be low, are discussed in more detail in
 Science goals that require data products which are not possible to create with 
 the original or reconfigured versions of the LSST Science Pipelines, 
 and/or for which new algorithmic development or significant computational resources 
-are needed, will require user processing and user-generated data products.
+are needed, will require User-Generated Processing and user-generated data products.
 As described above, custom coadds (e.g., weekly, monthly) are also left to users 
 to generate, as required by their specific science goals.
 
@@ -377,16 +396,14 @@ Very computationally intense user processing might require external resources.
 It is expected that some User-Generated pipelines and data products 
 might be ``adopted" or ``federated" into the LSST Science Pipelines and the Prompt 
 and Data Release data products.
-Details regarding this are to be provided elsewhere.
+Guidelines for User-Generated Processing, and for user-generated data products
+that can be federated with the Rubin-product data products (i.e., joinable tables),
+is forthcoming.
 
 \textbf{Alert production is restricted -- }
-User-Generated Processing will not be able to release alert packets in the LSST alert stream.
-As the latency on processed visit image availability has an 80-hour
-embargo, no user-generated pipeline will be able to process Special Programs 
-data on a timescale similar to prompt processing and alert production 
-(60 seconds to 24 hours).
-Thus, no User-Generated Processing may contribute alerts to the LSST alert stream on 
-any timescale.
+As processed visit images will be embargoed for 80 hours,
+only official Rubin Prompt processing may produce alerts.
+No User-Generated Processing may contribute alerts to the LSST alert stream.
 
 Further examples of potential User-Generated Processing for anticipated Special Programs are provided below.
 

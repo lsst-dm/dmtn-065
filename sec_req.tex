@@ -59,7 +59,7 @@ appropriate (Section~\ref{ssec:proc_special}).
 
 \textbf{Latency requirements apply to alerts from Special Programs images. --}
 It is a requirement that any Special Programs processing done with the 
-Prompt pipeline (or a reconfigured version of it) is subject to the same 
+Prompt pipeline is subject to the same 
 timescales and latency constraints of 24 hours for the release of Prompt 
 data products and 1 minute for the transmission of Alert packets 
 (DMS-REQ-0344).
@@ -85,3 +85,10 @@ required to reserve for \emph{all} User-Generated Processing includes that
 applied by users to Special Programs data.
 There is no additional capacity {\it for users} that will be reserved only for Special 
 Programs data (LSR-REQ-0041).
+
+This is a minor detail but, there are two different "10\%" values quoted here.
+The accounting order is not in the requirements but Rubin Data Management considers
+the 10\% for User-Generated Processing as coming off of the total capacity first,
+with 90\% allocated for Rubin processing.
+Then the 10\% for Rubin Special Processing comes from that 90\%,
+and so is actually 9\% of the total capacity.
