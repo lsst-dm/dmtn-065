@@ -12,6 +12,9 @@ DMTN-065.pdf
 *.fot
 *.cb
 *.cb2
+*.xdv
+meta.tex
+acronyms.tex
 
 ## Intermediate documents:
 *.dvi
