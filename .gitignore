@@ -15,6 +15,7 @@ DMTN-065.pdf
 *.xdv
 meta.tex
 acronyms.tex
+authors.tex
 
 ## Intermediate documents:
 *.dvi
